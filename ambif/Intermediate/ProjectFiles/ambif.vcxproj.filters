@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ItemGroup>
+		<None Include="..\..\ambif.uproject" />
+		<Filter Include="Source">
+			<UniqueIdentifier>{FCB9804C-F887-4C93-9479-C63A73A4562F}</UniqueIdentifier>
+		</Filter>
+		<None Include="..\..\Source\ambif.Target.cs">
+			<Filter>Source</Filter>
+		</None >
+		<None Include="..\..\Source\ambifEditor.Target.cs">
+			<Filter>Source</Filter>
+		</None >
+		<Filter Include="Config">
+			<UniqueIdentifier>{CD3BD4D4-EB62-40F8-813E-11D17DE1819E}</UniqueIdentifier>
+		</Filter>
+		<None Include="..\..\Config\DefaultEditor.ini">
+			<Filter>Config</Filter>
+		</None >
+		<None Include="..\..\Config\DefaultEngine.ini">
+			<Filter>Config</Filter>
+		</None >
+		<Filter Include="Source\ambif">
+			<UniqueIdentifier>{6EAF46CB-B381-4ADB-B8A8-A54C53A6127D}</UniqueIdentifier>
+		</Filter>
+		<None Include="..\..\Source\ambif\ambif.Build.cs">
+			<Filter>Source\ambif</Filter>
+		</None >
+		<ClCompile Include="..\..\Source\ambif\ambif.cpp">
+			<Filter>Source\ambif</Filter>
+		</ClCompile >
+		<ClInclude Include="..\..\Source\ambif\ambif.h">
+			<Filter>Source\ambif</Filter>
+		</ClInclude >
+		<ClCompile Include="..\..\Source\ambif\ambifGameMode.cpp">
+			<Filter>Source\ambif</Filter>
+		</ClCompile >
+		<ClInclude Include="..\..\Source\ambif\ambifGameMode.h">
+			<Filter>Source\ambif</Filter>
+		</ClInclude >
+		<Filter Include="Source\ambif\Resources">
+			<UniqueIdentifier>{456565E3-849E-486A-816D-F2D90F4FE733}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="Source\ambif\Resources\Windows">
+			<UniqueIdentifier>{68BFCF01-49F1-4402-A813-A63D1FBC8A99}</UniqueIdentifier>
+		</Filter>
+		<None Include="..\..\Source\ambif\Resources\Windows\ambif.ico">
+			<Filter>Source\ambif\Resources\Windows</Filter>
+		</None >
+		<ResourceCompile Include="..\..\Source\ambif\Resources\Windows\ambif.rc">
+			<Filter>Source\ambif\Resources\Windows</Filter>
+		</ResourceCompile >
+	</ItemGroup>
+</Project>
