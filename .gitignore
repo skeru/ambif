@@ -181,3 +181,21 @@ UpgradeLog*.htm
 
 # Microsoft Fakes
 FakesAssemblies/
+
+# Unreal Engine files
+Binaries/
+Build/
+#Content/Textures/T_*.uasset
+
+#Unreal Engine intermediate files
+Intermediate/*
+!Intermediate/ProjectFiles*
+Intermediate/Build/Win32/
+Intermediate/Build/Win64/
+*.exe
+*.pdb
+*.pak
+
+# Unreal saved
+Saved/*
+!Saved/Config
