@@ -188,14 +188,15 @@ Build/
 #Content/Textures/T_*.uasset
 
 #Unreal Engine intermediate files
-Intermediate/*
-!Intermediate/ProjectFiles*
-Intermediate/Build/Win32/
-Intermediate/Build/Win64/
+ambif/Intermediate/*
+!ambif/Intermediate/ProjectFiles*
+ambif/Intermediate/Build/Win32/
+ambif/Intermediate/Build/Win64/
 *.exe
 *.pdb
 *.pak
 
 # Unreal saved
-Saved/*
-!Saved/Config
+ambif/Saved/*
+!ambif/Saved/Config*
+ambif/Saved/AutoScreenshot.png
