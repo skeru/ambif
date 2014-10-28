@@ -4,7 +4,7 @@
 	<ItemGroup>
 		<None Include="..\..\ambif.uproject" />
 		<Filter Include="Source">
-			<UniqueIdentifier>{FCB9804C-F887-4C93-9479-C63A73A4562F}</UniqueIdentifier>
+			<UniqueIdentifier>{9A588FB7-53B9-408C-9559-749EA64F2264}</UniqueIdentifier>
 		</Filter>
 		<None Include="..\..\Source\ambif.Target.cs">
 			<Filter>Source</Filter>
@@ -13,7 +13,7 @@
 			<Filter>Source</Filter>
 		</None >
 		<Filter Include="Config">
-			<UniqueIdentifier>{CD3BD4D4-EB62-40F8-813E-11D17DE1819E}</UniqueIdentifier>
+			<UniqueIdentifier>{1C8D57EB-F38E-4457-A348-CC16D28777C3}</UniqueIdentifier>
 		</Filter>
 		<None Include="..\..\Config\DefaultEditor.ini">
 			<Filter>Config</Filter>
@@ -21,8 +21,11 @@
 		<None Include="..\..\Config\DefaultEngine.ini">
 			<Filter>Config</Filter>
 		</None >
+		<None Include="..\..\Config\DefaultGame.ini">
+			<Filter>Config</Filter>
+		</None >
 		<Filter Include="Source\ambif">
-			<UniqueIdentifier>{6EAF46CB-B381-4ADB-B8A8-A54C53A6127D}</UniqueIdentifier>
+			<UniqueIdentifier>{2DAB077F-2325-4705-B97F-FBDA5DBB2758}</UniqueIdentifier>
 		</Filter>
 		<None Include="..\..\Source\ambif\ambif.Build.cs">
 			<Filter>Source\ambif</Filter>
@@ -39,11 +42,20 @@
 		<ClInclude Include="..\..\Source\ambif\ambifGameMode.h">
 			<Filter>Source\ambif</Filter>
 		</ClInclude >
+		<Filter Include="Source\ambif\Music">
+			<UniqueIdentifier>{6269DA9F-3A81-4CFB-875E-DD9DF705E62F}</UniqueIdentifier>
+		</Filter>
+		<ClCompile Include="..\..\Source\ambif\Music\MusicPlayerActor.cpp">
+			<Filter>Source\ambif\Music</Filter>
+		</ClCompile >
+		<ClInclude Include="..\..\Source\ambif\Music\MusicPlayerActor.h">
+			<Filter>Source\ambif\Music</Filter>
+		</ClInclude >
 		<Filter Include="Source\ambif\Resources">
-			<UniqueIdentifier>{456565E3-849E-486A-816D-F2D90F4FE733}</UniqueIdentifier>
+			<UniqueIdentifier>{B24926D7-89B6-49A6-8BFD-63A53AD8AF01}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="Source\ambif\Resources\Windows">
-			<UniqueIdentifier>{68BFCF01-49F1-4402-A813-A63D1FBC8A99}</UniqueIdentifier>
+			<UniqueIdentifier>{3E9F6778-4755-45FE-A5EB-5A06C9287C83}</UniqueIdentifier>
 		</Filter>
 		<None Include="..\..\Source\ambif\Resources\Windows\ambif.ico">
 			<Filter>Source\ambif\Resources\Windows</Filter>

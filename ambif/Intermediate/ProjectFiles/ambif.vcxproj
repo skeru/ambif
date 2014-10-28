@@ -49,11 +49,14 @@
 		<None Include="..\..\Source\ambifEditor.Target.cs" />
 		<None Include="..\..\Config\DefaultEditor.ini" />
 		<None Include="..\..\Config\DefaultEngine.ini" />
+		<None Include="..\..\Config\DefaultGame.ini" />
 		<None Include="..\..\Source\ambif\ambif.Build.cs" />
 		<ClCompile Include="..\..\Source\ambif\ambif.cpp" />
 		<ClInclude Include="..\..\Source\ambif\ambif.h" />
 		<ClCompile Include="..\..\Source\ambif\ambifGameMode.cpp" />
 		<ClInclude Include="..\..\Source\ambif\ambifGameMode.h" />
+		<ClCompile Include="..\..\Source\ambif\Music\MusicPlayerActor.cpp" />
+		<ClInclude Include="..\..\Source\ambif\Music\MusicPlayerActor.h" />
 		<None Include="..\..\Source\ambif\Resources\Windows\ambif.ico" />
 		<ResourceCompile Include="..\..\Source\ambif\Resources\Windows\ambif.rc" />
 	</ItemGroup>
