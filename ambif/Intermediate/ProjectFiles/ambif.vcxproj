@@ -1,194 +1,199 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="DebugGame_RocketGame|x64">
-      <Configuration>DebugGame_RocketGame</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="DebugGame_RocketGame|Win32">
-      <Configuration>DebugGame_RocketGame</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="DebugGame_Editor|x64">
-      <Configuration>DebugGame_Editor</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="DebugGame_Editor|Win32">
-      <Configuration>DebugGame_Editor</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Development_RocketGame|x64">
-      <Configuration>Development_RocketGame</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Development_RocketGame|Win32">
-      <Configuration>Development_RocketGame</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Development_Editor|x64">
-      <Configuration>Development_Editor</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Development_Editor|Win32">
-      <Configuration>Development_Editor</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Shipping_RocketGame|x64">
-      <Configuration>Shipping_RocketGame</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Shipping_RocketGame|Win32">
-      <Configuration>Shipping_RocketGame</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\ambif.uproject" />
-    <None Include="..\..\Source\ambif.Target.cs" />
-    <None Include="..\..\Source\ambifEditor.Target.cs" />
-    <None Include="..\..\Config\DefaultEditor.ini" />
-    <None Include="..\..\Config\DefaultEngine.ini" />
-    <None Include="..\..\Config\DefaultGame.ini" />
-    <None Include="..\..\Source\ambif\ambif.Build.cs" />
-    <ClCompile Include="..\..\Source\ambif\ambif.cpp" />
-    <ClInclude Include="..\..\Source\ambif\ambif.h" />
-    <ClCompile Include="..\..\Source\ambif\ambifGameMode.cpp" />
-    <ClInclude Include="..\..\Source\ambif\ambifGameMode.h" />
-    <ClInclude Include="..\..\Source\ambif\CustomUtils\CustomUtils.h" />
-    <ClInclude Include="..\..\Source\ambif\CustomUtils\DebugUtils.h" />
-    <ClCompile Include="..\..\Source\ambif\CustomUtils\HSVColor.cpp" />
-    <ClInclude Include="..\..\Source\ambif\CustomUtils\HSVColor.h" />
-    <ClInclude Include="..\..\Source\ambif\DataDefinitions\Genre.h" />
-    <ClInclude Include="..\..\Source\ambif\DataDefinitions\TableDefinitions.h" />
-    <ClCompile Include="..\..\Source\ambif\Music\MusicPlayerActor.cpp" />
-    <ClInclude Include="..\..\Source\ambif\Music\MusicPlayerActor.h" />
-    <None Include="..\..\Source\ambif\Resources\Windows\ambif.ico" />
-    <ResourceCompile Include="..\..\Source\ambif\Resources\Windows\ambif.rc" />
-  </ItemGroup>
-  <PropertyGroup Label="Globals">
-    <ProjectGuid>{057AFB1D-8EF1-4F12-ADAE-9CBD29F6DDBF}</ProjectGuid>
-    <Keyword>MakeFileProj</Keyword>
-    <RootNamespace>ambif</RootNamespace>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame_RocketGame|x64'" Label="Configuration">
-    <ConfigurationType>Makefile</ConfigurationType>
-    <PlatformToolset>v120</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame_Editor|x64'" Label="Configuration">
-    <ConfigurationType>Makefile</ConfigurationType>
-    <PlatformToolset>v120</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development_RocketGame|x64'" Label="Configuration">
-    <ConfigurationType>Makefile</ConfigurationType>
-    <PlatformToolset>v120</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development_Editor|x64'" Label="Configuration">
-    <ConfigurationType>Makefile</ConfigurationType>
-    <PlatformToolset>v120</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Shipping_RocketGame|Win32'" Label="Configuration">
-    <ConfigurationType>Makefile</ConfigurationType>
-    <PlatformToolset>v120</PlatformToolset>
-  </PropertyGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <ImportGroup Label="ExtensionSettings" />
-  <PropertyGroup Label="UserMacros" />
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame_RocketGame|x64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame_RocketGame|x64'">
-    <IncludePath />
-    <ReferencePath />
-    <LibraryPath />
-    <LibraryWPath />
-    <SourcePath />
-    <ExcludePath />
-    <OutDir>$(ProjectDir)..\Build\Unused\</OutDir>
-    <IntDir>$(ProjectDir)..\Build\Unused\</IntDir>
-    <NMakeBuildCommandLine>"D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Build\BatchFiles\Build.bat" ambif Win64 DebugGame "$(SolutionDir)$(ProjectName).uproject" -rocket</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine>"D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Build\BatchFiles\Rebuild.bat" ambif Win64 DebugGame "$(SolutionDir)$(ProjectName).uproject" -rocket</NMakeReBuildCommandLine>
-    <NMakeCleanCommandLine>"D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Build\BatchFiles\Clean.bat" ambif Win64 DebugGame "$(SolutionDir)$(ProjectName).uproject" -rocket</NMakeCleanCommandLine>
-    <NMakeOutput>..\..\Binaries\Win64\ambif-Win64-DebugGame.exe</NMakeOutput>
-  </PropertyGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame_Editor|x64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame_Editor|x64'">
-    <IncludePath />
-    <ReferencePath />
-    <LibraryPath />
-    <LibraryWPath />
-    <SourcePath />
-    <ExcludePath />
-    <OutDir>$(ProjectDir)..\Build\Unused\</OutDir>
-    <IntDir>$(ProjectDir)..\Build\Unused\</IntDir>
-    <NMakeBuildCommandLine>"D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Build\BatchFiles\Build.bat" ambifEditor Win64 DebugGame "$(SolutionDir)$(ProjectName).uproject" -rocket</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine>"D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Build\BatchFiles\Rebuild.bat" ambifEditor Win64 DebugGame "$(SolutionDir)$(ProjectName).uproject" -rocket</NMakeReBuildCommandLine>
-    <NMakeCleanCommandLine>"D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Build\BatchFiles\Clean.bat" ambifEditor Win64 DebugGame "$(SolutionDir)$(ProjectName).uproject" -rocket</NMakeCleanCommandLine>
-    <NMakeOutput>D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Binaries\Win64\UE4Editor.exe</NMakeOutput>
-  </PropertyGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Development_RocketGame|x64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development_RocketGame|x64'">
-    <IncludePath />
-    <ReferencePath />
-    <LibraryPath />
-    <LibraryWPath />
-    <SourcePath />
-    <ExcludePath />
-    <OutDir>$(ProjectDir)..\Build\Unused\</OutDir>
-    <IntDir>$(ProjectDir)..\Build\Unused\</IntDir>
-    <NMakeBuildCommandLine>"D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Build\BatchFiles\Build.bat" ambif Win64 Development "$(SolutionDir)$(ProjectName).uproject" -rocket</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine>"D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Build\BatchFiles\Rebuild.bat" ambif Win64 Development "$(SolutionDir)$(ProjectName).uproject" -rocket</NMakeReBuildCommandLine>
-    <NMakeCleanCommandLine>"D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Build\BatchFiles\Clean.bat" ambif Win64 Development "$(SolutionDir)$(ProjectName).uproject" -rocket</NMakeCleanCommandLine>
-    <NMakeOutput>..\..\Binaries\Win64\ambif.exe</NMakeOutput>
-  </PropertyGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Development_Editor|x64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development_Editor|x64'">
-    <IncludePath />
-    <ReferencePath />
-    <LibraryPath />
-    <LibraryWPath />
-    <SourcePath />
-    <ExcludePath />
-    <OutDir>$(ProjectDir)..\Build\Unused\</OutDir>
-    <IntDir>$(ProjectDir)..\Build\Unused\</IntDir>
-    <NMakeBuildCommandLine>"D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Build\BatchFiles\Build.bat" ambifEditor Win64 Development "$(SolutionDir)$(ProjectName).uproject" -rocket</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine>"D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Build\BatchFiles\Rebuild.bat" ambifEditor Win64 Development "$(SolutionDir)$(ProjectName).uproject" -rocket</NMakeReBuildCommandLine>
-    <NMakeCleanCommandLine>"D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Build\BatchFiles\Clean.bat" ambifEditor Win64 Development "$(SolutionDir)$(ProjectName).uproject" -rocket</NMakeCleanCommandLine>
-    <NMakeOutput>D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Binaries\Win64\UE4Editor.exe</NMakeOutput>
-  </PropertyGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Shipping_RocketGame|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Shipping_RocketGame|Win32'">
-    <IncludePath />
-    <ReferencePath />
-    <LibraryPath />
-    <LibraryWPath />
-    <SourcePath />
-    <ExcludePath />
-    <OutDir>$(ProjectDir)..\Build\Unused\</OutDir>
-    <IntDir>$(ProjectDir)..\Build\Unused\</IntDir>
-    <NMakeBuildCommandLine>"D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Build\BatchFiles\Build.bat" ambif Win32 Shipping "$(SolutionDir)$(ProjectName).uproject" -rocket</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine>"D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Build\BatchFiles\Rebuild.bat" ambif Win32 Shipping "$(SolutionDir)$(ProjectName).uproject" -rocket</NMakeReBuildCommandLine>
-    <NMakeCleanCommandLine>"D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Build\BatchFiles\Clean.bat" ambif Win32 Shipping "$(SolutionDir)$(ProjectName).uproject" -rocket</NMakeCleanCommandLine>
-    <NMakeOutput>..\..\Binaries\Win32\ambif-Win32-Shipping.exe</NMakeOutput>
-  </PropertyGroup>
-  <PropertyGroup>
-    <NMakePreprocessorDefinitions>$(NMakePreprocessorDefinitions);UE_GAME=1;IS_PROGRAM=0;UE_ROCKET=1;UNICODE;_UNICODE;__UNREAL__;IS_MONOLITHIC=1;WITH_ENGINE=1;WITH_UNREAL_DEVELOPER_TOOLS=0;WITH_COREUOBJECT=1;USE_STATS_WITHOUT_ENGINE=0;WITH_PLUGIN_SUPPORT=0;USE_LOGGING_IN_SHIPPING=0;UE_BUILD_MINIMAL=1;WITH_EDITOR=1;WITH_EDITORONLY_DATA=0;WITH_SERVER_CODE=1;UBT_COMPILED_PLATFORM=Win64;WIN32=1;_WIN32_WINNT=0x0600;WINVER=0x0600;PLATFORM_WINDOWS=1;NDEBUG=1;UE_BUILD_DEVELOPMENT=1;UE_ENGINE_DIRECTORY=../../../../../../Installer/Unreal Engine/Unreal Engine/4.5/Engine/;UE_PROJECT_NAME=ambif;ORIGINAL_FILE_NAME="ambif.exe";AMBIF_API=;UE_ENABLE_ICU=1;WITH_STEAMWORKS=0;WITH_DIRECTXMATH=0;CORE_API=;COREUOBJECT_API=;WITH_PHYSX=1;WITH_APEX=1;WITH_RUNTIME_PHYSICS_COOKING;WITH_BOX2D=1;WITH_RECAST=1;ENGINE_API=;WITH_FREETYPE=1;SLATE_API=;INPUTCORE_API=;SLATECORE_API=;MESSAGING_API=;RENDERCORE_API=;RHI_API=;SHADERCORE_API=;ASSETREGISTRY_API=;ENGINEMESSAGES_API=;ENGINESETTINGS_API=;SYNTHBENCHMARK_API=;RENDERER_API=;AIMODULE_API=;UE_EDITOR=1;UNREALED_API=;BSPMODE_API=;DOCUMENTATION_API=;PROJECTS_API=;SANDBOXFILE_API=;EDITORSTYLE_API=;SOURCECONTROL_API=;UNREALEDMESSAGES_API=;BLUEPRINTGRAPH_API=;XAUDIO2_API=;USERFEEDBACK_API=;COLLECTIONMANAGER_API=;KISMET_API=</NMakePreprocessorDefinitions>
-    <NMakeIncludeSearchPath>$(NMakeIncludeSearchPath);D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source;..\..\Source;..\Build\Win64\ambif\Inc\ambif;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\Internationalization;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\Async;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\Concurrency;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\Containers;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\Delegates;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\GenericPlatform;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\HAL;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\Logging;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\Math;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\Misc;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\Modules;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\Modules\Boilerplate;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\ProfilingDebugging;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\Serialization;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\Serialization\Json;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\Serialization\Csv;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\Stats;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\Templates;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\UObject;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\Windows;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\CoreUObject\Classes;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\CoreUObject;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\CoreUObject\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\CoreUObject\Public\Blueprint;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\CoreUObject\Public\Misc;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\CoreUObject\Public\Serialization;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\CoreUObject\Public\Templates;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\CoreUObject\Public\UObject;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\CoreUObject;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Engine\Classes;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\Engine;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Engine\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Engine\Public\AI;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Engine\Public\EdGraph;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Engine\Public\Features;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Engine\Public\Landscape;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Engine\Public\Net;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Engine\Public\Slate;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Engine\Public\Tests;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Engine\Public\AI\Navigation;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\Slate;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Framework;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Widgets;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Framework\Application;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Framework\Commands;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Framework\Docking;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Framework\Layout;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Framework\MultiBox;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Framework\Notifications;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Framework\Styling;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Framework\Text;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Framework\Views;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Framework\Text\Android;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Framework\Text\IOS;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Widgets\Colors;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Widgets\Docking;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Widgets\Images;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Widgets\Input;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Widgets\Layout;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Widgets\Navigation;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Widgets\Notifications;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Widgets\Text;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Widgets\Views;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\InputCore\Classes;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\InputCore;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\InputCore\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\InputCore;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\SlateCore;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\SlateCore\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\SlateCore\Public\Animation;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\SlateCore\Public\Application;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\SlateCore\Public\Brushes;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\SlateCore\Public\Fonts;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\SlateCore\Public\Input;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\SlateCore\Public\Layout;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\SlateCore\Public\Logging;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\SlateCore\Public\Rendering;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\SlateCore\Public\Sound;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\SlateCore\Public\Styling;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\SlateCore\Public\Textures;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\SlateCore\Public\Types;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\SlateCore\Public\Widgets;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\SlateCore;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\Messaging;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Messaging\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Messaging\Public\Common;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Messaging\Public\Interfaces;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Messaging;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\RenderCore;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\RenderCore\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\RenderCore;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\RHI;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\RHI\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\RHI;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\ShaderCore;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\ShaderCore\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\ShaderCore;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\AssetRegistry;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\AssetRegistry\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\AssetRegistry;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\EngineMessages\Classes;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\EngineMessages;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\EngineMessages\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\EngineMessages;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\EngineSettings\Classes;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\EngineSettings;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\EngineSettings\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\EngineSettings;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\SynthBenchmark;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Developer\SynthBenchmark\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\Renderer;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Renderer\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Renderer;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Developer\SynthBenchmark;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\AIModule\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\AIModule\Classes;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\AIModule;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\AIModule;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Engine;..\..\Source\ambif;..\Build\Win64\Inc\ambif;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Programs\UnrealLightmass\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\UnrealEd\Classes;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\UnrealEd;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\UnrealEd\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\UnrealEd\Public\Commandlets;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\UnrealEd\Public\Dialogs;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\UnrealEd\Public\DragAndDrop;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\UnrealEd\Public\Features;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\UnrealEd\Public\Kismet2;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\UnrealEd\Public\Layers;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\UnrealEd\Public\Tests;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\UnrealEd\Public\Toolkits;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\BspMode;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\BspMode\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\BspMode;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\Documentation;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\Documentation\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\Documentation;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\Projects;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Projects\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Projects\Public\Interfaces;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Projects;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\SandboxFile;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\SandboxFile\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\SandboxFile;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\EditorStyle;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\EditorStyle\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\EditorStyle\Public\Classes;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\EditorStyle\Public\Interfaces;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\EditorStyle;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\SourceControl;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Developer\SourceControl\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Developer\SourceControl\Public\Tests;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Developer\SourceControl;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\UnrealEdMessages\Classes;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\UnrealEdMessages;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\UnrealEdMessages\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\UnrealEdMessages;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\BlueprintGraph\Classes;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\BlueprintGraph;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\BlueprintGraph\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\BlueprintGraph;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\XAudio2;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Windows\XAudio2\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Windows\XAudio2;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\UserFeedback;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\UserFeedback\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\UserFeedback;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\CollectionManager;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Developer\CollectionManager\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Developer\CollectionManager;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\UnrealEd;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\Kismet\Classes;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\Kismet;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\Kismet\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\Kismet\Public\WorkflowOrientedApp;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\Kismet;C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\INCLUDE;C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\ATLMFC\INCLUDE;C:\Program Files (x86)\Windows Kits\8.1\include\shared;C:\Program Files (x86)\Windows Kits\8.1\include\um;C:\Program Files (x86)\Windows Kits\8.1\include\winrt;;</NMakeIncludeSearchPath>
-    <NMakeForcedIncludes>$(NMakeForcedIncludes)</NMakeForcedIncludes>
-    <NMakeAssemblySearchPath>$(NMakeAssemblySearchPath)</NMakeAssemblySearchPath>
-    <NMakeForcedUsingAssemblies>$(NMakeForcedUsingAssemblies)</NMakeForcedUsingAssemblies>
-  </PropertyGroup>
-  <ItemDefinitionGroup>
-  </ItemDefinitionGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-  </ImportGroup>
+	<ItemGroup Label="ProjectConfigurations">
+		<ProjectConfiguration Include="DebugGame_RocketGame|x64">
+			<Configuration>DebugGame_RocketGame</Configuration>
+			<Platform>x64</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="DebugGame_RocketGame|Win32">
+			<Configuration>DebugGame_RocketGame</Configuration>
+			<Platform>Win32</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="DebugGame_Editor|x64">
+			<Configuration>DebugGame_Editor</Configuration>
+			<Platform>x64</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="DebugGame_Editor|Win32">
+			<Configuration>DebugGame_Editor</Configuration>
+			<Platform>Win32</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Development_RocketGame|x64">
+			<Configuration>Development_RocketGame</Configuration>
+			<Platform>x64</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Development_RocketGame|Win32">
+			<Configuration>Development_RocketGame</Configuration>
+			<Platform>Win32</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Development_Editor|x64">
+			<Configuration>Development_Editor</Configuration>
+			<Platform>x64</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Development_Editor|Win32">
+			<Configuration>Development_Editor</Configuration>
+			<Platform>Win32</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Shipping_RocketGame|x64">
+			<Configuration>Shipping_RocketGame</Configuration>
+			<Platform>x64</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Shipping_RocketGame|Win32">
+			<Configuration>Shipping_RocketGame</Configuration>
+			<Platform>Win32</Platform>
+		</ProjectConfiguration>
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="..\..\ambif.uproject" />
+		<None Include="..\..\Source\ambif.Target.cs" />
+		<None Include="..\..\Source\ambifEditor.Target.cs" />
+		<None Include="..\..\Config\DefaultEditor.ini" />
+		<None Include="..\..\Config\DefaultEngine.ini" />
+		<None Include="..\..\Config\DefaultGame.ini" />
+		<None Include="..\..\Source\ambif\ambif.Build.cs" />
+		<ClCompile Include="..\..\Source\ambif\ambif.cpp" />
+		<ClInclude Include="..\..\Source\ambif\ambif.h" />
+		<ClCompile Include="..\..\Source\ambif\ambifGameMode.cpp" />
+		<ClInclude Include="..\..\Source\ambif\ambifGameMode.h" />
+		<ClInclude Include="..\..\Source\ambif\CustomUtils\CustomUtils.h" />
+		<ClInclude Include="..\..\Source\ambif\CustomUtils\DebugUtils.h" />
+		<ClCompile Include="..\..\Source\ambif\CustomUtils\HSVColor.cpp" />
+		<ClInclude Include="..\..\Source\ambif\CustomUtils\HSVColor.h" />
+		<ClCompile Include="..\..\Source\ambif\Data\Caster.cpp" />
+		<ClInclude Include="..\..\Source\ambif\Data\Caster.h" />
+		<ClInclude Include="..\..\Source\ambif\DataDefinitions\Genre.h" />
+		<ClCompile Include="..\..\Source\ambif\DataDefinitions\MusicGenreAdapter.cpp" />
+		<ClInclude Include="..\..\Source\ambif\DataDefinitions\MusicGenreAdapter.h" />
+		<ClInclude Include="..\..\Source\ambif\DataDefinitions\TableDefinitions.h" />
+		<ClCompile Include="..\..\Source\ambif\Music\MusicPlayerActor.cpp" />
+		<ClInclude Include="..\..\Source\ambif\Music\MusicPlayerActor.h" />
+		<None Include="..\..\Source\ambif\Resources\Windows\ambif.ico" />
+		<ResourceCompile Include="..\..\Source\ambif\Resources\Windows\ambif.rc" />
+	</ItemGroup>
+	<PropertyGroup Label="Globals">
+		<ProjectGuid>{057AFB1D-8EF1-4F12-ADAE-9CBD29F6DDBF}</ProjectGuid>
+		<Keyword>MakeFileProj</Keyword>
+		<RootNamespace>ambif</RootNamespace>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame_RocketGame|x64'" Label="Configuration">
+		<ConfigurationType>Makefile</ConfigurationType>
+		<PlatformToolset>v120</PlatformToolset>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame_Editor|x64'" Label="Configuration">
+		<ConfigurationType>Makefile</ConfigurationType>
+		<PlatformToolset>v120</PlatformToolset>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development_RocketGame|x64'" Label="Configuration">
+		<ConfigurationType>Makefile</ConfigurationType>
+		<PlatformToolset>v120</PlatformToolset>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development_Editor|x64'" Label="Configuration">
+		<ConfigurationType>Makefile</ConfigurationType>
+		<PlatformToolset>v120</PlatformToolset>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Shipping_RocketGame|Win32'" Label="Configuration">
+		<ConfigurationType>Makefile</ConfigurationType>
+		<PlatformToolset>v120</PlatformToolset>
+	</PropertyGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+	<ImportGroup Label="ExtensionSettings" />
+	<PropertyGroup Label="UserMacros" />
+	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame_RocketGame|x64'" Label="PropertySheets">
+		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+	</ImportGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame_RocketGame|x64'">
+		<IncludePath />
+		<ReferencePath />
+		<LibraryPath />
+		<LibraryWPath />
+		<SourcePath />
+		<ExcludePath />
+		<OutDir>$(ProjectDir)..\Build\Unused\</OutDir>
+		<IntDir>$(ProjectDir)..\Build\Unused\</IntDir>
+		<NMakeBuildCommandLine>"D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Build\BatchFiles\Build.bat" ambif Win64 DebugGame "$(SolutionDir)$(ProjectName).uproject" -rocket</NMakeBuildCommandLine>
+		<NMakeReBuildCommandLine>"D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Build\BatchFiles\Rebuild.bat" ambif Win64 DebugGame "$(SolutionDir)$(ProjectName).uproject" -rocket</NMakeReBuildCommandLine>
+		<NMakeCleanCommandLine>"D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Build\BatchFiles\Clean.bat" ambif Win64 DebugGame "$(SolutionDir)$(ProjectName).uproject" -rocket</NMakeCleanCommandLine>
+		<NMakeOutput>..\..\Binaries\Win64\ambif-Win64-DebugGame.exe</NMakeOutput>
+	</PropertyGroup>
+	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame_Editor|x64'" Label="PropertySheets">
+		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+	</ImportGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame_Editor|x64'">
+		<IncludePath />
+		<ReferencePath />
+		<LibraryPath />
+		<LibraryWPath />
+		<SourcePath />
+		<ExcludePath />
+		<OutDir>$(ProjectDir)..\Build\Unused\</OutDir>
+		<IntDir>$(ProjectDir)..\Build\Unused\</IntDir>
+		<NMakeBuildCommandLine>"D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Build\BatchFiles\Build.bat" ambifEditor Win64 DebugGame "$(SolutionDir)$(ProjectName).uproject" -rocket</NMakeBuildCommandLine>
+		<NMakeReBuildCommandLine>"D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Build\BatchFiles\Rebuild.bat" ambifEditor Win64 DebugGame "$(SolutionDir)$(ProjectName).uproject" -rocket</NMakeReBuildCommandLine>
+		<NMakeCleanCommandLine>"D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Build\BatchFiles\Clean.bat" ambifEditor Win64 DebugGame "$(SolutionDir)$(ProjectName).uproject" -rocket</NMakeCleanCommandLine>
+		<NMakeOutput>D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Binaries\Win64\UE4Editor.exe</NMakeOutput>
+	</PropertyGroup>
+	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Development_RocketGame|x64'" Label="PropertySheets">
+		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+	</ImportGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development_RocketGame|x64'">
+		<IncludePath />
+		<ReferencePath />
+		<LibraryPath />
+		<LibraryWPath />
+		<SourcePath />
+		<ExcludePath />
+		<OutDir>$(ProjectDir)..\Build\Unused\</OutDir>
+		<IntDir>$(ProjectDir)..\Build\Unused\</IntDir>
+		<NMakeBuildCommandLine>"D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Build\BatchFiles\Build.bat" ambif Win64 Development "$(SolutionDir)$(ProjectName).uproject" -rocket</NMakeBuildCommandLine>
+		<NMakeReBuildCommandLine>"D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Build\BatchFiles\Rebuild.bat" ambif Win64 Development "$(SolutionDir)$(ProjectName).uproject" -rocket</NMakeReBuildCommandLine>
+		<NMakeCleanCommandLine>"D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Build\BatchFiles\Clean.bat" ambif Win64 Development "$(SolutionDir)$(ProjectName).uproject" -rocket</NMakeCleanCommandLine>
+		<NMakeOutput>..\..\Binaries\Win64\ambif.exe</NMakeOutput>
+	</PropertyGroup>
+	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Development_Editor|x64'" Label="PropertySheets">
+		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+	</ImportGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development_Editor|x64'">
+		<IncludePath />
+		<ReferencePath />
+		<LibraryPath />
+		<LibraryWPath />
+		<SourcePath />
+		<ExcludePath />
+		<OutDir>$(ProjectDir)..\Build\Unused\</OutDir>
+		<IntDir>$(ProjectDir)..\Build\Unused\</IntDir>
+		<NMakeBuildCommandLine>"D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Build\BatchFiles\Build.bat" ambifEditor Win64 Development "$(SolutionDir)$(ProjectName).uproject" -rocket</NMakeBuildCommandLine>
+		<NMakeReBuildCommandLine>"D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Build\BatchFiles\Rebuild.bat" ambifEditor Win64 Development "$(SolutionDir)$(ProjectName).uproject" -rocket</NMakeReBuildCommandLine>
+		<NMakeCleanCommandLine>"D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Build\BatchFiles\Clean.bat" ambifEditor Win64 Development "$(SolutionDir)$(ProjectName).uproject" -rocket</NMakeCleanCommandLine>
+		<NMakeOutput>D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Binaries\Win64\UE4Editor.exe</NMakeOutput>
+	</PropertyGroup>
+	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Shipping_RocketGame|Win32'" Label="PropertySheets">
+		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+	</ImportGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Shipping_RocketGame|Win32'">
+		<IncludePath />
+		<ReferencePath />
+		<LibraryPath />
+		<LibraryWPath />
+		<SourcePath />
+		<ExcludePath />
+		<OutDir>$(ProjectDir)..\Build\Unused\</OutDir>
+		<IntDir>$(ProjectDir)..\Build\Unused\</IntDir>
+		<NMakeBuildCommandLine>"D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Build\BatchFiles\Build.bat" ambif Win32 Shipping "$(SolutionDir)$(ProjectName).uproject" -rocket</NMakeBuildCommandLine>
+		<NMakeReBuildCommandLine>"D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Build\BatchFiles\Rebuild.bat" ambif Win32 Shipping "$(SolutionDir)$(ProjectName).uproject" -rocket</NMakeReBuildCommandLine>
+		<NMakeCleanCommandLine>"D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Build\BatchFiles\Clean.bat" ambif Win32 Shipping "$(SolutionDir)$(ProjectName).uproject" -rocket</NMakeCleanCommandLine>
+		<NMakeOutput>..\..\Binaries\Win32\ambif-Win32-Shipping.exe</NMakeOutput>
+	</PropertyGroup>
+	<PropertyGroup>
+		<NMakePreprocessorDefinitions>$(NMakePreprocessorDefinitions);UE_GAME=1;IS_PROGRAM=0;UE_ROCKET=1;UNICODE;_UNICODE;__UNREAL__;IS_MONOLITHIC=1;WITH_ENGINE=1;WITH_UNREAL_DEVELOPER_TOOLS=0;WITH_COREUOBJECT=1;USE_STATS_WITHOUT_ENGINE=0;WITH_PLUGIN_SUPPORT=0;USE_LOGGING_IN_SHIPPING=0;UE_BUILD_MINIMAL=1;WITH_EDITOR=1;WITH_EDITORONLY_DATA=0;WITH_SERVER_CODE=1;UBT_COMPILED_PLATFORM=Win64;WIN32=1;_WIN32_WINNT=0x0600;WINVER=0x0600;PLATFORM_WINDOWS=1;NDEBUG=1;UE_BUILD_DEVELOPMENT=1;UE_ENGINE_DIRECTORY=../../../../../../Installer/Unreal Engine/Unreal Engine/4.5/Engine/;UE_PROJECT_NAME=ambif;ORIGINAL_FILE_NAME="ambif.exe";AMBIF_API=;UE_ENABLE_ICU=1;WITH_STEAMWORKS=0;WITH_DIRECTXMATH=0;CORE_API=;COREUOBJECT_API=;WITH_PHYSX=1;WITH_APEX=1;WITH_RUNTIME_PHYSICS_COOKING;WITH_BOX2D=1;WITH_RECAST=1;ENGINE_API=;WITH_FREETYPE=1;SLATE_API=;INPUTCORE_API=;SLATECORE_API=;MESSAGING_API=;RENDERCORE_API=;RHI_API=;SHADERCORE_API=;ASSETREGISTRY_API=;ENGINEMESSAGES_API=;ENGINESETTINGS_API=;SYNTHBENCHMARK_API=;RENDERER_API=;AIMODULE_API=;UE_EDITOR=1;UNREALED_API=;BSPMODE_API=;DOCUMENTATION_API=;PROJECTS_API=;SANDBOXFILE_API=;EDITORSTYLE_API=;SOURCECONTROL_API=;UNREALEDMESSAGES_API=;BLUEPRINTGRAPH_API=;XAUDIO2_API=;USERFEEDBACK_API=;COLLECTIONMANAGER_API=;KISMET_API=</NMakePreprocessorDefinitions>
+		<NMakeIncludeSearchPath>$(NMakeIncludeSearchPath);D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source;..\..\Source;..\Build\Win64\ambif\Inc\ambif;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\Internationalization;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\Async;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\Concurrency;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\Containers;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\Delegates;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\GenericPlatform;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\HAL;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\Logging;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\Math;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\Misc;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\Modules;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\Modules\Boilerplate;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\ProfilingDebugging;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\Serialization;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\Serialization\Json;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\Serialization\Csv;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\Stats;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\Templates;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\UObject;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core\Public\Windows;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Core;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\CoreUObject\Classes;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\CoreUObject;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\CoreUObject\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\CoreUObject\Public\Blueprint;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\CoreUObject\Public\Misc;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\CoreUObject\Public\Serialization;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\CoreUObject\Public\Templates;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\CoreUObject\Public\UObject;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\CoreUObject;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Engine\Classes;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\Engine;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Engine\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Engine\Public\AI;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Engine\Public\EdGraph;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Engine\Public\Features;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Engine\Public\Landscape;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Engine\Public\Net;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Engine\Public\Slate;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Engine\Public\Tests;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Engine\Public\AI\Navigation;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\Slate;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Framework;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Widgets;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Framework\Application;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Framework\Commands;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Framework\Docking;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Framework\Layout;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Framework\MultiBox;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Framework\Notifications;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Framework\Styling;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Framework\Text;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Framework\Views;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Framework\Text\Android;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Framework\Text\IOS;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Widgets\Colors;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Widgets\Docking;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Widgets\Images;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Widgets\Input;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Widgets\Layout;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Widgets\Navigation;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Widgets\Notifications;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Widgets\Text;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate\Public\Widgets\Views;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\InputCore\Classes;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\InputCore;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\InputCore\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\InputCore;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\SlateCore;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\SlateCore\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\SlateCore\Public\Animation;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\SlateCore\Public\Application;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\SlateCore\Public\Brushes;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\SlateCore\Public\Fonts;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\SlateCore\Public\Input;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\SlateCore\Public\Layout;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\SlateCore\Public\Logging;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\SlateCore\Public\Rendering;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\SlateCore\Public\Sound;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\SlateCore\Public\Styling;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\SlateCore\Public\Textures;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\SlateCore\Public\Types;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\SlateCore\Public\Widgets;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\SlateCore;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Slate;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\Messaging;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Messaging\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Messaging\Public\Common;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Messaging\Public\Interfaces;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Messaging;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\RenderCore;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\RenderCore\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\RenderCore;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\RHI;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\RHI\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\RHI;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\ShaderCore;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\ShaderCore\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\ShaderCore;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\AssetRegistry;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\AssetRegistry\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\AssetRegistry;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\EngineMessages\Classes;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\EngineMessages;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\EngineMessages\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\EngineMessages;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\EngineSettings\Classes;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\EngineSettings;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\EngineSettings\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\EngineSettings;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\SynthBenchmark;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Developer\SynthBenchmark\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\Renderer;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Renderer\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Renderer;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Developer\SynthBenchmark;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\AIModule\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\AIModule\Classes;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\AIModule;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\AIModule;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Engine;..\..\Source\ambif;..\Build\Win64\Inc\ambif;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Programs\UnrealLightmass\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\UnrealEd\Classes;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\UnrealEd;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\UnrealEd\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\UnrealEd\Public\Commandlets;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\UnrealEd\Public\Dialogs;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\UnrealEd\Public\DragAndDrop;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\UnrealEd\Public\Features;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\UnrealEd\Public\Kismet2;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\UnrealEd\Public\Layers;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\UnrealEd\Public\Tests;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\UnrealEd\Public\Toolkits;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\BspMode;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\BspMode\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\BspMode;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\Documentation;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\Documentation\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\Documentation;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\Projects;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Projects\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Projects\Public\Interfaces;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Projects;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\SandboxFile;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\SandboxFile\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\SandboxFile;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\EditorStyle;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\EditorStyle\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\EditorStyle\Public\Classes;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\EditorStyle\Public\Interfaces;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\EditorStyle;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\SourceControl;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Developer\SourceControl\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Developer\SourceControl\Public\Tests;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Developer\SourceControl;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\UnrealEdMessages\Classes;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\UnrealEdMessages;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\UnrealEdMessages\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\UnrealEdMessages;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\BlueprintGraph\Classes;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\BlueprintGraph;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\BlueprintGraph\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\BlueprintGraph;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\XAudio2;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Windows\XAudio2\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Runtime\Windows\XAudio2;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\UserFeedback;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\UserFeedback\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\UserFeedback;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\CollectionManager;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Developer\CollectionManager\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Developer\CollectionManager;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\UnrealEd;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\Kismet\Classes;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Intermediate\Build\Win64\Inc\Kismet;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\Kismet\Public;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\Kismet\Public\WorkflowOrientedApp;D:\Installer\Unreal Engine\Unreal Engine\4.5\Engine\Source\Editor\Kismet;C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\INCLUDE;C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\ATLMFC\INCLUDE;C:\Program Files (x86)\Windows Kits\8.1\include\shared;C:\Program Files (x86)\Windows Kits\8.1\include\um;C:\Program Files (x86)\Windows Kits\8.1\include\winrt;;</NMakeIncludeSearchPath>
+		<NMakeForcedIncludes>$(NMakeForcedIncludes)</NMakeForcedIncludes>
+		<NMakeAssemblySearchPath>$(NMakeAssemblySearchPath)</NMakeAssemblySearchPath>
+		<NMakeForcedUsingAssemblies>$(NMakeForcedUsingAssemblies)</NMakeForcedUsingAssemblies>
+	</PropertyGroup>
+	<ItemDefinitionGroup>
+	</ItemDefinitionGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+	<ImportGroup Label="ExtensionTargets">
+	</ImportGroup>
 </Project>
