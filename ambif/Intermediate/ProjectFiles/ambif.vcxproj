@@ -61,6 +61,8 @@
 		<ClInclude Include="..\..\Source\ambif\CustomUtils\HSVColor.h" />
 		<ClCompile Include="..\..\Source\ambif\Data\Caster.cpp" />
 		<ClInclude Include="..\..\Source\ambif\Data\Caster.h" />
+		<ClCompile Include="..\..\Source\ambif\Data\CSVParser.cpp" />
+		<ClInclude Include="..\..\Source\ambif\Data\CSVParser.h" />
 		<ClInclude Include="..\..\Source\ambif\DataDefinitions\Genre.h" />
 		<ClCompile Include="..\..\Source\ambif\DataDefinitions\MusicGenreAdapter.cpp" />
 		<ClInclude Include="..\..\Source\ambif\DataDefinitions\MusicGenreAdapter.h" />
