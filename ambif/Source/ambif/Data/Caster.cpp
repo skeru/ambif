@@ -7,6 +7,8 @@
 
 #define EPSILON 0.0000001f
 
+//-------------------------NORMALIZER FUNCTIONS-------------------------
+
 #define RATE FMath::Clamp((Value - InMin) / (InMax - InMin), 0.0f, 1.0f)
 #define TARGETRANGE (TargetMax - TargetMin) 
 
@@ -34,6 +36,8 @@ float LogReverseNormalizer(float Value, float InMin, float InMax, float TargetMi
 
 #undef RATE
 #undef TARGETRANGE
+
+//-------------------------VARIOUS SETTERS-------------------------
 
 void Caster::SetInputBounds(float Min = 0.0f, float Max = 1.0f)
 {
@@ -73,6 +77,26 @@ void Caster::SetTargetBounds(float TargetMin, float TargetMax)
 	TargetMaxBound = TargetMax;
 }
 
+void Caster::SetInputFormat(EInputFormat::Type Format)
+{
+	InputFormat = Format;
+
+	switch (Format)
+	{
+	case EInputFormat::Number:
+		_Cast = &Caster::CastValue < float >;
+		break;
+	case EInputFormat::Genres:
+		_Cast = &Caster::CastValue < Genre::Type >;
+		break;
+	default:
+		_Cast = &Caster::CastValue < FString >;		//uninplemented
+		break;
+	}
+}
+
+//------------------------ CONSTRUCTOR ------------------------
+
 Caster::Caster(ENormalize::Type NormalizeAs, float TargetMin, float TargetMax)
 {
 	SetTargetBounds(TargetMin, TargetMax);
@@ -80,6 +104,8 @@ Caster::Caster(ENormalize::Type NormalizeAs, float TargetMin, float TargetMax)
 	SetNormalizationType(NormalizeAs);
 	SetInputFormat(EInputFormat::Number);
 }
+
+//---------------------- CASTING METHODS ----------------------
 
 inline float Caster::CastFloat(const float input)
 {
@@ -130,22 +156,4 @@ bool Caster::CastValue<FString>(FString str, float & output)
 	}
 	DebugUtils::LogString(FString("Caster: Unimplemented method CastValue<FString> called. This is a quite bad thing, it shouldn't happen!"));
 	return false;
-}
-
-void Caster::SetInputFormat(EInputFormat::Type Format)
-{
-	InputFormat = Format;
-
-	switch (Format)
-	{
-	case EInputFormat::Number:
-		_Cast = &Caster::CastValue < float >;
-		break;
-	case EInputFormat::Genres:
-		_Cast = &Caster::CastValue < Genre::Type >;
-		break;
-	default:
-		_Cast = &Caster::CastValue < FString >;		//uninplemented
-		break;
-	}
 }
