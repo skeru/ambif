@@ -77,24 +77,6 @@ void Caster::SetTargetBounds(float TargetMin, float TargetMax)
 	TargetMaxBound = TargetMax;
 }
 
-void Caster::SetInputFormat(EInputFormat::Type Format)
-{
-	InputFormat = Format;
-
-	switch (Format)
-	{
-	case EInputFormat::Number:
-		_Cast = &Caster::CastValue < float >;
-		break;
-	case EInputFormat::Genres:
-		_Cast = &Caster::CastValue < Genre::Type >;
-		break;
-	default:
-		_Cast = &Caster::CastValue < FString >;		//uninplemented
-		break;
-	}
-}
-
 //------------------------ CONSTRUCTOR ------------------------
 
 Caster::Caster(ENormalize::Type NormalizeAs, float TargetMin, float TargetMax)
@@ -156,4 +138,24 @@ bool Caster::CastValue<FString>(FString str, float & output)
 	}
 	DebugUtils::LogString(FString("Caster: Unimplemented method CastValue<FString> called. This is a quite bad thing, it shouldn't happen!"));
 	return false;
+}
+
+
+//-----this should stay as last 'cause uses specialization templates
+void Caster::SetInputFormat(EInputFormat::Type Format)
+{
+	InputFormat = Format;
+
+	switch (Format)
+	{
+	case EInputFormat::Number:
+		_Cast = &Caster::CastValue < float >;
+		break;
+	case EInputFormat::Genres:
+		_Cast = &Caster::CastValue < Genre::Type >;
+		break;
+	default:
+		_Cast = &Caster::CastValue < FString >;		//uninplemented
+		break;
+	}
 }
