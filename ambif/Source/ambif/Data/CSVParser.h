@@ -42,3 +42,64 @@ public:
 
 	static int ReadPropertyDataCSV(const char* FileName, Utils::FHashMap<SongDetails>& OutputMap, bool FirstRowDiscarded = true, char elem_delim = CSV_COLUMN_DELIMITER, char row_delim = CSV_ROW_DELIMITER);
 };
+
+
+//####################_implementation_####################
+
+template<typename FileStructure>
+static int CSVParser::ReadPlainTextFile(const char* FileName, Utils::FHashMap<FileStructure>& OutputMap, bool FirstRowDiscarded, char elem_delim, char row_delim)
+{
+	FileStructure element;
+	int lineNumber = 0;
+	std::string line, linetoken;
+	std::ifstream ifile(FileName);
+	if (!ifile)
+	{//file can't be opened
+		return -1;
+	}
+	/* before going on I want to point out one thing:
+	* I HATE std::getline
+	* and obviously std::getline hates me.
+	* It is important you remember that
+	* if you touch std::getline code
+	* std::getline will take its revenge on you. */
+	if (FirstRowDiscarded)
+	{
+		if (!std::getline(ifile, line, row_delim))
+			return 0;
+	}
+	while (std::getline(ifile, line, row_delim))
+	{
+#ifdef DEBUG_CSV_CONTENT
+		UE_LOG(LogTemp, Log, TEXT("new line: \n%s\ntokenized as"), *FString(line.c_str()));
+		//DEBUG(line.c_str())
+#endif
+		std::istringstream str_parser;
+		str_parser.str(line);
+		TArray<FString> SeparatedLine = TArray<FString>();
+		while (std::getline(str_parser, linetoken, elem_delim))
+		{
+			SeparatedLine.Add(Utils::CustomUnquote(FString(linetoken.c_str())));	//append
+#ifdef DEBUG_CSV_CONTENT
+			UE_LOG(LogTemp, Log, TEXT("%s"), *Utils::CustomUnquote(FString(linetoken.c_str())));
+			//DEBUG(linetoken.c_str())
+#endif
+		}
+		element << SeparatedLine;
+		OutputMap[element.Id] = element;
+		lineNumber++;
+#ifdef DEBUG_CSV_CONTENT
+		UE_LOG(LogTemp, Log, TEXT(" . . . . . . ."));
+#endif
+	}
+	ifile.close();
+	return lineNumber;
+}
+
+
+#undef CSV_COLUMN_DELIMITER
+#undef CSV_ROW_DELIMITER
+
+#ifdef DEBUG_CSV_CONTENT
+#undef DEBUG_CSV_CONTENT
+#endif
