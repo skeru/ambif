@@ -7,8 +7,8 @@
 #include "MapElementActor.generated.h"
 
 #define _ParamName_color "CustomColor"
-#define _ElementAsset_Ball "StaticMesh'/Game/Props/SM_CustomSphere.SM_CustomSphere'"
-#define _ElementAsset_BallMaterial "Material'/Game/Props/Materials/M_CustomBall.M_CustomBall'"
+#define _ElementAsset_Ball "StaticMesh'/Game/SteticMesh/SM_CustomSphere.SM_CustomSphere'"
+#define _ElementAsset_BallMaterial "Material'/Game/Material/M_CustomBall.M_CustomBall'"
 
 /**
  * Base class for element to be shown in the map
