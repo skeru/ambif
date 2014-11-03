@@ -104,7 +104,7 @@ namespace Utils
 	}
 
 	/** safe conversion from FString to float
-	* @return false if conversion fails, otherwise true. */
+	 * @return false if conversion fails, otherwise true. */
 	static bool FStrToF(FString string, float&output)
 	{
 		if (string.IsNumeric())
@@ -121,7 +121,7 @@ namespace Utils
 	}
 
 	/** safe conversion from FString to unsigned
-	* @return false if conversion fails, otherwise true. */
+	 * @return false if conversion fails, otherwise true. */
 	static bool FStrToU(FString string, unsigned&output)
 	{
 		if (string.IsNumeric())
