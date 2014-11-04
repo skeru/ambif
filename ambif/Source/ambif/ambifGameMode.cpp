@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Stefano Cherubin stefano1.cherubin@mail.polimi.it - except where otherwise stated
 
 #include "ambif.h"
 #include "ambifGameMode.h"
@@ -13,6 +13,11 @@ AambifGameMode::AambifGameMode(const class FPostConstructInitializeProperties& P
 		DefaultPawnClass = (UClass*)PlayerPawnBPClass.Object->GeneratedClass;
 	}
 
+	static ConstructorHelpers::FObjectFinder<UBlueprint> TheHUDOb(TEXT("/Game/Blueprints/SimplePlayerHUD_BP"));
+	if (TheHUDOb.Object != NULL)
+	{
+		HUDClass = (UClass*)TheHUDOb.Object->GeneratedClass;
+	}
 }
 
 
