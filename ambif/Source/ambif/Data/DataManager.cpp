@@ -6,10 +6,10 @@
 #include "DataManager.h"
 
 //----------------------HARDCODED FILE NAMES----------------------
-#define SongFileName "../SongMetadata.csv"
-#define DimensionFileName "../DimensionList.csv"
-#define ViewFileName "../ViewList.csv"
-#define PropertiesFileName "../Properties.csv"
+#define SongFileName "D:/_ambif_files_/SongMetadata.csv"
+#define DimensionFileName "D:/_ambif_files_/DimensionList.csv"
+#define ViewFileName "D:/_ambif_files_/ViewList.csv"
+#define PropertiesFileName "D:/_ambif_files_/Properties.csv"
 
 //#define DATA_MANAGER_VERBOSE
 
