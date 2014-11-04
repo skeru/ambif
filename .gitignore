@@ -200,3 +200,4 @@ ambif/Intermediate/Build/Win64/
 ambif/Saved/*
 !ambif/Saved/Config*
 ambif/Saved/AutoScreenshot.png
+*.csv
