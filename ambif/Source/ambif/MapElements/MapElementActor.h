@@ -7,7 +7,7 @@
 #include "MapElementActor.generated.h"
 
 #define _ParamName_color "CustomColor"
-#define _ElementAsset_Ball "StaticMesh'/Game/SteticMesh/SM_CustomSphere.SM_CustomSphere'"
+#define _ElementAsset_Ball "StaticMesh'/Game/StaticMesh/SM_CustomSphere.SM_CustomSphere'"
 #define _ElementAsset_BallMaterial "Material'/Game/Material/M_CustomBall.M_CustomBall'"
 
 /**
