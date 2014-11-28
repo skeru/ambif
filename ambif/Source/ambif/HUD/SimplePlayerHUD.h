@@ -135,6 +135,7 @@ public:
 	/* Draw Hud? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = MyHUD_Options)
 	bool DontDrawHUD;
+	
 
 	//Cursor
 public:

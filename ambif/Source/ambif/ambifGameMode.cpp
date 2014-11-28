@@ -18,6 +18,7 @@ AambifGameMode::AambifGameMode(const class FPostConstructInitializeProperties& P
 	{
 		HUDClass = (UClass*)TheHUDOb.Object->GeneratedClass;
 	}
+
 }
 
 

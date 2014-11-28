@@ -34,7 +34,7 @@ struct _DimensionOnMapInfo
 
 
 /** This actor is meant as a layer between data and map elements.
- * Its purpose is to define how data should be representated.
+ * Its purpose is to define how data should be representated on the map.
  *
  * Upon request it triggers an update of the map.
  */

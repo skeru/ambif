@@ -44,20 +44,20 @@ public:
 	inline Caster* getCaster(const DimensionDetails& DimendionId);
 
 	/** Extract structur from id.
-	*
-	* Returns true if success, false if failed.
-	*/
+	 *
+	 * Returns true if success, false if failed.
+	 */
 	inline bool getDimensionDetails(FString DimensionID, DimensionDetails& output);
 
 	/** Extract structur from id.
-	*
-	* Returns true if success, false if failed.
-	*/
+	 *
+	 * Returns true if success, false if failed.
+	 */
 	inline bool getViewDetails(FString ViewID, ViewDetails& output);
 
 	/** Extract structur from id.
-	*
-	* Returns true if success, false if failed.
-	*/
+	 *
+	 * Returns true if success, false if failed.
+	 */
 	inline bool getSongDetails(FString SongID, SongDetails& output);
 };
