@@ -40,6 +40,7 @@ protected:
 
 private:
 	FLinearColor _color;
+	FLinearColor _color_backup;
 
 	//------------------------ AUXILIARITIES ------------------------
 private:
@@ -52,13 +53,24 @@ public:
 	void SetElementID(FString NewElementID);
 
 	UFUNCTION(BlueprintCallable, Category = "Element State")
+	/** Extract represented element's identifier */
 	FString GetElementID();
 
 	UFUNCTION(BlueprintCallable, Category = "Element State")
+	/** read element current color */
+	virtual FLinearColor GetColor();
+
+	UFUNCTION(BlueprintCallable, Category = "Element State")
+	/** Force a new element color */
 	virtual void SetColor(FColor NewColor);
 
 	UFUNCTION(BlueprintCallable, Category = "Element State")
-	virtual FLinearColor GetColor();
+	/** set secondary color. Might not be visible. */
+	virtual void SetBgColor(FColor NewColor);
+	
+	UFUNCTION(BlueprintCallable, Category = "Element State")
+	/** switch between main color and secondary color */
+	virtual void ToggleColor();
 
 	//-------------------- EVENTE REGISTRATION --------------------
 public:

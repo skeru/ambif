@@ -127,11 +127,13 @@ void AMapElementsManager::MoveElementTo(FString ElementID, float x, float y)
 
 void AMapElementsManager::SelectElement(FString ElementID)
 {
+	ActorMap[ElementID]->ToggleColor();
 	//CurrentlySelectedElements.Add(ElementID);
 }
 
 void AMapElementsManager::DeselectElement(FString ElementID)
 {
+	ActorMap[ElementID]->ToggleColor();
 	/*
 	if (CurrentlySelectedElements.Contains(ElementID))
 	{
@@ -223,6 +225,9 @@ void AMapElementsManager::OnMouseClick(AActor* TouchedComponent)
 	if (element && !ThisTickClickedElements.Contains(element->GetElementID()))
 	{
 		ThisTickClickedElements.Add(element->GetElementID());
+#ifdef MapElementsManager_VERBOSE_MODE
+		DebugUtils::LogString("click detected");
+#endif
 	}
 }
 

@@ -6,6 +6,7 @@
 
 //#define MapElementActor_DEBUG_COLORS
 //#define MapElemensActor_DEBUG_EVENTS
+//#define _INTERNAL_READ_COLOR
 
 AMapElementActor::AMapElementActor(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
@@ -27,6 +28,8 @@ AMapElementActor::AMapElementActor(const class FPostConstructInitializePropertie
 	_material = UMaterialInstanceDynamic::Create(Mesh->GetMaterial(0), this);
 	_color = FLinearColor::Red;
 	_material->SetVectorParameterValue(FName(_ParamName_color), _color);
+
+	_color_backup = FLinearColor::White;
 
 	//Mesh->SetMaterial(0, Material.Object);
 	//static ConstructorHelpers::FObjectFinder <UMaterialInterface>BallMaterial(TEXT(_ElementAsset_BallMaterial));
@@ -55,6 +58,7 @@ FString AMapElementActor::GetElementID()
 
 void AMapElementActor::SetColor(FColor NewColor)
 {
+	_color = NewColor;
 	_material->SetVectorParameterValue(FName(_ParamName_color), NewColor);
 #ifdef MapElementActor_DEBUG_COLORS
 	DebugUtils::LogString(FString("Element::SetColor: R: ") + FString::SanitizeFloat(NewColor.R) + FString(" - G: ") + FString::SanitizeFloat(NewColor.G) + FString(" - B: ") + FString::SanitizeFloat(NewColor.B));
@@ -64,12 +68,31 @@ void AMapElementActor::SetColor(FColor NewColor)
 
 FLinearColor AMapElementActor::GetColor()
 {
+#ifdef _INTERNAL_READ_COLOR
 	_material->GetVectorParameterValue(FName(_ParamName_color), _color);
+#endif
 #ifdef MapElementActor_DEBUG_COLORS
 	DebugUtils::LogString(FString("Element::GetColor: R: ") + FString::SanitizeFloat(_color.R) + FString(" - G: ") + FString::SanitizeFloat(_color.G) + FString(" - B: ") + FString::SanitizeFloat(_color.B));
 #endif
+
+#ifdef _INTERNAL_READ_COLOR
+#undef _INTERNAL_READ_COLOR
+#endif
 	return _color;
 }
+
+void AMapElementActor::SetBgColor(FColor NewColor)
+{
+	_color_backup = NewColor;
+}
+
+void AMapElementActor::ToggleColor()
+{
+	FLinearColor tmp = _color_backup;
+	_color_backup = _color;
+	SetColor(tmp);
+}
+
 
 //------------------------ MOUSE INTERACTION ------------------------
 
