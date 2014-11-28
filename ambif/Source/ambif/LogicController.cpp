@@ -112,7 +112,15 @@ void ALogicController::DetectSelectedActors()
 	for (auto elem : removed_set)
 		DebugUtils::LogString(FString("LogicController: Detected mouse out of ") + elem);
 #endif
-	//TODO apply selection / deselection to elements
+	
+	for (auto elem : detected_set)
+	{
+		SelectElement(elem);
+	}
+	for (auto elem : removed_set)
+	{
+		DeselectElement(elem);
+	}
 }
 
 void ALogicController::DetectClickedActors()
@@ -122,4 +130,22 @@ void ALogicController::DetectClickedActors()
 	CurrentlyClickedElements = detected_new;
 
 	//TODO apply clik to elements
+	if (detected_new.Num() > 0)
+	{
+		FString id = detected_new.Array()[0];
+		FString metadata_str = ReadMetadata(id);
+		WidgetManager->UpdateMetadataWid(metadata_str);
+#ifdef LogicController_VERBOSE_MODE
+		DebugUtils::LogString("identified click id: " + id);
+#endif
+	}
+
+}
+
+//--------------------PRIVATE STUFF--------------------
+
+FString ALogicController::ReadMetadata(FString elementID)
+{
+	FSongDetails details;
+	return (DataAgent->getSongDetails(elementID, details)) ? details.Name + " - " + details.Artist : "no data retrieved";
 }

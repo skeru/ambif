@@ -6,6 +6,7 @@
 #include "Music/MusicPlayerActor.h"
 #include "Data/DataManager.h"
 #include "PresentationLayer.h"
+#include "Widgets/WidgetManager_i.h"
 #include "LogicController.generated.h"
 
 /**
@@ -23,7 +24,7 @@ class AMBIF_API ALogicController : public AActor
 {
 	GENERATED_UCLASS_BODY()
 
-		//------------------ACTOR REFERENCES------------------
+	//-------------------ACTOR REFERENCES-------------------
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = MusicPlayer)
 	/** Music Player Actor */
@@ -40,6 +41,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = TestingStuff)
 	/** Map Elements Manager (notifications) */
 	AMapElementsManager* MapElementsAgent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = TestingStuff)
+	/** Map Elements Manager (notifications) */
+	AWidgetManager_i* WidgetManager;
+
 
 	//-----------------------BUFFER------------------------
 private:
@@ -104,4 +110,10 @@ private:
 	void DetectSelectedActors();
 
 	void DetectClickedActors();
+
+	//--------------------PRIVATE STUFF--------------------
+private:
+	/** Retrieve track artist and title given its id */
+	FString inline ReadMetadata(FString elementID);
+	
 };
