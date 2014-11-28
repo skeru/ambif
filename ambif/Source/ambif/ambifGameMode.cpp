@@ -1,6 +1,7 @@
 // Stefano Cherubin stefano1.cherubin@mail.polimi.it - except where otherwise stated
 
 #include "ambif.h"
+#include "ambifPlayerController.h"
 #include "ambifGameMode.h"
 
 
@@ -19,6 +20,7 @@ AambifGameMode::AambifGameMode(const class FPostConstructInitializeProperties& P
 		HUDClass = (UClass*)TheHUDOb.Object->GeneratedClass;
 	}
 
+	PlayerControllerClass = AambifPlayerController::StaticClass();
 }
 
 
