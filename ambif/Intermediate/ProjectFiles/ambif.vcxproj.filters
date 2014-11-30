@@ -4,7 +4,7 @@
 	<ItemGroup>
 		<None Include="..\..\ambif.uproject" />
 		<Filter Include="Source">
-			<UniqueIdentifier>{5F258FA0-AFD2-402A-9965-848B8972F8B1}</UniqueIdentifier>
+			<UniqueIdentifier>{C8D32492-DCD6-41C4-BEF0-B16E3A1423C3}</UniqueIdentifier>
 		</Filter>
 		<None Include="..\..\Source\ambif.Target.cs">
 			<Filter>Source</Filter>
@@ -13,7 +13,7 @@
 			<Filter>Source</Filter>
 		</None >
 		<Filter Include="Config">
-			<UniqueIdentifier>{F7CF5C0F-9252-432A-9458-7B510173B796}</UniqueIdentifier>
+			<UniqueIdentifier>{16645395-AC3C-4A2B-A2C2-2DF30FD48C28}</UniqueIdentifier>
 		</Filter>
 		<None Include="..\..\Config\DefaultEditor.ini">
 			<Filter>Config</Filter>
@@ -28,7 +28,7 @@
 			<Filter>Config</Filter>
 		</None >
 		<Filter Include="Source\ambif">
-			<UniqueIdentifier>{B68AA4BE-5A00-44B3-B0FF-C81CDCA0EEBF}</UniqueIdentifier>
+			<UniqueIdentifier>{62E4168D-76E2-42B1-998C-7FE49A26A96C}</UniqueIdentifier>
 		</Filter>
 		<None Include="..\..\Source\ambif\ambif.Build.cs">
 			<Filter>Source\ambif</Filter>
@@ -70,7 +70,7 @@
 			<Filter>Source\ambif</Filter>
 		</ClInclude >
 		<Filter Include="Source\ambif\CustomUtils">
-			<UniqueIdentifier>{52B4EC89-4B3F-456C-8659-3E4670C82518}</UniqueIdentifier>
+			<UniqueIdentifier>{2010D3DB-E27A-4BEA-8CEE-0DB6DC9A3B82}</UniqueIdentifier>
 		</Filter>
 		<ClInclude Include="..\..\Source\ambif\CustomUtils\CameraMacros.h">
 			<Filter>Source\ambif\CustomUtils</Filter>
@@ -88,7 +88,7 @@
 			<Filter>Source\ambif\CustomUtils</Filter>
 		</ClInclude >
 		<Filter Include="Source\ambif\Data">
-			<UniqueIdentifier>{7FE6AE39-C23D-44BD-B6C1-62C2276353EF}</UniqueIdentifier>
+			<UniqueIdentifier>{E805558A-BDA8-44D0-8FB7-F97AE4A614B7}</UniqueIdentifier>
 		</Filter>
 		<ClCompile Include="..\..\Source\ambif\Data\Caster.cpp">
 			<Filter>Source\ambif\Data</Filter>
@@ -109,7 +109,7 @@
 			<Filter>Source\ambif\Data</Filter>
 		</ClInclude >
 		<Filter Include="Source\ambif\DataDefinitions">
-			<UniqueIdentifier>{BABEAE2E-DB48-4056-B582-17BDDD97C308}</UniqueIdentifier>
+			<UniqueIdentifier>{54E325EE-F9A9-459B-BAED-5ED50EB5E25A}</UniqueIdentifier>
 		</Filter>
 		<ClInclude Include="..\..\Source\ambif\DataDefinitions\Genre.h">
 			<Filter>Source\ambif\DataDefinitions</Filter>
@@ -124,7 +124,7 @@
 			<Filter>Source\ambif\DataDefinitions</Filter>
 		</ClInclude >
 		<Filter Include="Source\ambif\HUD">
-			<UniqueIdentifier>{56D2BAC5-7F5B-48B8-B271-4C28A204B4AF}</UniqueIdentifier>
+			<UniqueIdentifier>{27FAB952-6FC7-438B-8A3E-95BC4512C6E1}</UniqueIdentifier>
 		</Filter>
 		<ClCompile Include="..\..\Source\ambif\HUD\SimplePlayerHUD.cpp">
 			<Filter>Source\ambif\HUD</Filter>
@@ -133,7 +133,7 @@
 			<Filter>Source\ambif\HUD</Filter>
 		</ClInclude >
 		<Filter Include="Source\ambif\MapElements">
-			<UniqueIdentifier>{AEED6224-65B5-442A-BE8F-B59E3F31C74C}</UniqueIdentifier>
+			<UniqueIdentifier>{04B33A80-4896-489A-A4B3-2E1430D79994}</UniqueIdentifier>
 		</Filter>
 		<ClCompile Include="..\..\Source\ambif\MapElements\MapElementActor.cpp">
 			<Filter>Source\ambif\MapElements</Filter>
@@ -151,7 +151,7 @@
 			<Filter>Source\ambif\MapElements</Filter>
 		</ClInclude >
 		<Filter Include="Source\ambif\Music">
-			<UniqueIdentifier>{CF14AC0E-783E-4702-BB9B-37238050F087}</UniqueIdentifier>
+			<UniqueIdentifier>{96CCE2D9-53F3-4114-A41B-6BF3FFC7E7D9}</UniqueIdentifier>
 		</Filter>
 		<ClCompile Include="..\..\Source\ambif\Music\MusicPlayerActor.cpp">
 			<Filter>Source\ambif\Music</Filter>
@@ -160,10 +160,10 @@
 			<Filter>Source\ambif\Music</Filter>
 		</ClInclude >
 		<Filter Include="Source\ambif\Resources">
-			<UniqueIdentifier>{1B34E0B8-139C-44E4-AE34-1AFE24D880C8}</UniqueIdentifier>
+			<UniqueIdentifier>{1B972420-D824-48EF-A0FD-8BED89F81DFE}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="Source\ambif\Resources\Windows">
-			<UniqueIdentifier>{D8F4B205-3726-442D-BBE2-642234A9A665}</UniqueIdentifier>
+			<UniqueIdentifier>{623EE4BC-A316-4AC1-B9FB-DE44B3EE1166}</UniqueIdentifier>
 		</Filter>
 		<None Include="..\..\Source\ambif\Resources\Windows\ambif.ico">
 			<Filter>Source\ambif\Resources\Windows</Filter>
@@ -172,8 +172,14 @@
 			<Filter>Source\ambif\Resources\Windows</Filter>
 		</ResourceCompile >
 		<Filter Include="Source\ambif\Widgets">
-			<UniqueIdentifier>{C0214045-92ED-44A5-9876-3C0E42977DC2}</UniqueIdentifier>
+			<UniqueIdentifier>{B1EBCFC6-7605-4650-9EA6-2AA9BC470FFA}</UniqueIdentifier>
 		</Filter>
+		<ClCompile Include="..\..\Source\ambif\Widgets\WidgetManager_active_i.cpp">
+			<Filter>Source\ambif\Widgets</Filter>
+		</ClCompile >
+		<ClInclude Include="..\..\Source\ambif\Widgets\WidgetManager_active_i.h">
+			<Filter>Source\ambif\Widgets</Filter>
+		</ClInclude >
 		<ClCompile Include="..\..\Source\ambif\Widgets\WidgetManager_i.cpp">
 			<Filter>Source\ambif\Widgets</Filter>
 		</ClCompile >

@@ -90,6 +90,8 @@
 		<ClInclude Include="..\..\Source\ambif\Music\MusicPlayerActor.h" />
 		<None Include="..\..\Source\ambif\Resources\Windows\ambif.ico" />
 		<ResourceCompile Include="..\..\Source\ambif\Resources\Windows\ambif.rc" />
+		<ClCompile Include="..\..\Source\ambif\Widgets\WidgetManager_active_i.cpp" />
+		<ClInclude Include="..\..\Source\ambif\Widgets\WidgetManager_active_i.h" />
 		<ClCompile Include="..\..\Source\ambif\Widgets\WidgetManager_i.cpp" />
 		<ClInclude Include="..\..\Source\ambif\Widgets\WidgetManager_i.h" />
 	</ItemGroup>
