@@ -1,4 +1,5 @@
-The MIT License (MIT)
+ambif license 
+(MIT License + Unreal Engine restrictions and limitations)
 
 Copyright (c) 2014 
 
@@ -8,6 +9,9 @@ in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
+
+Assets can be used only with a licensed version of Unreal Engine for 
+purposes allowed by the UNREAL® ENGINE END USER LICENSE AGREEMENT
 
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
