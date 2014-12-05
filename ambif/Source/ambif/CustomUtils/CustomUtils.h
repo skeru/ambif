@@ -86,6 +86,22 @@ namespace Utils
 
 	template<typename type1, typename type2> using map = std::map < type1, type2 >;
 
+	template<typename t> TArray<FString> GetIdList(Utils::FHashMap<t> map)
+	{
+		TArray<FString> id_list = TArray<FString>();
+		for (auto elem : map)
+		{
+			id_list.Add(elem.first);
+		}
+		return id_list;
+	}
+
+	/** check if Container has a given key */
+	template<typename t> bool FHMContains(const FHashMap<t> Container, const FString key)
+	{
+		return Container.find(key) != Container.end();
+	}
+
 	/** Remove quotes and white spaces
 	*/
 	inline static FString CustomUnquote(const FString input)

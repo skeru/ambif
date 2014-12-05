@@ -82,6 +82,7 @@ void ADataManager::LogData()
 	}
 }
 
+//------------------------GETTERS------------------------
 Utils::FHashMap<SongDetails>* ADataManager::GetElementMap()
 {
 	return &SongMap;
@@ -90,6 +91,11 @@ Utils::FHashMap<SongDetails>* ADataManager::GetElementMap()
 Utils::FHashMap<ViewDetails>* ADataManager::GetViewMap()
 {
 	return &ViewMap;
+}
+
+TArray<FString> ADataManager::GetDimensionIdList()
+{
+	return Utils::GetIdList(DimensionMap);
 }
 
 inline Caster* ADataManager::getCaster(const DimensionDetails& Dimension)

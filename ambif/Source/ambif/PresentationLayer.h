@@ -26,6 +26,7 @@ namespace PlottableDimension{
 	};
 }
 
+
 struct _DimensionOnMapInfo
 {
 	FString Id;
@@ -42,7 +43,6 @@ UCLASS()
 class AMBIF_API APresentationLayer : public AActor
 {
 	GENERATED_UCLASS_BODY()
-
 
 public:
 	//-----------------OTHER ACTOR REFERENCES-----------------
@@ -161,7 +161,25 @@ public:
 	void SetSpawnTargetBounds(float MinX, float MaxX, float MinY, float MaxY);
 
 
-	//------------------------ACTIONS-------------------------
+	//------------------------PLOTTABLE DIMENSION------------------------
+	UFUNCTION(BlueprintCallable, Category = "Enum Conversion")
+	/** Provides conversion from PlottableDimension to FString using a unique human readable representation */
+	static FString ToString(PlottableDimension::Type var);
+
+	UFUNCTION(BlueprintCallable, Category = "Enum Conversion")
+	/** Provides conversion from human readable FString to PlottableDimension.
+	 * 
+	 * @param var FString representation to convert
+	 * @output PlottableDimension output
+	 * @return true if conversion successfull, false otherwise.
+	 */
+	static bool ToPlottableDimension(FString var, TEnumAsByte<PlottableDimension::Type>& output);
+
+	UFUNCTION(BlueprintCallable, Category = "Enum Conversion")
+	/** Provides a list of all enabled (and tested) plottable dimensions */
+	static TArray<TEnumAsByte<PlottableDimension::Type>> GetAvailablePlottableDimensions();
+
+	//---------------------------ACTIONS----------------------------
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Actions (Map)")

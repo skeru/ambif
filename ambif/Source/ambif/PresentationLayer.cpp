@@ -6,8 +6,84 @@
 #include "PresentationLayer.h"
 
 #define SAT_LOWER_BOUND 0.5f
+#define ENABLE_DIMENSION_COLOR_SAT
+//#define ENABLE_DIMENSION_SIZE
 //#define PresentationLayer_VERBOSE_MODE
 
+//------------------------PLOTTABLE DIMENSION------------------------
+FString APresentationLayer::ToString(PlottableDimension::Type var)
+{
+	switch (var)
+	{
+	case PlottableDimension::X:
+		return "X";
+	case PlottableDimension::Y:
+		return "Y";
+	case PlottableDimension::Z:
+		return "Z";
+	case PlottableDimension::Color_Hue:
+		return "Color Hue";
+	case PlottableDimension::Color_Sat:
+		return "Color Saturation";
+	case PlottableDimension::Size:
+		return "Size";
+	default:
+		return "";
+	}
+}
+
+bool APresentationLayer::ToPlottableDimension(FString var, TEnumAsByte<PlottableDimension::Type>& output)
+{
+	if (var.Equals("X"))
+	{
+		output = PlottableDimension::X;
+		return true;
+	}
+	if (var.Equals("Y"))
+	{
+		output = PlottableDimension::Y;
+		return true;
+	}
+	if (var.Equals("Z"))
+	{
+		output = PlottableDimension::Z;
+		return true;
+	}
+	if (var.Equals("Color Hue"))
+	{
+		output = PlottableDimension::Color_Hue;
+		return true;
+	}
+	if (var.Equals("Color Saturation"))
+	{
+		output = PlottableDimension::Color_Sat;
+		return true;
+	}
+	if (var.Equals("Size"))
+	{
+		output = PlottableDimension::Size;
+		return true;
+	}
+	return false;
+}
+
+TArray<TEnumAsByte<PlottableDimension::Type>> APresentationLayer::GetAvailablePlottableDimensions()
+{
+	TArray<TEnumAsByte<PlottableDimension::Type>> tmp = TArray<TEnumAsByte<PlottableDimension::Type>>();
+	tmp.Add(PlottableDimension::X);
+	tmp.Add(PlottableDimension::Y);
+	tmp.Add(PlottableDimension::Z);
+	tmp.Add(PlottableDimension::Color_Hue);
+#ifdef ENABLE_DIMENSION_COLOR_SAT
+	tmp.Add(PlottableDimension::Color_Sat);
+#endif
+#ifdef ENABLE_DIMENSION_SIZE
+	tmp.Add(PlottableDimension::Size);
+#endif
+	return tmp;
+}
+
+//------------------------PRESENTATION LAYER-----------------------------
 APresentationLayer::APresentationLayer(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
 {

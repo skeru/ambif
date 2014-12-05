@@ -36,9 +36,11 @@ public:
 	void LogData();
 
 	//------------------------GETTERS------------------------
-
+public:
 	Utils::FHashMap<SongDetails>* GetElementMap();
 	Utils::FHashMap<ViewDetails>* GetViewMap();
+	
+	TArray<FString> GetDimensionIdList();
 
 public:
 	inline Caster* getCaster(const DimensionDetails& DimendionId);

@@ -4,7 +4,7 @@
 #include "CustomUtils/DebugUtils.h"
 #include "LogicController.h"
 
-//#define LogicController_VERBOSE_MODE
+#define LogicController_VERBOSE_MODE
 
 ALogicController::ALogicController(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
@@ -76,6 +76,32 @@ void ALogicController::RefreshViewList()
 	}
 
 	//plot out views
+}
+
+TArray<FString> ALogicController::GetDimensionList()
+{
+	return DataAgent->GetDimensionIdList();
+}
+
+FString ALogicController::GetDimensionDescription(FString DimensionId)
+{
+	DimensionDetails tmp;
+	if (DataAgent->getDimensionDetails(DimensionId, tmp))
+	{
+		return tmp.Description;
+	}
+	return FString(NO_DIMENSION_FOUND);
+}
+
+TArray<FString> ALogicController::GetPlottableDimensionList()
+{
+	TArray<FString> tmp = TArray<FString>();
+	TArray<TEnumAsByte<PlottableDimension::Type>> typed_list = APresentationLayer::GetAvailablePlottableDimensions();
+	for (auto elem : typed_list)
+	{
+		tmp.Add(APresentationLayer::ToString(elem));
+	}
+	return tmp;
 }
 
 //-------------------MAP ACTIONS--------------------

@@ -90,6 +90,22 @@ public:
 	/** Refresh view cache (does not open CSV data) */
 	void RefreshViewList();
 
+#define NO_DIMENSION_FOUND ""
+
+	UFUNCTION(BlueprintCallable, Category = "Data functions")
+	/** Get a list of all available dimension's identifiers */
+	TArray<FString> GetDimensionList();
+
+	UFUNCTION(BlueprintCallable, Category = "Data functions")
+	/** Retrieve description from ID 
+	 *
+	 * Empty FString is returned when no description can be found */
+	FString GetDimensionDescription(FString DimensionId);
+
+	UFUNCTION(BlueprintCallable, Category = "Data functions")
+	/** Get a list of all available plottable dimensions (human readable format) */
+	static TArray<FString> GetPlottableDimensionList();
+
 	//-------------------MAP ACTIONS--------------------
 public:
 	UFUNCTION(BlueprintCallable, Category = "Map Actions")
