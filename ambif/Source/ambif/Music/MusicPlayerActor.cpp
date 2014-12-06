@@ -5,13 +5,13 @@
 
 //#define MUSIC_PLAYER_ACTOR_VERBOSE
 
-AMusicPlayerActor::AMusicPlayerActor(const class FPostConstructInitializeProperties& PCIP)
-	: Super(PCIP)
+AMusicPlayerActor::AMusicPlayerActor(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
 {
 	FileName = "My Song.ogg";
 
 	sw = (USoundWave*)StaticConstructObject(USoundWave::StaticClass(), this, TEXT("MyTestSoundWave"));
-	ac = PCIP.CreateDefaultSubobject<UAudioComponent>(this, TEXT("audio_component"));
+	ac = ObjectInitializer.CreateDefaultSubobject<UAudioComponent>(this, TEXT("audio_component"));
 	device = GEngine ? GEngine->GetAudioDevice() : NULL; //gently ask for the audio device
 
 	sw->SoundGroup = ESoundGroup::SOUNDGROUP_Music;
@@ -30,7 +30,7 @@ inline void AMusicPlayerActor::Load(FString NewFileName = "")
 		FileName = NewFileName;
 		Stop();
 	}
-	loaded = FFileHelper::LoadFileToArray(rawFile, FileName.GetCharArray().GetTypedData());
+	loaded = FFileHelper::LoadFileToArray(rawFile, FileName.GetCharArray().GetData());
 
 	if (loaded){
 #ifdef MUSIC_PLAYER_ACTOR_VERBOSE
@@ -38,7 +38,7 @@ inline void AMusicPlayerActor::Load(FString NewFileName = "")
 #endif
 		FByteBulkData* bulkData = &sw->CompressedFormatData.GetFormat(TEXT("OGG"));
 		bulkData->Lock(LOCK_READ_WRITE);
-		FMemory::Memcpy(bulkData->Realloc(rawFile.Num()), rawFile.GetTypedData(), rawFile.Num());
+		FMemory::Memcpy(bulkData->Realloc(rawFile.Num()), rawFile.GetData(), rawFile.Num());
 		bulkData->Unlock();
 		fillSoundWaveInfo(sw, &rawFile);
 		ac->SetSound(sw);
@@ -90,7 +90,7 @@ int AMusicPlayerActor::fillSoundWaveInfo(USoundWave* sw, TArray<uint8>* rawFile)
 {
 	FSoundQualityInfo info;
 	FVorbisAudioInfo vorbis_obj = FVorbisAudioInfo();
-	if (!vorbis_obj.ReadCompressedInfo(rawFile->GetTypedData(), rawFile->Num(), &info))
+	if (!vorbis_obj.ReadCompressedInfo(rawFile->GetData(), rawFile->Num(), &info))
 	{
 		//Debug("Can't load header");
 		return 1;

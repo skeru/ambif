@@ -11,8 +11,10 @@
 UCLASS()
 class AMBIF_API AambifGameMode : public AGameMode
 {
-	GENERATED_UCLASS_BODY()
+	GENERATED_BODY()
 
-	
+public:
+	//constructor
+	AambifGameMode(const FObjectInitializer& ObjectInitializer);
 	
 };

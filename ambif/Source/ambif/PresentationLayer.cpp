@@ -84,8 +84,8 @@ TArray<TEnumAsByte<PlottableDimension::Type>> APresentationLayer::GetAvailablePl
 }
 
 //------------------------PRESENTATION LAYER-----------------------------
-APresentationLayer::APresentationLayer(const class FPostConstructInitializeProperties& PCIP)
-	: Super(PCIP)
+APresentationLayer::APresentationLayer(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
 {
 	DimensionOnMap = Utils::hashmap<int, _DimensionOnMapInfo>();
 

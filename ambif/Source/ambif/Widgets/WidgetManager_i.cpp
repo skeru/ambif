@@ -4,8 +4,8 @@
 #include "WidgetManager_i.h"
 
 
-AWidgetManager_i::AWidgetManager_i(const class FPostConstructInitializeProperties& PCIP)
-	: Super(PCIP)
+AWidgetManager_i::AWidgetManager_i(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
 {
 
 }

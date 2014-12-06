@@ -15,9 +15,12 @@
 UCLASS()
 class AMBIF_API ADataManager : public AActor
 {
-	GENERATED_UCLASS_BODY()
+	GENERATED_BODY()
+public:
+	//constructor
+	ADataManager(const FObjectInitializer& ObjectInitializer);
 
-		//---------------------DATA STRUCTURES---------------------
+	//---------------------DATA STRUCTURES---------------------
 protected:
 
 	Utils::FHashMap<SongDetails> SongMap;

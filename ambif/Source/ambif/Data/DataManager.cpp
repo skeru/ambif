@@ -13,8 +13,8 @@
 
 //#define DATA_MANAGER_VERBOSE
 
-ADataManager::ADataManager(const class FPostConstructInitializeProperties& PCIP)
-	: Super(PCIP)
+ADataManager::ADataManager(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
 {
 	SongMap = Utils::FHashMap<SongDetails>();
 	DimensionMap = Utils::FHashMap<DimensionDetails>();

@@ -8,11 +8,11 @@
 //#define MapElemensActor_DEBUG_EVENTS
 //#define _INTERNAL_READ_COLOR
 
-AMapElementActor::AMapElementActor(const class FPostConstructInitializeProperties& PCIP)
-	: Super(PCIP)
+AMapElementActor::AMapElementActor(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
 {
 	ElementId = "";
-	Mesh = PCIP.CreateAbstractDefaultSubobject<UStaticMeshComponent>(this, "ball mesh");
+	Mesh = ObjectInitializer.CreateAbstractDefaultSubobject<UStaticMeshComponent>(this, "ball mesh");
 	static ConstructorHelpers::FObjectFinder <UStaticMesh>StaticMesh(TEXT(_ElementAsset_Ball));
 	if (!StaticMesh.Object)
 	{

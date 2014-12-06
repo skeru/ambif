@@ -4,8 +4,8 @@
 #include "ambifPlayerController.h"
 
 
-AambifPlayerController::AambifPlayerController(const class FPostConstructInitializeProperties& PCIP)
-	: Super(PCIP)
+AambifPlayerController::AambifPlayerController(const FObjectInitializer& ObjectInitializer)
+		: Super(ObjectInitializer)
 {
 	bEnableClickEvents = true;
 	bEnableTouchEvents = true;

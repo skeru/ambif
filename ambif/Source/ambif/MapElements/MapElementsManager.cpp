@@ -8,7 +8,8 @@
 //#define BIND_HSVCOLOR_VALUE_TO_SATURATION
 //#define MapElementsManager_VERBOSE_MODE
 
-AMapElementsManager::AMapElementsManager(const class FPostConstructInitializeProperties& PCIP) : Super(PCIP)
+AMapElementsManager::AMapElementsManager(const FObjectInitializer& ObjectInitializer) 
+	: Super(ObjectInitializer)
 {
 	ActorMap = Utils::FHashMap<AMapElementActor*>();
 

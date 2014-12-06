@@ -19,8 +19,12 @@
 UCLASS()
 class AMBIF_API AMusicPlayerActor : public AActor
 {
-	GENERATED_UCLASS_BODY()
+	GENERATED_BODY()
+public:
+	//constructor
+	AMusicPlayerActor(const FObjectInitializer& ObjectInitializer);
 
+public:
 	//* Audio file name (OggVorbis) with path
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = MusicPlayer)
 	FString FileName;
@@ -28,7 +32,7 @@ class AMBIF_API AMusicPlayerActor : public AActor
 	//* manually constructed SoundWave 
 	USoundWave* sw;
 	//* Game component used to play audio
-	TSubobjectPtr<UAudioComponent> ac;
+	UAudioComponent* ac;
 	//* loaded song file (binary, encoded)
 	TArray < uint8 > rawFile;
 

@@ -16,14 +16,18 @@
 UCLASS()
 class AMBIF_API AMapElementActor : public AActor
 {
-	GENERATED_UCLASS_BODY()
-		//------------------------ ELEMENT BODY ------------------------
+	GENERATED_BODY()
 public:
+	//constructor
+	AMapElementActor(const FObjectInitializer& ObjectInitializer);
+	
+	//------------------------ ELEMENT BODY ------------------------
+protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Element Look")
-	TSubobjectPtr<UStaticMeshComponent> Mesh;
+	UStaticMeshComponent* Mesh;
 
 	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = SkelMeshComponents)
-	//TSubobjectPtr<UStaticMesh> SubComponent;
+	//UStaticMesh* SubComponent;
 
 	//------------------------ELEMENT STATE ------------------------
 protected:

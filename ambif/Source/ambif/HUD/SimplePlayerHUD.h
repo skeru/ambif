@@ -70,7 +70,10 @@ public:
 UCLASS()
 class AMBIF_API ASimplePlayerHUD : public AHUD
 {
-	GENERATED_UCLASS_BODY()
+	GENERATED_BODY()
+public:
+	//constructor
+	ASimplePlayerHUD(const FObjectInitializer& ObjectInitializer);
 
 	//---------internal components reference-------------
 public:

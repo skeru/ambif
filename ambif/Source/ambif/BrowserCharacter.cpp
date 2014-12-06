@@ -8,11 +8,11 @@
 #define CHARACTER_MOVEMENT_SPEED_BASE 0.02f
 #define CHARACTER_MOVEMENT_SPEED(cameraZoom_current) (CAMERA_ZOOM_PERCENT((cameraZoom_current))*CAMERA_ZOOM_PERCENT((cameraZoom_current)) + CHARACTER_MOVEMENT_SPEED_BASE)
 
-ABrowserCharacter::ABrowserCharacter(const class FPostConstructInitializeProperties& PCIP)
-	: Super(PCIP)
+ABrowserCharacter::ABrowserCharacter(const FObjectInitializer& ObjectInitializer) 
+	: Super(ObjectInitializer)
 {
-	CapsuleComponent->SetEnableGravity(false);
-	CapsuleComponent->SetCapsuleSize(150.0f, 0.0f);
+	GetCapsuleComponent()->SetEnableGravity(false);
+	GetCapsuleComponent()->SetCapsuleSize(150.0f, 0.0f);
 
 	//oh yeah, it's high. but it's still limited by the character movement max speed - max acceleration
 	//update: oh, no more :p
@@ -24,7 +24,7 @@ ABrowserCharacter::ABrowserCharacter(const class FPostConstructInitializePropert
 	SpeedZ = 0.5f;
 
 	// Create a camera boom (pulls in towards the player if there is a collision)
-	CameraBoom = PCIP.CreateDefaultSubobject<USpringArmComponent>(this, TEXT("CameraBoom"));
+	CameraBoom = ObjectInitializer.CreateDefaultSubobject<USpringArmComponent>(this, TEXT("CameraBoom"));
 	CameraBoom->AttachTo(RootComponent);
 	cameraZoom_current = CAMERA_ARM_LENGTH;
 	float angle = CAMERA_ANGLE(cameraZoom_current);
@@ -34,7 +34,7 @@ ABrowserCharacter::ABrowserCharacter(const class FPostConstructInitializePropert
 	CameraBoom->TargetArmLength = cameraZoom_current; // The camera follows at this distance behind the character
 
 	// Create a follow camera
-	FollowCamera = PCIP.CreateDefaultSubobject<UCameraComponent>(this, TEXT("FollowCamera"));
+	FollowCamera = ObjectInitializer.CreateDefaultSubobject<UCameraComponent>(this, TEXT("FollowCamera"));
 	FollowCamera->AttachTo(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	// Don't rotate when the controller rotates. Let that just affect the camera.
 	FollowCamera->bUsePawnControlRotation = false;

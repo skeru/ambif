@@ -49,7 +49,7 @@ namespace std
 			{
 				try
 				{
-					return (p.GetCharArray().GetTypedData()) ? std::hash<std::wstring>()(std::wstring((wchar_t*)(p.GetCharArray().GetTypedData()))) : 0;
+					return (p.GetCharArray().GetData()) ? std::hash<std::wstring>()(std::wstring((wchar_t*)(p.GetCharArray().GetData()))) : 0;
 				}
 				catch (std::exception e)
 				{

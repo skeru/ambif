@@ -11,8 +11,9 @@
 UCLASS()
 class AMBIF_API AambifPlayerController : public APlayerController
 {
-	GENERATED_UCLASS_BODY()
+	GENERATED_BODY()
 
-	
+public:
+	AambifPlayerController(const FObjectInitializer& ObjectInitializer);
 	
 };

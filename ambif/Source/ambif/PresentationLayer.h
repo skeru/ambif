@@ -3,7 +3,7 @@
 #pragma once
 
 #include "GameFramework/Actor.h"
-#include "Landscape/Landscape.h"
+#include "Runtime/Landscape/Classes/Landscape.h"
 #include "Engine/BlockingVolume.h"
 #include "GameFramework/PhysicsVolume.h"
 #include "CustomUtils/CustomUtils.h"
@@ -42,7 +42,10 @@ struct _DimensionOnMapInfo
 UCLASS()
 class AMBIF_API APresentationLayer : public AActor
 {
-	GENERATED_UCLASS_BODY()
+	GENERATED_BODY()
+public:
+	//constructor
+	APresentationLayer(const FObjectInitializer& ObjectInitializer);
 
 public:
 	//-----------------OTHER ACTOR REFERENCES-----------------

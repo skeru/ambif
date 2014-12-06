@@ -6,8 +6,8 @@
 
 #define LogicController_VERBOSE_MODE
 
-ALogicController::ALogicController(const class FPostConstructInitializeProperties& PCIP)
-	: Super(PCIP)
+ALogicController::ALogicController(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
 {
 	ViewList_cache = Utils::FHashMap<ViewDetails>();
 

@@ -3,7 +3,7 @@
 #pragma once
 
 #include "GameFramework/Actor.h"
-#include "Landscape/Landscape.h"
+#include "Runtime/Landscape/Classes/Landscape.h"
 #include "MapElementActor.h"
 #include "CustomUtils/HSVColor.h"
 #include "CustomUtils/CustomUtils.h"
@@ -16,7 +16,10 @@
 UCLASS()
 class AMBIF_API AMapElementsManager : public AActor, public MapElementActorListener
 {
-	GENERATED_UCLASS_BODY()
+	GENERATED_BODY()
+public:
+	//constructor
+	AMapElementsManager(const FObjectInitializer& ObjectInitializer);
 
 public:
 	//------------------------ACTIONS ON ELEMENTS------------------------

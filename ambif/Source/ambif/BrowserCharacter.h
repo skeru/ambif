@@ -13,19 +13,25 @@
 UCLASS()
 class AMBIF_API ABrowserCharacter : public ACharacter
 {
-	GENERATED_UCLASS_BODY()
+	GENERATED_BODY()
+public:
+	//constructor
+	ABrowserCharacter(const FObjectInitializer& ObjectInitializer);
 
+public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = LogicController)
 	/** Manager Actor */
 	ALogicController* Manager;
 
+protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 	/** Camera boom positioning the camera behind the character */
-	TSubobjectPtr<class USpringArmComponent> CameraBoom;
+	USpringArmComponent* CameraBoom;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
-	TSubobjectPtr<class UCameraComponent> FollowCamera;
+	UCameraComponent* FollowCamera;
 
+public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Camera)
 	/** Speed multplier on X axis */
 	float SpeedX;
