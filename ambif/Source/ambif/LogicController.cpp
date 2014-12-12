@@ -4,7 +4,7 @@
 #include "CustomUtils/DebugUtils.h"
 #include "LogicController.h"
 
-#define LogicController_VERBOSE_MODE
+//#define LogicController_VERBOSE_MODE
 
 ALogicController::ALogicController(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -117,7 +117,15 @@ void ALogicController::DeselectElement(FString ElementID)
 	PresentationLayer->RemoveSelectionFromElement(ElementID);
 }
 
+//----------------------GUI-----------------------
+
+void ALogicController::UpdateWidgetInterface()
+{
+	WidgetManager->UpdateDimensionWidegt();
+}
+
 //----------------------TICK-----------------------
+
 void ALogicController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);

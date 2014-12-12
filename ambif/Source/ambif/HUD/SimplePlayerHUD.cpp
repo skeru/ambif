@@ -313,7 +313,7 @@ void ASimplePlayerHUD::CheckCursorInButtonsMain()
 
 		Manager->Spawn();
 		//TODO implement ???
-
+		Manager->UpdateWidgetInterface();
 
 		break;
 #endif

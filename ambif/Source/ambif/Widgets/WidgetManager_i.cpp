@@ -9,5 +9,3 @@ AWidgetManager_i::AWidgetManager_i(const FObjectInitializer& ObjectInitializer)
 {
 
 }
-
-

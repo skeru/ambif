@@ -219,8 +219,8 @@ public:
 	//----------------------------TICK----------------------------
 public:
 	UFUNCTION()
-		//deprecated
-		void Tick(float DeltaTime) override;
+	//deprecated
+	void Tick(float DeltaTime) override;
 
 	//---------------------private tick stuff---------------------
 private:

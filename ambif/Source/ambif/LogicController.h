@@ -46,7 +46,7 @@ public:
 	AMapElementsManager* MapElementsAgent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = TestingStuff)
-	/** Map Elements Manager (notifications) */
+	/** Interface to update widget user interface */
 	AWidgetManager_i* WidgetManager;
 
 
@@ -111,13 +111,22 @@ public:
 
 	//-------------------MAP ACTIONS--------------------
 public:
-	UFUNCTION(BlueprintCallable, Category = "Map Actions")
 	/** Select element from map */
+	UFUNCTION(BlueprintCallable, Category = "Map Actions")
 	void SelectElement(FString ElementID);
 
-	/** Deselect element from map */
 	UFUNCTION(BlueprintCallable, Category = "Map Actions")
+	/** Deselect element from map */
 	void DeselectElement(FString ElementID);
+
+	//------------------------GUI-------------------------
+	UFUNCTION(BlueprintCallable, Category = "GUI")
+	/** Triggers an update of interface widgets.
+	 *
+	 * Actually updates:
+	 *  - Dimension Selection Widget
+	 */
+	void UpdateWidgetInterface();
 
 	//----------------------TICK-----------------------
 public:
