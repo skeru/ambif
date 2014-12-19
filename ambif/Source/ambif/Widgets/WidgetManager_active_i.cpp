@@ -93,3 +93,16 @@ void AWidgetManager_active_i::SetDimensionByDescription(FString PlottableDimensi
 		SetDimension(PlottableDimensionID, DimensionDescription);
 	}
 }
+
+//-------------------------TESTING STUFF-------------------------
+void AWidgetManager_active_i::TriggerSpawn()
+{
+	LogicController->ReadData();
+	LogicController->RefreshViewList();
+	LogicController->Spawn();
+}
+
+void AWidgetManager_active_i::UpdateWidgets()
+{
+	LogicController->UpdateWidgetInterface();
+}
