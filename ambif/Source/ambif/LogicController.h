@@ -17,7 +17,8 @@
  * so i built up this custom actor to manage all of this in one
  * easy-to-access actor.
  *
- * This actor should be referenced by the HUD class
+ * This actor should be referenced by user interface classes
+ * (user interface classes could be HUD or widgets or something else)
  */
 UCLASS()
 class AMBIF_API ALogicController : public AActor

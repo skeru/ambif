@@ -14,11 +14,13 @@ AambifGameMode::AambifGameMode(const FObjectInitializer& ObjectInitializer)
 		DefaultPawnClass = (UClass*)PlayerPawnBPClass.Object->GeneratedClass;
 	}
 
+	/* HUD DISABLED
 	static ConstructorHelpers::FObjectFinder<UBlueprint> TheHUDOb(TEXT("/Game/Blueprints/SimplePlayerHUD_BP"));
 	if (TheHUDOb.Object != NULL)
 	{
 		HUDClass = (UClass*)TheHUDOb.Object->GeneratedClass;
 	}
+	*/
 
 	PlayerControllerClass = AambifPlayerController::StaticClass();
 }
