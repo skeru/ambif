@@ -104,6 +104,11 @@ TArray<FString> ALogicController::GetPlottableDimensionList()
 	return tmp;
 }
 
+void ALogicController::SetDimension(PlottableDimension::Type DimensionSpace, FString DimensionID, bool UpdateNow)
+{
+	PresentationLayer->SetDimension(DimensionSpace, DimensionID, UpdateNow);
+}
+
 //-------------------MAP ACTIONS--------------------
 
 void ALogicController::SelectElement(FString ElementID)
@@ -117,6 +122,10 @@ void ALogicController::DeselectElement(FString ElementID)
 	PresentationLayer->RemoveSelectionFromElement(ElementID);
 }
 
+void ALogicController::UpdateDimensionsOnMap()
+{
+	PresentationLayer->GlobalUpdateMap();
+}
 //----------------------GUI-----------------------
 
 void ALogicController::UpdateWidgetInterface()

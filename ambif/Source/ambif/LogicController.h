@@ -110,6 +110,16 @@ public:
 	/** Get a list of all available plottable dimensions (human readable format) */
 	static TArray<FString> GetPlottableDimensionList();
 
+	UFUNCTION(BlueprintCallable, Category = "Data functions")
+	/** Proxy for PresentationLayer::SetDimension */
+	void SetDimension(PlottableDimension::Type DimensionSpace, FString DimensionID, bool UpdateNow = true);//testing
+
+	UFUNCTION(BlueprintCallable, Category = "Data functions")
+	/** Triggers a global map elements update.
+	 * 
+	 * @see PresentationLayer::GlobalUpdateMap() */
+	void UpdateDimensionsOnMap();
+
 	//-------------------MAP ACTIONS--------------------
 public:
 	/** Select element from map */
