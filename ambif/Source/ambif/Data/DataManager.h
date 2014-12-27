@@ -64,5 +64,5 @@ public:
 	 *
 	 * Returns true if success, false if failed.
 	 */
-	inline bool getSongDetails(FString SongID, SongDetails& output);
+	inline bool getElementDetails(FString ElementID, SongDetails& output);
 };

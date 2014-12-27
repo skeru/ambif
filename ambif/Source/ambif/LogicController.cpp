@@ -2,6 +2,7 @@
 
 #include "ambif.h"
 #include "CustomUtils/DebugUtils.h"
+#include "CustomUtils/CustomUtils.h"
 #include "LogicController.h"
 
 //#define LogicController_VERBOSE_MODE
@@ -20,6 +21,33 @@ ALogicController::ALogicController(const FObjectInitializer& ObjectInitializer)
 }
 
 //---------------MUSIC PLAYER FUNCTIONS---------------
+
+void ALogicController::LoadElement(FString ElementID)
+{
+	SongDetails d;
+	if (MusicPlayer && DataAgent->getElementDetails(ElementID, d))
+	{
+		if (Utils::FileExists(d.Path))
+		{
+			MusicPlayer->Load(d.Path);
+			WidgetManager->UpdateMusicPlayerWidget(false, false); //load stops music
+#ifdef LogicController_VERBOSE_MODE
+			DebugUtils::LogString("LogicController: Loaded song");
+		}
+		else
+		{
+			DebugUtils::LogString("LogicController: file not found fot element " + ElementID);
+		}
+	}
+	else
+	{
+		DebugUtils::LogString("LogicController: unable to load element to " + ElementID + " on music player.");
+	}
+#else
+		}
+	}
+#endif
+}
 
 void ALogicController::MusicPlay()
 {
@@ -181,6 +209,7 @@ void ALogicController::DetectClickedActors()
 #ifdef LogicController_VERBOSE_MODE
 		DebugUtils::LogString("identified click id: " + id);
 #endif
+		LoadElement(id);
 	}
 
 }
@@ -190,5 +219,5 @@ void ALogicController::DetectClickedActors()
 FString ALogicController::ReadMetadata(FString elementID)
 {
 	FSongDetails details;
-	return (DataAgent->getSongDetails(elementID, details)) ? details.Name + " - " + details.Artist : "no data retrieved";
+	return (DataAgent->getElementDetails(elementID, details)) ? details.Name + " - " + details.Artist : "no data retrieved";
 }

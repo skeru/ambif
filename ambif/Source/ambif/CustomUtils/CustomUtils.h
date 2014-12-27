@@ -7,6 +7,7 @@
 #include "map"
 #include "stdexcept"
 #include "functional"
+#include "sys/stat.h"
 
 /*namespace _foo_utils{
 	struct foo1 {
@@ -68,11 +69,11 @@ namespace std
 
 }
 
-/**
- *
+/** Various tools
  */
 namespace Utils
 {
+	//------------------------------ HASHMAP TOOLS -------------------------
 	template<class datatype> using FHashMap =
 		std::unordered_map <
 		FString,
@@ -101,6 +102,8 @@ namespace Utils
 	{
 		return Container.find(key) != Container.end();
 	}
+
+	//----------------------------- STRING TOOLS -----------------------------
 
 	/** Remove quotes and white spaces
 	*/
@@ -151,5 +154,17 @@ namespace Utils
 		}
 		//DebugUtils::LogString("ConversionError: Cannot convert String " + string + " to Unsigned");
 		return false;
+	}
+
+	//------------------------------ FILE TOOLS ------------------------------
+
+	/** check if file exists (optimized)
+	 *
+	 * @return true if file exists, false otherwise 
+	 */
+	inline static bool FileExists(FString FileName)
+	{
+		struct stat buffer;
+		return (stat((TCHAR_TO_UTF8(*FileName)), &buffer) == 0);
 	}
 };

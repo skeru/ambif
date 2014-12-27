@@ -67,6 +67,10 @@ private:
 	//---------------MUSIC PLAYER FUNCTIONS---------------
 public:
 	UFUNCTION(BlueprintCallable, Category = "Music Player")
+	/** Load Element in buffer */
+	void LoadElement(FString ElementID);
+
+	UFUNCTION(BlueprintCallable, Category = "Music Player")
 	/** Play Song */
 	void MusicPlay();
 

@@ -147,16 +147,16 @@ inline bool ADataManager::getViewDetails(FString ViewID, ViewDetails& output)
 	}
 }
 
-inline bool ADataManager::getSongDetails(FString SongID, SongDetails& output)
+inline bool ADataManager::getElementDetails(FString ElementID, SongDetails& output)
 {
 	try
 	{
-		output = SongMap.at(SongID);
+		output = SongMap.at(ElementID);
 		return true;
 	}
 	catch (const std::out_of_range do_not_care)
 	{
-		DEBUG("Failed to load Song Details. ID not found " + SongID);
+		DEBUG("Failed to load Element Details. ID not found " + ElementID);
 		return false;
 	}
 }

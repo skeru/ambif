@@ -30,6 +30,7 @@ inline void AMusicPlayerActor::Load(FString NewFileName = "")
 		FileName = NewFileName;
 		Stop();
 	}
+	rawFile.Empty();
 	loaded = FFileHelper::LoadFileToArray(rawFile, FileName.GetCharArray().GetData());
 
 	if (loaded){
