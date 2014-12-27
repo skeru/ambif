@@ -332,42 +332,49 @@ void APresentationLayer::SetDimension(PlottableDimension::Type DimensionSpace, F
 
 void APresentationLayer::GlobalUpdateMap()
 {
-	//update x-y
-	UpdateMapXY();
+	//update x-y-z
+	UpdateMapXYZ();
+
 	//update other dimensions
 	for (auto d : DimensionOnMap)
 	{
-		if (d.first != PlottableDimension::X && d.first != PlottableDimension::Y)
+		if (d.first != PlottableDimension::X && d.first != PlottableDimension::Y && d.first != PlottableDimension::Z)
 		{
 			UpdateSingleMapDimension((PlottableDimension::Type) d.first);
 		}
 	}
 }
 
-void APresentationLayer::UpdateMapXY()
+void APresentationLayer::UpdateMapXYZ()
 {
-	DimensionDetails xd, yd;
-	if (!DataAgent->getDimensionDetails(DimensionOnMap[PlottableDimension::X].Id, xd) || !DataAgent->getDimensionDetails(DimensionOnMap[PlottableDimension::Y].Id, yd))
+	DimensionDetails xd, yd, zd;
+	if (!DataAgent->getDimensionDetails(DimensionOnMap[PlottableDimension::X].Id, xd) || !DataAgent->getDimensionDetails(DimensionOnMap[PlottableDimension::Y].Id, yd) || !DataAgent->getDimensionDetails(DimensionOnMap[PlottableDimension::Z].Id, zd))
 	{
-		DEBUG("PresentationLayer::UpdateMapXY: Failed to load Dimension Details.");
+		DEBUG("PresentationLayer::UpdateMapXYZ: Failed to load Dimension Details.");
 		return;
 	}
+
+	//retieve or create Caster objects (input bounds set)
 	DimensionOnMap[PlottableDimension::X].Caster = DataAgent->getCaster(xd);
 	DimensionOnMap[PlottableDimension::Y].Caster = DataAgent->getCaster(yd);
+	DimensionOnMap[PlottableDimension::Z].Caster = DataAgent->getCaster(zd);
+
+	//updates Caster objects (recompute x, y, z output bounds)
 	UpdateVolumeCasterBounds();
 
-	float x_elem_pos, y_elem_pos;
+	float x_elem_pos, y_elem_pos, z_elem_pos;
 	FString tmp;
 	Utils::FHashMap<SongDetails> map = *DataAgent->GetElementMap();
 	for (auto el : map)
 	{
 		//TODO perform existence and format check
 		bool conversion_ok;
-		conversion_ok = DimensionOnMap[PlottableDimension::X].Caster->Cast(el.second[xd.Id], x_elem_pos);
+		conversion_ok =					  DimensionOnMap[PlottableDimension::X].Caster->Cast(el.second[xd.Id], x_elem_pos);
 		conversion_ok = (conversion_ok) ? DimensionOnMap[PlottableDimension::Y].Caster->Cast(el.second[yd.Id], y_elem_pos) : false;
+		conversion_ok = (conversion_ok) ? DimensionOnMap[PlottableDimension::Z].Caster->Cast(el.second[zd.Id], z_elem_pos) : false;
 		if (conversion_ok)
 		{
-			MapElementsManagerAgent->MoveElementTo(el.first, x_elem_pos, y_elem_pos);
+			MapElementsManagerAgent->MoveElementTo(el.first, x_elem_pos, y_elem_pos, z_elem_pos);
 		}
 #ifdef PresentationLayer_VERBOSE_MODE
 		else
@@ -399,9 +406,9 @@ void APresentationLayer::UpdateSingleMapDimension(PlottableDimension::Type Dimen
 
 	switch (Dimension)
 	{
-	case PlottableDimension::X: case PlottableDimension::Y:
+	case PlottableDimension::X: case PlottableDimension::Y: case PlottableDimension::Z:
 		//refresh position
-		UpdateMapXY();
+		UpdateMapXYZ();
 		break;
 	case PlottableDimension::Color_Hue:
 		DimensionOnMap[PlottableDimension::Color_Hue].Caster = DataAgent->getCaster(dim);

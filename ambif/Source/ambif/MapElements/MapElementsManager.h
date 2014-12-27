@@ -64,7 +64,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Element Managing")
 	/** Move an element to specified position on the map */
-	void MoveElementTo(FString ElementID, float x, float y);
+	void MoveElementTo(FString ElementID, float x, float y, float z);
 
 
 	//------------------------SPAWNING FUNCTIONS------------------------

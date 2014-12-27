@@ -118,10 +118,19 @@ inline void AMapElementsManager::SetColorSat(FString ElementID, float Sat)
 	}
 }
 
-void AMapElementsManager::MoveElementTo(FString ElementID, float x, float y)
+void AMapElementsManager::MoveElementTo(FString ElementID, float x, float y, float z)
 {
-	//TODO implement
-	DebugUtils::LogString(FString("MapElementsManager::MoveElementTo: not implemented method called for element ") + ElementID);
+	try
+	{
+		ActorMap.at(ElementID);//exception if ElementID not valid
+		ActorMap[ElementID]->MoveTo(x, y, z);
+	}
+	catch (const std::out_of_range i_am_really_sad_about_this)
+	{
+		DebugUtils::LogString(FString("MapElementsManager::MoveElementTo: ElementID not found"));
+		//desert dust ball.gif
+	}
+	//DebugUtils::LogString(FString("MapElementsManager::MoveElementTo: not implemented method called for element ") + ElementID);
 }
 
 //-------------------------ELEMENTS MANAGING-------------------------

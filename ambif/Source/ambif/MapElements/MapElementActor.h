@@ -50,6 +50,12 @@ private:
 private:
 	UMaterialInstanceDynamic* _material;
 
+	//---------------------------- MOVE ----------------------------
+public:
+	UFUNCTION(BlueprintCallable, Category = "Element Movement")
+	/** Move actor to absolute position */
+	virtual void MoveTo(float x, float y, float z);
+
 	//------------------- ELEMENT STATE ACCESSORS ------------------
 public:
 	UFUNCTION(BlueprintCallable, Category = "Element State")
@@ -76,7 +82,7 @@ public:
 	/** switch between main color and secondary color */
 	virtual void ToggleColor();
 
-	//-------------------- EVENTE REGISTRATION --------------------
+	//-------------------- EVENT REGISTRATION --------------------
 public:
 	/** Set Manager Actor for callback notifications */
 	void RegisterElementListener(MapElementActorListener* Manager);

@@ -205,7 +205,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Actions (Map)")
 	/** For every dimension plotted, update dimension */
-	void UpdateMapXY();
+	void UpdateMapXYZ();
 
 	UFUNCTION(BlueprintCallable, Category = "Actions (Map)")
 	/** Loads details and render on the map a PlottableDimension */

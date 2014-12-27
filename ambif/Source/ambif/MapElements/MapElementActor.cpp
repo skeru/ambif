@@ -46,6 +46,14 @@ AMapElementActor::AMapElementActor(const FObjectInitializer& ObjectInitializer)
 	Mesh->SetEnableGravity(false);
 }
 
+//---------------------------- MOVE ----------------------------
+void AMapElementActor::MoveTo(float x, float y, float z)
+{
+	//no hit check, only translate root component
+	RootComponent->SetWorldLocation(FVector(x, y, z));
+}
+
+//------------------- ELEMENT STATE ACCESSORS ------------------
 void AMapElementActor::SetElementID(FString NewElementID)
 {
 	ElementId = NewElementID;
