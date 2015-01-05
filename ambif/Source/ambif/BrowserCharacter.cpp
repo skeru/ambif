@@ -8,39 +8,49 @@
 #define CHARACTER_MOVEMENT_SPEED_BASE 0.02f
 #define CHARACTER_MOVEMENT_SPEED(cameraZoom_current) (CAMERA_ZOOM_PERCENT((cameraZoom_current))*CAMERA_ZOOM_PERCENT((cameraZoom_current)) + CHARACTER_MOVEMENT_SPEED_BASE)
 
+//#define ENABLE_CAMERA_DEBUG_MESSAGES
+//#define ENABLE_OVERLAP_DEBUG_MESSAGES
+
 ABrowserCharacter::ABrowserCharacter(const FObjectInitializer& ObjectInitializer) 
 	: Super(ObjectInitializer)
 {
 	GetCapsuleComponent()->SetEnableGravity(false);
 	GetCapsuleComponent()->SetCapsuleSize(150.0f, 0.0f);
 
-	//oh yeah, it's high. but it's still limited by the character movement max speed - max acceleration
-	//update: oh, no more :p
+	//actual speed may be limited by the character movement max speed/acceleration
 	SpeedX = 0.5f;
-	//oh yeah, it's high. but it's still limited by the character movement max speed - max acceleration
-	//update: oh, no more
 	SpeedY = 0.5f;
-
 	SpeedZ = 0.5f;
 
-	// Create a camera boom (pulls in towards the player if there is a collision)
+	//affects camera and character orientation
+	SpeedRotation = 1.1f;
+
+	//just affect camera
+	SpeedLookUp = 1.0f;
+
+	// Create a camera boom (pulls in towards the player if there is a collision)	
 	CameraBoom = ObjectInitializer.CreateDefaultSubobject<USpringArmComponent>(this, TEXT("CameraBoom"));
 	CameraBoom->AttachTo(RootComponent);
 	cameraZoom_current = CAMERA_ARM_LENGTH;
-	float angle = CAMERA_ANGLE(cameraZoom_current);
+	
 	// Camera arm rotation, based on its length 
+	float angle = CAMERA_ANGLE(cameraZoom_current);
+	
+	//do not consider collisions with world
 	CameraBoom->bDoCollisionTest = false;
 	CameraBoom->SetWorldRotation(FRotator(angle, 180, 0));
-	CameraBoom->TargetArmLength = cameraZoom_current; // The camera follows at this distance behind the character
+	
+	// The camera follows at this distance behind the character
+	CameraBoom->TargetArmLength = cameraZoom_current; 
 
 	// Create a follow camera
 	FollowCamera = ObjectInitializer.CreateDefaultSubobject<UCameraComponent>(this, TEXT("FollowCamera"));
-	FollowCamera->AttachTo(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
+	
+	// Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
+	FollowCamera->AttachTo(CameraBoom, USpringArmComponent::SocketName); 
+
 	// Don't rotate when the controller rotates. Let that just affect the camera.
 	FollowCamera->bUsePawnControlRotation = false;
-
-	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
-	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 
 	OnActorBeginOverlap.AddDynamic(this, &ABrowserCharacter::OnBeginOverlap);
 	OnActorEndOverlap.AddDynamic(this, &ABrowserCharacter::OnEndOverlap);
@@ -55,27 +65,63 @@ void ABrowserCharacter::SetupPlayerInputComponent(class UInputComponent* InputCo
 	InputComponent->BindAction("ZoomIn", IE_Pressed, this, &ABrowserCharacter::CameraZoomIn);
 	InputComponent->BindAction("ZoomOut", IE_Pressed, this, &ABrowserCharacter::CameraZoomOut);
 
+	InputComponent->BindAxis("Turn", this, &ABrowserCharacter::Turn);
+	InputComponent->BindAxis("LookUp", this, &ABrowserCharacter::LookUp);
 }
 
 //------------------------------ CAMERA ZOOM ------------------------------
+void ABrowserCharacter::ResetCamera()
+{
+	cameraZoom_current = CAMERA_ARM_LENGTH;
+	const float angle = CAMERA_ANGLE(cameraZoom_current);
+	CameraBoom->TargetArmLength = cameraZoom_current;
+	CameraBoom->SetWorldRotation(FRotator(angle, 180, 0));
+#ifdef ENABLE_CAMERA_DEBUG_MESSAGES
+	DEBUG("Camera values reset.")
+#endif
+}
 
 void ABrowserCharacter::CameraZoomIn(){
+	const float angle = (CAMERA_ANGLE(cameraZoom_current));
 	cameraZoom_current = FMath::Clamp(cameraZoom_current - CAMERA_ZOOM_STEP, CAMERA_ZOOM_MIN, CAMERA_ZOOM_MAX);
 	CameraBoom->TargetArmLength = cameraZoom_current;
-	float angle = (CAMERA_ANGLE(cameraZoom_current));
-	CameraBoom->SetWorldRotation(FRotator(angle, 180, 0));
+	const float delta_angle = (CAMERA_ANGLE(cameraZoom_current)) - angle;
+
+	//const FRotator Rotation = Controller->GetControlRotation();
+	CameraBoom->AddRelativeRotation(FRotator(delta_angle, 0.0f, 0.0f));
+#ifdef ENABLE_CAMERA_DEBUG_MESSAGES
 	DEBUG("angle should be " + FString::SanitizeFloat(angle));
+#endif
 }
 
 void ABrowserCharacter::CameraZoomOut(){
+	const float angle = (CAMERA_ANGLE(cameraZoom_current));
 	cameraZoom_current = FMath::Clamp(cameraZoom_current + CAMERA_ZOOM_STEP, CAMERA_ZOOM_MIN, CAMERA_ZOOM_MAX);
 	CameraBoom->TargetArmLength = cameraZoom_current;
-	float angle = (CAMERA_ANGLE(cameraZoom_current));
-	CameraBoom->SetWorldRotation(FRotator(angle, 180, 0));
+	const float delta_angle = (CAMERA_ANGLE(cameraZoom_current)) - angle;
+
+	//const FRotator Rotation = Controller->GetControlRotation();
+	//CameraBoom->SetWorldRotation(FRotator(Rotation.Pitch - delta_angle, Rotation.Yaw, Rotation.Roll));
+	CameraBoom->AddRelativeRotation(FRotator(delta_angle, 0.0f, 0.0f));
+#ifdef ENABLE_CAMERA_DEBUG_MESSAGES
 	DEBUG("angle should be " + FString::SanitizeFloat(angle));
+#endif
 }
 
-//------------------------- CHARACTER MOVEMEMENT ------------------------------
+//------------------------- AXES CONTROL -------------------------
+
+void ABrowserCharacter::Turn(float Val)
+{
+	const FRotator R = Controller->GetControlRotation();
+	Controller->SetControlRotation(FRotator(R.Pitch, R.Yaw + (Val * SpeedRotation), R.Roll));
+}
+
+void ABrowserCharacter::LookUp(float Val)
+{
+	CameraBoom->AddRelativeRotation(FRotator(-Val * SpeedLookUp, 0.0f, 0.0f));
+}
+
+//-------------------------CHARACTER MOVEMEMENT------------------------------
 void ABrowserCharacter::MoveForward(float Val)
 {
 	if ((Val != 0.f) && (Controller != NULL))
@@ -108,13 +154,11 @@ void ABrowserCharacter::MoveUp(float Val)
 {
 	if ((Val != 0.f) && (Controller != NULL))
 	{
-		/*
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotationMatrix R = FRotationMatrix(FRotator(Rotation.Pitch, 0, Rotation.Roll));
 		const FVector WorldSpaceAccel = R.GetScaledAxis(EAxis::Z);
-		*/
 
-		const FVector WorldSpaceAccel = FVector(0.0f, 0.0f, 1.0f);
+		//const FVector WorldSpaceAccel = FVector(0.0f, 0.0f, 1.0f);
 
 		// transform to world space and add it
 		AddMovementInput(WorldSpaceAccel, Val * SpeedZ * (CHARACTER_MOVEMENT_SPEED(cameraZoom_current)));
@@ -125,10 +169,11 @@ void ABrowserCharacter::MoveUp(float Val)
 void ABrowserCharacter::OnBeginOverlap(AActor* Other)
 {
 	//overlap begin
-	/* equivalent of C++ line
-	* AMapElementActor* element = dynamic_cast<AMapElementActor*>(Other);
-	* but works without turning on RTTI compiler settings.
-	* Pay attention to pointers. */
+	/* Cast<> description: 
+	 * [efficiency preset] it's the equivalent of C++ line
+	 * AMapElementActor* element = dynamic_cast<AMapElementActor*>(Other);
+	 * but magically works without turning on RTTI compiler settings.
+	 * Pay attention to pointers. */
 	AMapElementActor* element = Cast<AMapElementActor>(Other);
 	if (element == NULL) // element is not a MapElementActor
 	{
@@ -140,7 +185,9 @@ void ABrowserCharacter::OnBeginOverlap(AActor* Other)
 		Manager->SelectElement(element->GetElementID());
 	}
 
+#ifdef ENABLE_OVERLAP_DEBUG_MESSAGES
 	DEBUG("overlap begin")
+#endif
 }
 
 void ABrowserCharacter::OnEndOverlap(AActor* Other)
@@ -159,5 +206,8 @@ void ABrowserCharacter::OnEndOverlap(AActor* Other)
 	{
 		Manager->DeselectElement(element->GetElementID());
 	}
+
+#ifdef ENABLE_OVERLAP_DEBUG_MESSAGES
 	DEBUG("overlap end")
+#endif
 }

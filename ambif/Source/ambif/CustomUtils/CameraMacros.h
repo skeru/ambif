@@ -6,16 +6,18 @@
 #define CAMERA_ZOOM_MIN 500.0f
 #define CAMERA_ZOOM_STEP 500.0f
 
-#define CAMERA_ARM_LENGTH 5000.0f
+#define CAMERA_ARM_LENGTH 20000.0f
 
 /* distance = (current_zoom - zoom min) / range
 * camera_angle = K1 * d^2 + alfa0
 */
 #define CAMERA_RANGE (float)(CAMERA_ZOOM_MAX - CAMERA_ZOOM_MIN)
+
 //* camera angle when zoom is max
-#define CAMERA_ALFA0 -70.0f
+#define CAMERA_ALFA0 -75.0f
+
 //* camera angle when zoom is min
-#define CAMERA_ALFA_MAX -30.0f
+#define CAMERA_ALFA_MAX -15.0f
 
 
 //* Zoom (%)  range [0;1]
