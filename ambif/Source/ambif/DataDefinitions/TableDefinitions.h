@@ -13,9 +13,9 @@ struct FSongProperty
 {
 	GENERATED_USTRUCT_BODY()
 
-		UPROPERTY(BlueprintReadOnly, Category = "Details")
-		/** Property Value (Summary) */
-		FString SummaryValue;
+	UPROPERTY(BlueprintReadOnly, Category = "Details")
+	/** Property Value (Summary) */
+	FString SummaryValue;
 
 	//UPROPERTY(BlueprintReadOnly, Category = "Details")
 	/** Property Segment Values <start segment time, value> */

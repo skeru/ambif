@@ -9,3 +9,12 @@ AWidgetManager_i::AWidgetManager_i(const FObjectInitializer& ObjectInitializer)
 {
 
 }
+
+void AWidgetManager_i::ApplyView(FViewDetails view)
+{
+	SetSelectedDimension(PlottableDimension::X, view.XDimension);
+	SetSelectedDimension(PlottableDimension::Y, view.YDimension);
+	SetSelectedDimension(PlottableDimension::Z, view.ZDimension);
+	SetSelectedDimension(PlottableDimension::Color_Hue, view.HueDimension);
+	SetSelectedDimension(PlottableDimension::Color_Sat, view.SatDimension);
+}

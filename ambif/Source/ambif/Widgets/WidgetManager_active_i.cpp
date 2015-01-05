@@ -10,6 +10,7 @@ AWidgetManager_active_i::AWidgetManager_active_i(const FObjectInitializer& Objec
 {
 	dim_descr_buffer = Utils::FHashMap<int>();
 	dim_id_descr_map = Utils::FHashMap<FString>();
+	ReverseMappingAvailable = false;
 }
 
 //--------------------MUSIC PLAYER CONTROLS-------------------------
@@ -52,20 +53,20 @@ TArray<FString> AWidgetManager_active_i::GetDimensionDescriptionList(bool MakeDe
 		int counter = 1;
 		descr_base = GetDimensionDescription(elem);
 		descr_tmp = descr_base;
-		if (MakeDescriptionUnique)//skip unique mapping if not required
+		if (MakeDescriptionUnique)	//skip unique mapping if not required - may cause collisions
 		{
 			if (Utils::FHMContains(dim_descr_buffer, descr_tmp))
-			{
-				counter = dim_descr_buffer[descr_tmp] + 1;
+			{	//there is a collision on text description
+				counter = dim_descr_buffer[descr_tmp] + 1;	//increase tail n.
 				do	//append counter to make unique the description
 				{
-					descr_tmp = descr_base;
+					descr_tmp = descr_base;	//base text description
 					descr_tmp.AppendInt(counter);
 					counter++;
 				} while (Utils::FHMContains(dim_descr_buffer, descr_tmp));
 			}
-			dim_descr_buffer[descr_base] = counter;
-			dim_id_descr_map[descr_tmp] = elem;
+			dim_descr_buffer[descr_base] = counter;	//update counter buffer
+			dim_id_descr_map[descr_tmp] = elem;	//map element id to description
 		}	
 		d_list.Add(descr_tmp);
 	}
@@ -87,7 +88,6 @@ void AWidgetManager_active_i::SetDimension(FString PlottableDimensionID, FString
 	else
 	{//conversion failed
 		DebugUtils::LogString("WidgetManager: Error converting string to PlottableDimension " + PlottableDimensionID);
-		//TODO implement
 	}
 }
 
@@ -114,7 +114,20 @@ void AWidgetManager_active_i::SetDimensionsByDescription(FString XDimensionDescr
 	LogicController->UpdateDimensionsOnMap();
 }
 
-//-------------------------TESTING STUFF-------------------------
+FString AWidgetManager_active_i::GetOnScreenDimensionDescription(FString DimensionID)
+{
+	FString descr = LogicController->GetDimensionDescription(DimensionID);
+	if (Utils::FHMContains(dim_descr_buffer, descr) && dim_descr_buffer[descr] > 1)
+	{
+		int counter = dim_descr_buffer[descr];
+		FString aux = FString(descr);
+		aux.AppendInt(counter);
+		return aux;
+	}
+	return descr;
+}
+
+//-------------------------OTHER THINGS-------------------------
 void AWidgetManager_active_i::TriggerSpawn()
 {
 	LogicController->ReadData();
