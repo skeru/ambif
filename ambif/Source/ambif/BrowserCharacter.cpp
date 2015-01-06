@@ -11,6 +11,9 @@
 //#define ENABLE_CAMERA_DEBUG_MESSAGES
 //#define ENABLE_OVERLAP_DEBUG_MESSAGES
 
+// comment/uncomment this define to update or not zoom widget 
+//#define SKIP_ZOOM_WIDGET
+
 ABrowserCharacter::ABrowserCharacter(const FObjectInitializer& ObjectInitializer) 
 	: Super(ObjectInitializer)
 {
@@ -76,6 +79,7 @@ void ABrowserCharacter::ResetCamera()
 	const float angle = CAMERA_ANGLE(cameraZoom_current);
 	CameraBoom->TargetArmLength = cameraZoom_current;
 	CameraBoom->SetWorldRotation(FRotator(angle, 180, 0));
+	Manager->ForceUpdateZoomWidget(CAMERA_ZOOM_PERCENT(cameraZoom_current));
 #ifdef ENABLE_CAMERA_DEBUG_MESSAGES
 	DEBUG("Camera values reset.")
 #endif
@@ -86,9 +90,11 @@ void ABrowserCharacter::CameraZoomIn(){
 	cameraZoom_current = FMath::Clamp(cameraZoom_current - CAMERA_ZOOM_STEP, CAMERA_ZOOM_MIN, CAMERA_ZOOM_MAX);
 	CameraBoom->TargetArmLength = cameraZoom_current;
 	const float delta_angle = (CAMERA_ANGLE(cameraZoom_current)) - angle;
-
 	//const FRotator Rotation = Controller->GetControlRotation();
 	CameraBoom->AddRelativeRotation(FRotator(delta_angle, 0.0f, 0.0f));
+#ifndef SKIP_ZOOM_WIDGET
+	Manager->ForceUpdateZoomWidget(CAMERA_ZOOM_PERCENT(cameraZoom_current));
+#endif
 #ifdef ENABLE_CAMERA_DEBUG_MESSAGES
 	DEBUG("angle should be " + FString::SanitizeFloat(angle));
 #endif
@@ -99,6 +105,23 @@ void ABrowserCharacter::CameraZoomOut(){
 	cameraZoom_current = FMath::Clamp(cameraZoom_current + CAMERA_ZOOM_STEP, CAMERA_ZOOM_MIN, CAMERA_ZOOM_MAX);
 	CameraBoom->TargetArmLength = cameraZoom_current;
 	const float delta_angle = (CAMERA_ANGLE(cameraZoom_current)) - angle;
+	//const FRotator Rotation = Controller->GetControlRotation();
+	//CameraBoom->SetWorldRotation(FRotator(Rotation.Pitch - delta_angle, Rotation.Yaw, Rotation.Roll));
+	CameraBoom->AddRelativeRotation(FRotator(delta_angle, 0.0f, 0.0f));
+#ifndef SKIP_ZOOM_WIDGET
+	Manager->ForceUpdateZoomWidget(CAMERA_ZOOM_PERCENT(cameraZoom_current));
+#endif
+#ifdef ENABLE_CAMERA_DEBUG_MESSAGES
+	DEBUG("angle should be " + FString::SanitizeFloat(angle));
+#endif
+}
+
+void ABrowserCharacter::CameraZoomTo(float ZoomPercent)
+{
+	const float angle = (CAMERA_ANGLE(cameraZoom_current));
+	cameraZoom_current = (CAMERA_ZOOM_VALUE(FMath::Clamp(ZoomPercent, 0.0f, 1.0f)));
+	const float delta_angle = (CAMERA_ANGLE(cameraZoom_current)) - angle;
+	CameraBoom->TargetArmLength = cameraZoom_current;
 
 	//const FRotator Rotation = Controller->GetControlRotation();
 	//CameraBoom->SetWorldRotation(FRotator(Rotation.Pitch - delta_angle, Rotation.Yaw, Rotation.Roll));

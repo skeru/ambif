@@ -1,5 +1,11 @@
 // Stefano Cherubin stefano1.cherubin@mail.polimi.it - except where otherwise stated
 
+/** Static mapping genres to numbers. */
+
+/* This is not so scalable 
+ * and may not be defined 'good code' 
+ * but should just work. */
+
 #pragma once
 
 #include "CustomUtils/CustomUtils.h"

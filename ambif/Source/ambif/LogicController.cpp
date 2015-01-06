@@ -161,6 +161,11 @@ void ALogicController::UpdateWidgetInterface()
 	WidgetManager->UpdateDimensionWidegt();
 }
 
+void ALogicController::ForceUpdateZoomWidget(float NewZoomPercentage)
+{
+	WidgetManager->ForceUpdateZoomWidget(NewZoomPercentage);
+}
+
 //----------------------TICK-----------------------
 
 void ALogicController::Tick(float DeltaTime)

@@ -63,7 +63,7 @@ private:
 	/** Reset Camera to default values */
 	void ResetCamera();
 
-protected:
+public:
 	UFUNCTION(BlueprintCallable, Category = "Camera Management")
 	/** Camera zoom step in */
 	void CameraZoomIn();
@@ -71,6 +71,13 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Camera Management")
 	/** Camera zoom step out */
 	void CameraZoomOut();
+
+	UFUNCTION(BlueprintCallable, Category = "Camera Management")
+	/** Camera zoom set to value.
+	 * Zoom 0 means close to object.
+	 *
+	 * Does not update Widget Zoom */
+	void CameraZoomTo(float ZoomPercent);
 
 	float cameraZoom_current;
 

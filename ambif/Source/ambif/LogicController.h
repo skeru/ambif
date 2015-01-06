@@ -143,6 +143,15 @@ public:
 	 */
 	void UpdateWidgetInterface();
 
+	/** Force zoom to NewZoomPercentage.
+	 * Updates widget slider and triggers a zoom update. 
+	 * 
+	 * Proxy for WidgetManager_i::ForceUpdateZoomWidget
+	 *
+	 * @see AWidgetManager_i::ForceUpdateZoomWidget(float)
+	 */
+	void ForceUpdateZoomWidget(float NewZoomPercentage);
+
 	//----------------------TICK-----------------------
 public:
 	UFUNCTION()
