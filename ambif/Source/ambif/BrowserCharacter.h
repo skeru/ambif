@@ -58,12 +58,11 @@ public:
 
 	//-------------------------CAMERA ZOOM-------------------------
 
-private:
+public:
 	UFUNCTION(BlueprintCallable, Category = "Camera Management")
 	/** Reset Camera to default values */
 	void ResetCamera();
 
-public:
 	UFUNCTION(BlueprintCallable, Category = "Camera Management")
 	/** Camera zoom step in */
 	void CameraZoomIn();
@@ -79,6 +78,7 @@ public:
 	 * Does not update Widget Zoom */
 	void CameraZoomTo(float ZoomPercent);
 
+private:
 	float cameraZoom_current;
 
 	//------------------------- AXES CONTROL -------------------------
