@@ -1,6 +1,7 @@
 // Stefano Cherubin stefano1.cherubin@mail.polimi.it
 
 #include "ambif.h"
+#include "CustomUtils/DebugUtils.h"
 #include "MusicPlayerActor.h"
 
 //#define MUSIC_PLAYER_ACTOR_VERBOSE
@@ -20,6 +21,11 @@ AMusicPlayerActor::AMusicPlayerActor(const FObjectInitializer& ObjectInitializer
 	ac->bAutoActivate = false;
 
 	loaded = false;
+	isPlaying = false;
+	isPaused = false;
+
+	//tick
+	PrimaryActorTick.bCanEverTick = true;
 }
 
 
@@ -28,21 +34,27 @@ inline void AMusicPlayerActor::Load(FString NewFileName = "")
 	if (NewFileName != "")
 	{
 		FileName = NewFileName;
-		Stop();
 	}
+	Stop();
+	
 	rawFile.Empty();
+	
 	loaded = FFileHelper::LoadFileToArray(rawFile, FileName.GetCharArray().GetData());
 
 	if (loaded){
-#ifdef MUSIC_PLAYER_ACTOR_VERBOSE
-		DEBUG("loaded");
-#endif
 		FByteBulkData* bulkData = &sw->CompressedFormatData.GetFormat(TEXT("OGG"));
 		bulkData->Lock(LOCK_READ_WRITE);
 		FMemory::Memcpy(bulkData->Realloc(rawFile.Num()), rawFile.GetData(), rawFile.Num());
 		bulkData->Unlock();
 		fillSoundWaveInfo(sw, &rawFile);
 		ac->SetSound(sw);
+#ifdef MUSIC_PLAYER_ACTOR_VERBOSE
+		DEBUG("loaded");
+	}
+	else
+	{
+		DebugUtils::LogString("MusicPlayerActor: can't load song file.");
+#endif
 	}
 }
 
@@ -63,6 +75,7 @@ void AMusicPlayerActor::Play()
 	{
 		ac->Play();
 	}
+	isPlaying = true;
 }
 
 void AMusicPlayerActor::Pause()
@@ -74,6 +87,7 @@ void AMusicPlayerActor::Pause()
 	{
 		audioSource->Pause();
 		isPaused = true;
+		isPlaying = true;
 	}
 }
 
@@ -81,11 +95,35 @@ void AMusicPlayerActor::Stop()
 {
 	ac->Stop();
 	isPaused = false;
+	isPlaying = false;
+	playTime = 0.0f;
 	if (audioSource)
 	{
 		audioSource->Stop();
 	}
 }
+
+bool AMusicPlayerActor::IsPaused()
+{
+	return isPaused;
+}
+
+bool AMusicPlayerActor::IsLoaded()
+{
+	return loaded;
+}
+
+bool AMusicPlayerActor::IsPlaying()
+{
+	return isPlaying;
+}
+
+double AMusicPlayerActor::GetPlayTime()
+{
+	return playTime;
+}
+
+//--------------------------------private stuff--------------------------------
 
 int AMusicPlayerActor::fillSoundWaveInfo(USoundWave* sw, TArray<uint8>* rawFile)
 {
@@ -113,10 +151,13 @@ int AMusicPlayerActor::findSource(USoundWave* sw)
 	}
 	TArray<FActiveSound*> tmpActualSounds = device->GetActiveSounds();
 	if (tmpActualSounds.Num()){
+		//for every sound in game (there shouldn't be many)
 		for (auto activeSoundIt(tmpActualSounds.CreateIterator()); activeSoundIt; ++activeSoundIt){
 			activeSound = *activeSoundIt;
+			//for every wave contained in this sound source
 			for (auto WaveInstanceIt(activeSound->WaveInstances.CreateIterator()); WaveInstanceIt; ++WaveInstanceIt){
 				sw_instance = WaveInstanceIt.Value();
+				//if contains same data (same track)
 				if (sw_instance->WaveData->CompressedDataGuid == sw->CompressedDataGuid){
 					audioSource = device->WaveInstanceSourceMap.FindRef(sw_instance);
 					return 0;
@@ -127,4 +168,21 @@ int AMusicPlayerActor::findSource(USoundWave* sw)
 	audioSource = NULL;
 	activeSound = NULL;
 	return -2;
+}
+
+//----------------------TICK-----------------------
+
+void AMusicPlayerActor::Tick(float DeltaTime)
+{
+	if (audioSource && audioSource->IsPlaying())
+	{
+		playTime += (double) DeltaTime;
+	}
+	else if (isPlaying && playTime > DeltaTime)
+	{	//song just ended (playTime > DeltaTime is needed to avoid first tick)
+		Stop();
+#ifdef MUSIC_PLAYER_ACTOR_VERBOSE
+		DebugUtils::LogString("MusicPlayerActor: detected song end");
+#endif
+	}
 }

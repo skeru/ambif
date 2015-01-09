@@ -201,36 +201,23 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Actions (Map)")
 	/** For every dimension plotted, update dimension */
-	void GlobalUpdateMap();
+	void GlobalUpdateMap(float CurrentTime = 0.0f);
 
 	UFUNCTION(BlueprintCallable, Category = "Actions (Map)")
 	/** For every dimension plotted, update dimension */
-	void UpdateMapXYZ();
+	void UpdateMapXYZ(float CurrentTime = 0.0f);
 
 	UFUNCTION(BlueprintCallable, Category = "Actions (Map)")
 	/** Loads details and render on the map a PlottableDimension */
-	void UpdateSingleMapDimension(PlottableDimension::Type Dimension);	//to be extended with new dimensions
+	void UpdateSingleMapDimension(PlottableDimension::Type Dimension, float CurrentTime = 0.0f);	//to be extended with new dimensions
 
 	void ShowElements(TArray<FString> ElementIDs);
 
 	void ApplySelectionToElement(FString ElementID);
 	void RemoveSelectionFromElement(FString ElementID);
 
-	//----------------------------TICK----------------------------
-public:
-	UFUNCTION()
-	//deprecated
-	void Tick(float DeltaTime) override;
-
-	//---------------------private tick stuff---------------------
-private:
-	//deprecated
-	void DetectSelectedActors();
-	//deprecated
-	void DetectClickedActors();
-
 	//------------------------PRIVATE STUFF------------------------
 private:	//EHI, Go away! I'm naked.
 
-	bool TakeValue(FSongDetails elem, DimensionDetails dim, Caster* c, float& OutputValue);
+	bool TakeValue(FSongDetails elem, DimensionDetails dim, Caster* c, float& OutputValue, float time = 0.0f);
 };

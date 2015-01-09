@@ -163,6 +163,14 @@ private:
 
 	void DetectClickedActors();
 
+	inline void HandleElement();
+
+	//*time from last element update
+	double DeltaTimeElementUpdate;
+
+	//*update element every ElmentUpdateGranularity seconds.
+	const double ElmentUpdateGranularity = 1.0f;
+
 	//--------------------PRIVATE STUFF--------------------
 private:
 	/** Retrieve track artist and title given its id */

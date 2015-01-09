@@ -24,9 +24,9 @@ public:
 	//constructor
 	AMusicPlayerActor(const FObjectInitializer& ObjectInitializer);
 
-public:
+private:
 	//* Audio file name (OggVorbis) with path
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = MusicPlayer)
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = MusicPlayer)
 	FString FileName;
 
 	//* manually constructed SoundWave 
@@ -46,17 +46,45 @@ public:
 
 	//* If true the song was successfully loaded
 	bool loaded;
-	//* If true the song was manually paused by the user
+	
+	//* If true the song is playing
 	bool isPaused;
 
+	//* If true the song was manually paused by the user
+	bool isPlaying;
+
+	//* Played seconds of the current song. Updated every tick.
+	double playTime;
+
+public:
 	UFUNCTION(BlueprintCallable, Category = "Player")
-		void Load(FString NewFileName);
+	void Load(FString NewFileName);
+	
 	UFUNCTION(BlueprintCallable, Category = "Player")
-		void Stop();
+	void Stop();
+	
 	UFUNCTION(BlueprintCallable, Category = "Player")
-		void Play();
+	void Play();
+	
 	UFUNCTION(BlueprintCallable, Category = "Player")
-		void Pause();
+	void Pause();
+	
+	UFUNCTION(BlueprintCallable, Category = "Player Status")
+	/** True if the song playing, false otherwise. */
+	bool IsPlaying();
+	
+	UFUNCTION(BlueprintCallable, Category = "Player Status")
+	/** If true the song was manually paused by the user */
+	bool IsPaused();
+	
+	UFUNCTION(BlueprintCallable, Category = "Player Status")
+	/** Return true if the song was successfully loaded */
+	bool IsLoaded();
+	
+	UFUNCTION(BlueprintCallable, Category = "Player Status")
+	double GetPlayTime();
+
+	//--------------------------------private stuff--------------------------------
 
 private:
 
@@ -78,4 +106,8 @@ private:
 	*/
 	int findSource(USoundWave* sw);
 
+	//----------------------TICK-----------------------
+public:
+	UFUNCTION()
+	void Tick(float DeltaTime) override;
 };

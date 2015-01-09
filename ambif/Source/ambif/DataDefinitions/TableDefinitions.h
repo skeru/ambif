@@ -18,12 +18,16 @@ struct FSongProperty
 	FString SummaryValue;
 
 	//UPROPERTY(BlueprintReadOnly, Category = "Details")
-	/** Property Segment Values <start segment time, value> */
-	TMap<unsigned, FString> SegmentValues;
+	/** Property Segment Values <start segment time, value> 
+	 * 
+	 * segment time is expressed in seconds.
+	 * value is a FString representation of the value.
+	 */
+	TMap<float, FString> SegmentValues;
 
 	inline struct FSongProperty& operator<<(const TArray<FString> serialized_data)
 	{
-		SegmentValues = TMap<unsigned, FString>();
+		SegmentValues = TMap<float, FString>();
 		if (serialized_data.Num() > 0)
 		{
 			SummaryValue = serialized_data[0];
@@ -31,8 +35,8 @@ struct FSongProperty
 			SegmentCounter = (serialized_data.Num() - 1) / 2;
 			for (int i = 0, offset = 1; i < SegmentCounter; i++)
 			{
-				unsigned tmp;
-				if (Utils::FStrToU(serialized_data[offset + (2 * i)], tmp))
+				float tmp;
+				if (Utils::FStrToF(serialized_data[offset + (2 * i)], tmp))
 				{
 					SegmentValues[tmp] = serialized_data[offset + (2 * i) + 1];
 				}
@@ -46,12 +50,13 @@ struct FSongProperty
 		return *this;
 	}
 
-	inline FString operator[](unsigned int time)
+	/** takes, if exists, the greater element less than time. */
+	inline FString operator[](float time)
 	{
 		if (SegmentValues.Num() > 0)
 		{
 			int a, b, middle, old_min;
-			TArray<unsigned> keys;
+			TArray<float> keys;
 			a = 0;
 			b = SegmentValues.GetKeys(keys);
 			keys.Sort();
@@ -85,21 +90,21 @@ struct FSongDetails //TODO promote to class & create interface via abstract clas
 {
 	GENERATED_USTRUCT_BODY()
 
-		UPROPERTY(BlueprintReadOnly, Category = "Details")
-		/** Song Identifier */
-		FString Id;
+	UPROPERTY(BlueprintReadOnly, Category = "Details")
+	/** Song Identifier */
+	FString Id;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Details")
-		/** Song Name, Public Identifier */
-		FString Name;
+	/** Song Name, Public Identifier */
+	FString Name;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Details")
-		/** Where song file is stored */
-		FString Path;
+	/** Where song file is stored */
+	FString Path;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Details")
-		/** Artist */
-		FString Artist;
+	/** Artist */
+	FString Artist;
 
 	//UPROPERTY(BlueprintReadOnly, Category = "Details")
 	/** Length */
@@ -136,14 +141,23 @@ struct FSongDetails //TODO promote to class & create interface via abstract clas
 
 			//-------propery loading suspended waiting for refactoring------------
 
-			//columns except Name, Path. Half is property Ids, Half is property values
-			/*			size_t numberOfProperties = (serialized_data.Num() - 2) / 2;
-			for (size_t i = 0, offset = 3; i < numberOfProperties; i++)
+			/*columns except:
+			 * - Id,
+			 * - Name,
+			 * - Path,
+			 * - Artist,
+			 * - Lenght. 
+			 * 
+			 * Half are property Ids, half are property values */
+			//const size_t numberOfProperties = (serialized_data.Num() - 2) / 2;
+
+			/*for (size_t i = 0, offset = 3; i < numberOfProperties; i++)
 			{
-			FSongProperty prop;
-			prop.Id = serialized_data[2 * i + offset];
-			prop.Value = serialized_data[2 * i + offset + 1];
-			Properties[prop.Id] = prop; //Properties.Add(prop);
+				
+				FSongProperty prop;
+				prop.Id = serialized_data[2 * i + offset];
+				prop.Value = serialized_data[2 * i + offset + 1];
+				Properties[prop.Id] = prop; //Properties.Add(prop);
 			}*/
 		}
 		return *this;
@@ -160,37 +174,37 @@ struct FDimensionDetails //TODO promote to class & create interface via abstract
 {
 	GENERATED_USTRUCT_BODY()
 
-		UPROPERTY(BlueprintReadOnly, Category = "Details")
-		/** Dimension Identifier */
-		FString Id;
+	UPROPERTY(BlueprintReadOnly, Category = "Details")
+	/** Dimension Identifier */
+	FString Id;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Details")
-		/** Display Name */
-		FString FullName;
+	/** Display Name */
+	FString FullName;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Details")
-		/** Description */
-		FString Description;
+	/** Description */
+	FString Description;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Details")
-		/** Lowest value this dimension could assume */
-		float LowerBound;
+	/** Lowest value this dimension could assume */
+	float LowerBound;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Details")
-		/** Highest value this dimension could assume */
-		float UpperBound;
+	/** Highest value this dimension could assume */
+	float UpperBound;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Details")
-		/** Numbers, Nominal values, Genre classification, ... */
-		FString OrderAs;
+	/** Numbers, Nominal values, Genre classification, ... */
+	FString OrderAs;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Details")
-		/** Should default value be used */
-		bool ReplaceMissingValues;
+	/** Should default value be used */
+	bool ReplaceMissingValues;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Details")
-		/** Default Value */
-		float DefaultValue;
+	/** Default Value */
+	float DefaultValue;
 
 	inline struct FDimensionDetails& operator<<(const TArray<FString> serialized_data)
 	{
@@ -225,29 +239,29 @@ struct FViewDetails //TODO promote to class & create interface via abstract clas
 {
 	GENERATED_USTRUCT_BODY()
 
-		UPROPERTY(BlueprintReadOnly, Category = "Details")
-		/** View Identifier */
-		FString Id;
+	UPROPERTY(BlueprintReadOnly, Category = "Details")
+	/** View Identifier */
+	FString Id;
+	
+	UPROPERTY(BlueprintReadOnly, Category = "Details")
+	/** Dimension to show among X */
+	FString XDimension;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Details")
-		/** Dimension to show among X */
-		FString XDimension;
+	/** Dimension to show among Y */
+	FString YDimension;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Details")
-		/** Dimension to show among Y */
-		FString YDimension;
+	/** Dimension to show among Z */
+	FString ZDimension;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Details")
-		/** Dimension to show among Z */
-		FString ZDimension;
+	/** Dimension to show as element color */
+	FString HueDimension;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Details")
-		/** Dimension to show as element color */
-		FString HueDimension;
-
-	UPROPERTY(BlueprintReadOnly, Category = "Details")
-		/** Dimension to show as element color saturation*/
-		FString SatDimension;
+	/** Dimension to show as element color saturation*/
+	FString SatDimension;
 
 	inline struct FViewDetails& operator<<(const TArray<FString> serialized_data)
 	{

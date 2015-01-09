@@ -330,22 +330,22 @@ void APresentationLayer::SetDimension(PlottableDimension::Type DimensionSpace, F
 	}
 }
 
-void APresentationLayer::GlobalUpdateMap()
+void APresentationLayer::GlobalUpdateMap(float CurrentTime)
 {
 	//update x-y-z
-	UpdateMapXYZ();
+	UpdateMapXYZ(CurrentTime);
 
 	//update other dimensions
 	for (auto d : DimensionOnMap)
 	{
 		if (d.first != PlottableDimension::X && d.first != PlottableDimension::Y && d.first != PlottableDimension::Z)
 		{
-			UpdateSingleMapDimension((PlottableDimension::Type) d.first);
+			UpdateSingleMapDimension((PlottableDimension::Type) d.first, CurrentTime);
 		}
 	}
 }
 
-void APresentationLayer::UpdateMapXYZ()
+void APresentationLayer::UpdateMapXYZ(float CurrentTime)
 {
 	DimensionDetails xd, yd, zd;
 	if (!DataAgent->getDimensionDetails(DimensionOnMap[PlottableDimension::X].Id, xd) || !DataAgent->getDimensionDetails(DimensionOnMap[PlottableDimension::Y].Id, yd) || !DataAgent->getDimensionDetails(DimensionOnMap[PlottableDimension::Z].Id, zd))
@@ -369,9 +369,9 @@ void APresentationLayer::UpdateMapXYZ()
 	{
 		//TODO perform existence and format check
 		bool conversion_ok;
-		conversion_ok =					  DimensionOnMap[PlottableDimension::X].Caster->Cast(el.second[xd.Id], x_elem_pos);
-		conversion_ok = (conversion_ok) ? DimensionOnMap[PlottableDimension::Y].Caster->Cast(el.second[yd.Id], y_elem_pos) : false;
-		conversion_ok = (conversion_ok) ? DimensionOnMap[PlottableDimension::Z].Caster->Cast(el.second[zd.Id], z_elem_pos) : false;
+		conversion_ok = DimensionOnMap[PlottableDimension::X].Caster->Cast(el.second.Properties[xd.Id][CurrentTime], x_elem_pos);
+		conversion_ok = (conversion_ok) ? DimensionOnMap[PlottableDimension::Y].Caster->Cast(el.second.Properties[yd.Id][CurrentTime], y_elem_pos) : false;
+		conversion_ok = (conversion_ok) ? DimensionOnMap[PlottableDimension::Z].Caster->Cast(el.second.Properties[zd.Id][CurrentTime], z_elem_pos) : false;
 		if (conversion_ok)
 		{
 			MapElementsManagerAgent->MoveElementTo(el.first, x_elem_pos, y_elem_pos, z_elem_pos);
@@ -385,7 +385,7 @@ void APresentationLayer::UpdateMapXYZ()
 	}
 }
 
-void APresentationLayer::UpdateSingleMapDimension(PlottableDimension::Type Dimension)
+void APresentationLayer::UpdateSingleMapDimension(PlottableDimension::Type Dimension, float CurrentTime)
 {
 	DimensionDetails dim;
 	FString dim_id;
@@ -408,7 +408,7 @@ void APresentationLayer::UpdateSingleMapDimension(PlottableDimension::Type Dimen
 	{
 	case PlottableDimension::X: case PlottableDimension::Y: case PlottableDimension::Z:
 		//refresh position
-		UpdateMapXYZ();
+		UpdateMapXYZ(CurrentTime);
 		break;
 	case PlottableDimension::Color_Hue:
 		DimensionOnMap[PlottableDimension::Color_Hue].Caster = DataAgent->getCaster(dim);
@@ -417,7 +417,7 @@ void APresentationLayer::UpdateSingleMapDimension(PlottableDimension::Type Dimen
 
 		for (auto elem : data)
 		{
-			valid = TakeValue(elem.second, dim, DimensionOnMap[PlottableDimension::Color_Hue].Caster, fval);
+			valid = TakeValue(elem.second, dim, DimensionOnMap[PlottableDimension::Color_Hue].Caster, fval, CurrentTime);
 			if (valid)	//update the element using fval
 			{
 				MapElementsManagerAgent->SetColorHue(elem.first, fval);
@@ -437,7 +437,7 @@ void APresentationLayer::UpdateSingleMapDimension(PlottableDimension::Type Dimen
 
 		for (auto elem : data)
 		{
-			valid = TakeValue(elem.second, dim, DimensionOnMap[PlottableDimension::Color_Sat].Caster, fval);
+			valid = TakeValue(elem.second, dim, DimensionOnMap[PlottableDimension::Color_Sat].Caster, fval, CurrentTime);
 			if (valid)	//update the element using fval
 			{
 				MapElementsManagerAgent->SetColorSat(elem.first, fval);
@@ -472,14 +472,14 @@ inline void APresentationLayer::RemoveSelectionFromElement(FString ElementID)
 
 
 //----------------------------PRIVATE STUFF----------------------------
-inline bool APresentationLayer::TakeValue(FSongDetails elem, DimensionDetails dim, Caster* c, float& OutputValue)
+inline bool APresentationLayer::TakeValue(FSongDetails elem, DimensionDetails dim, Caster* c, float& OutputValue, float time)
 {
-	FString val;
-	bool valid;
-	float fval;
+	FString val;	//FString value representation
+	bool valid;		//value found
+	float fval;		//float value
 	try
 	{
-		val = elem.Properties.at(dim.Id).SummaryValue;
+		val = elem.Properties.at(dim.Id)[time];//.SummaryValue;
 		valid = true;
 	}
 	catch (std::out_of_range do_not_panic){//carry a towel
@@ -513,39 +513,3 @@ inline bool APresentationLayer::TakeValue(FSongDetails elem, DimensionDetails di
 	return valid;
 }
 
-//-----------------------------------TICK-----------------------------------
-//deprecated
-void APresentationLayer::Tick(float DeltaTime)
-{
-	//move this method to Logic Controller
-	Super::Tick(DeltaTime);
-	DetectSelectedActors();
-	DetectClickedActors();
-}
-
-//deprecated
-void APresentationLayer::DetectSelectedActors()
-{
-	TSet<FString> detected_set = MapElementsManagerAgent->CollectTickSelectedElements();
-	CurrentlySelectedElements = CurrentlySelectedElements.Union(detected_set);
-	TSet<FString> removed_set = MapElementsManagerAgent->CollectTickDeselectedElements();
-	CurrentlySelectedElements = CurrentlySelectedElements.Difference(removed_set);
-
-#ifdef PresentationLayer_VERBOSE_MODE
-	for (auto elem : detected_set)
-		DebugUtils::LogString(FString("Presentation Layer: Detected mouse over ") + elem);
-	for (auto elem : removed_set)
-		DebugUtils::LogString(FString("Presentation Layer: Detected mouse out of ") + elem);
-#endif
-	//TODO apply selection / deselection to elements
-}
-
-//deprecated
-void APresentationLayer::DetectClickedActors()
-{
-	TSet<FString> detected_new = MapElementsManagerAgent->CollectTickClickedElements();
-	TSet<FString> diff_set = CurrentlyClickedElements.Difference(detected_new);
-	CurrentlyClickedElements = detected_new;
-
-	//TODO apply clik to elements
-}

@@ -18,6 +18,8 @@ ALogicController::ALogicController(const FObjectInitializer& ObjectInitializer)
 	//elements buffers
 	CurrentlySelectedElements = TSet<FString>();
 	CurrentlyClickedElements = TSet<FString>();
+
+	DeltaTimeElementUpdate = 0.0f;
 }
 
 //---------------MUSIC PLAYER FUNCTIONS---------------
@@ -173,6 +175,14 @@ void ALogicController::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	DetectClickedActors();
 	DetectSelectedActors();
+
+	//element update
+	DeltaTimeElementUpdate += DeltaTime;
+	if (DeltaTimeElementUpdate >= ElmentUpdateGranularity)
+	{
+		DeltaTimeElementUpdate = 0.0f;
+		HandleElement();
+	}
 }
 
 void ALogicController::DetectSelectedActors()
@@ -217,6 +227,15 @@ void ALogicController::DetectClickedActors()
 		LoadElement(id);
 	}
 
+}
+
+void ALogicController::HandleElement()
+{
+	if (MusicPlayer && MusicPlayer->IsPlaying())
+	{	//update only current playing element
+		const double currentTime = MusicPlayer->GetPlayTime();
+		PresentationLayer->GlobalUpdateMap(currentTime);	//TODO implement single element update
+	}
 }
 
 //--------------------PRIVATE STUFF--------------------
