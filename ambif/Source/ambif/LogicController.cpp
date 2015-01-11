@@ -18,6 +18,7 @@ ALogicController::ALogicController(const FObjectInitializer& ObjectInitializer)
 	//elements buffers
 	CurrentlySelectedElements = TSet<FString>();
 	CurrentlyClickedElements = TSet<FString>();
+	LastClickedElementID = "";
 
 	DeltaTimeElementUpdate = 0.0f;
 }
@@ -33,6 +34,7 @@ void ALogicController::LoadElement(FString ElementID)
 		{
 			MusicPlayer->Load(d.Path);
 			WidgetManager->UpdateMusicPlayerWidget(false, false); //load stops music
+
 #ifdef LogicController_VERBOSE_MODE
 			DebugUtils::LogString("LogicController: Loaded song");
 		}
@@ -225,6 +227,7 @@ void ALogicController::DetectClickedActors()
 		DebugUtils::LogString("identified click id: " + id);
 #endif
 		LoadElement(id);
+		LastClickedElementID = id;
 	}
 
 }
@@ -234,7 +237,7 @@ void ALogicController::HandleElement()
 	if (MusicPlayer && MusicPlayer->IsPlaying())
 	{	//update only current playing element
 		const double currentTime = MusicPlayer->GetPlayTime();
-		PresentationLayer->GlobalUpdateMap(currentTime);	//TODO implement single element update
+		PresentationLayer->GlobalUpdateMap(currentTime, LastClickedElementID);
 	}
 }
 

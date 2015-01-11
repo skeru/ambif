@@ -1,7 +1,7 @@
 // Stefano Cherubin stefano1.cherubin@mail.polimi.it - except where otherwise stated
 
 #include "ambif.h"
-#include "stdexcept"
+#include "CustomUtils/CustomUtils.h"
 #include "CustomUtils/DebugUtils.h"
 #include "MapElementsManager.h"
 
@@ -37,14 +37,13 @@ inline void AMapElementsManager::AddElement(FString ElementID, AMapElementActor*
 
 inline void AMapElementsManager::SetVisible(FString ElementID, bool bVisible)
 {
-	try
+	if (Utils::FHMContains(ActorMap, ElementID))
 	{
-		ActorMap.at(ElementID);//exception if ElementID not valid
 		ActorMap[ElementID]->SetActorHiddenInGame(bVisible);
 	}
-	catch (const std::out_of_range i_care_really_much)
+	else
 	{
-		//desert dust ball.gif
+		DebugUtils::LogString(FString("MapElementsManager::SetVisible: ElementID not found"));
 	}
 }
 
@@ -68,42 +67,36 @@ void AMapElementsManager::SetVisibleToAll(bool bVisible)
 
 inline void AMapElementsManager::SetColor(FString ElementID, FColor NewColor) //TODO test
 {
-	try
+	if (Utils::FHMContains(ActorMap, ElementID))
 	{
-		ActorMap.at(ElementID);//exception if ElementID not valid
 		ActorMap[ElementID]->SetColor(NewColor);
 	}
-	catch (const std::out_of_range i_care_really_much)
+	else
 	{
 		DebugUtils::LogString(FString("MapElementsManager::SetColor: ElementID not found"));
-		//desert dust ball.gif
 	}
 }
 
 inline void AMapElementsManager::SetColorHue(FString ElementID, float Hue)
 {
 	HSVColor NewColor;
-	try
+	if (Utils::FHMContains(ActorMap, ElementID))
 	{
-		ActorMap.at(ElementID);//exception if ElementID not valid
 		NewColor = HSVColor(ActorMap[ElementID]->GetColor());
 		NewColor.SetH(Hue);
 		ActorMap[ElementID]->SetColor(NewColor.ToFLinearColor());
-
 	}
-	catch (const std::out_of_range i_care_really_much)
+	else
 	{
 		DebugUtils::LogString(FString("MapElementsManager::SetColor: ElementID not found"));
-		//desert dust ball.gif
 	}
 }
 
 inline void AMapElementsManager::SetColorSat(FString ElementID, float Sat)
 {
 	HSVColor NewColor;
-	try
+	if (Utils::FHMContains(ActorMap, ElementID))
 	{
-		ActorMap.at(ElementID);//exception if ElementID not valid
 		NewColor = HSVColor(ActorMap[ElementID]->GetColor());
 		NewColor.SetS(Sat);
 #ifdef BIND_HSVCOLOR_VALUE_TO_SATURATION
@@ -111,24 +104,21 @@ inline void AMapElementsManager::SetColorSat(FString ElementID, float Sat)
 #endif
 		ActorMap[ElementID]->SetColor(NewColor.ToFLinearColor());
 	}
-	catch (const std::out_of_range i_care_really_much)
+	else
 	{
 		DebugUtils::LogString(FString("MapElementsManager::SetColor: ElementID not found"));
-		//desert dust ball.gif
 	}
 }
 
 void AMapElementsManager::MoveElementTo(FString ElementID, float x, float y, float z)
 {
-	try
+	if (Utils::FHMContains(ActorMap, ElementID))
 	{
-		ActorMap.at(ElementID);//exception if ElementID not valid
 		ActorMap[ElementID]->MoveTo(x, y, z);
 	}
-	catch (const std::out_of_range i_am_really_sad_about_this)
+	else
 	{
 		DebugUtils::LogString(FString("MapElementsManager::MoveElementTo: ElementID not found"));
-		//desert dust ball.gif
 	}
 	//DebugUtils::LogString(FString("MapElementsManager::MoveElementTo: not implemented method called for element ") + ElementID);
 }

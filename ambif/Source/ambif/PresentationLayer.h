@@ -200,16 +200,30 @@ public:
 	void SetDimension(PlottableDimension::Type DimensionSpace, FString DimensionID, bool UpdateNow = true);//WIP
 
 	UFUNCTION(BlueprintCallable, Category = "Actions (Map)")
-	/** For every dimension plotted, update dimension */
-	void GlobalUpdateMap(float CurrentTime = 0.0f);
+	/** For every dimension plotted, update dimension.
+	 * 
+	 * @param CurrentTime plot dimensions using value for currentTime.
+	 * @param ElementID which element should be updated. Default = "" means all elements.
+	 */
+	void GlobalUpdateMap(float CurrentTime = 0.0f, FString ElementID = "");
 
 	UFUNCTION(BlueprintCallable, Category = "Actions (Map)")
-	/** For every dimension plotted, update dimension */
-	void UpdateMapXYZ(float CurrentTime = 0.0f);
+	/** For X, Y, Z dimension plotted, update dimension
+	 *
+	 * @param CurrentTime plot dimensions using value for currentTime.
+	 * @param ElementID which element should be updated. Default = "" means all elements.
+	 */
+	void UpdateMapXYZ(float CurrentTime = 0.0f, FString ElementID = "");
 
 	UFUNCTION(BlueprintCallable, Category = "Actions (Map)")
-	/** Loads details and render on the map a PlottableDimension */
-	void UpdateSingleMapDimension(PlottableDimension::Type Dimension, float CurrentTime = 0.0f);	//to be extended with new dimensions
+	/** Loads details and render on the map a PlottableDimension 
+	 * 
+	 * @param Dimension Which one of the rendered dimension should be updated.
+	 *		If no dimension is associated to this PlottableDimension, a default NO_DIMENSION is used.
+	 * @param CurrentTime plot dimensions using value for currentTime.
+	 * @param ElementID which element should be updated. Default = "" means all elements.
+	 */
+	void UpdateSingleMapDimension(PlottableDimension::Type Dimension, float CurrentTime = 0.0f, FString ElementID = "");
 
 	void ShowElements(TArray<FString> ElementIDs);
 
@@ -220,4 +234,20 @@ public:
 private:	//EHI, Go away! I'm naked.
 
 	bool TakeValue(FSongDetails elem, DimensionDetails dim, Caster* c, float& OutputValue, float time = 0.0f);
+
+	/** Update Single Plottable Dimension: Color Hue. 
+	 * 
+	 * @param dim Dimension to plot in this PlottableDimension
+	 * @param CurrentTime use value for this time if available. Default use summary value.
+	 * @param ElementID update only ElementID. Default update all elements.
+	 */
+	inline void UpdateColorHue(const DimensionDetails dim, float CurrentTime = 0.0f, FString ElementID = "");
+
+	/** Update Single Plottable Dimension: Color Sat.
+	*
+	* @param dim Dimension to plot in this PlottableDimension
+	* @param CurrentTime use value for this time if available. Default use summary value.
+	* @param ElementID update only ElementID. Default update all elements.
+	*/
+	inline void UpdateColorSat(const DimensionDetails dim, float CurrentTime = 0.0f, FString ElementID = "");
 };

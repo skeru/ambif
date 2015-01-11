@@ -330,10 +330,10 @@ void APresentationLayer::SetDimension(PlottableDimension::Type DimensionSpace, F
 	}
 }
 
-void APresentationLayer::GlobalUpdateMap(float CurrentTime)
+void APresentationLayer::GlobalUpdateMap(float CurrentTime, FString ElementID)
 {
 	//update x-y-z
-	UpdateMapXYZ(CurrentTime);
+	UpdateMapXYZ(CurrentTime, ElementID);
 
 	//update other dimensions
 	for (auto d : DimensionOnMap)
@@ -345,7 +345,7 @@ void APresentationLayer::GlobalUpdateMap(float CurrentTime)
 	}
 }
 
-void APresentationLayer::UpdateMapXYZ(float CurrentTime)
+void APresentationLayer::UpdateMapXYZ(float CurrentTime, FString ElementID)
 {
 	DimensionDetails xd, yd, zd;
 	if (!DataAgent->getDimensionDetails(DimensionOnMap[PlottableDimension::X].Id, xd) || !DataAgent->getDimensionDetails(DimensionOnMap[PlottableDimension::Y].Id, yd) || !DataAgent->getDimensionDetails(DimensionOnMap[PlottableDimension::Z].Id, zd))
@@ -385,12 +385,10 @@ void APresentationLayer::UpdateMapXYZ(float CurrentTime)
 	}
 }
 
-void APresentationLayer::UpdateSingleMapDimension(PlottableDimension::Type Dimension, float CurrentTime)
+void APresentationLayer::UpdateSingleMapDimension(PlottableDimension::Type Dimension, float CurrentTime, FString ElementID)
 {
 	DimensionDetails dim;
 	FString dim_id;
-	bool valid;
-	float fval;
 
 	try
 	{
@@ -411,44 +409,10 @@ void APresentationLayer::UpdateSingleMapDimension(PlottableDimension::Type Dimen
 		UpdateMapXYZ(CurrentTime);
 		break;
 	case PlottableDimension::Color_Hue:
-		DimensionOnMap[PlottableDimension::Color_Hue].Caster = DataAgent->getCaster(dim);
-		DimensionOnMap[PlottableDimension::Color_Hue].Caster->SetTargetBounds(0.0f, 360.0f);
-		DimensionOnMap[PlottableDimension::Color_Hue].Caster->SetNormalizationType(ENormalize::Linear);
-
-		for (auto elem : data)
-		{
-			valid = TakeValue(elem.second, dim, DimensionOnMap[PlottableDimension::Color_Hue].Caster, fval, CurrentTime);
-			if (valid)	//update the element using fval
-			{
-				MapElementsManagerAgent->SetColorHue(elem.first, fval);
-			}
-#ifdef PresentationLayer_VERBOSE_MODE
-			else
-			{
-				DebugUtils::LogString(FString("PresentationLayer::UpdateColorHue: failed to load color Hue. Invalid value."));
-			}
-#endif
-		}
+		UpdateColorHue(dim, CurrentTime, ElementID);
 		break;
 	case PlottableDimension::Color_Sat:
-		DimensionOnMap[PlottableDimension::Color_Sat].Caster = DataAgent->getCaster(dim);
-		DimensionOnMap[PlottableDimension::Color_Sat].Caster->SetTargetBounds(SAT_LOWER_BOUND, 1.0f);
-		DimensionOnMap[PlottableDimension::Color_Sat].Caster->SetNormalizationType(ENormalize::Log);
-
-		for (auto elem : data)
-		{
-			valid = TakeValue(elem.second, dim, DimensionOnMap[PlottableDimension::Color_Sat].Caster, fval, CurrentTime);
-			if (valid)	//update the element using fval
-			{
-				MapElementsManagerAgent->SetColorSat(elem.first, fval);
-			}
-#ifdef PresentationLayer_VERBOSE_MODE
-			else
-			{
-				DebugUtils::LogString(FString("PresentationLayer::UpdateColorSat: failed to load color saturation. Invalid value."));
-			}
-#endif
-		}
+		UpdateColorSat(dim, CurrentTime, ElementID);
 		break;
 	default:
 		break;
@@ -477,32 +441,28 @@ inline bool APresentationLayer::TakeValue(FSongDetails elem, DimensionDetails di
 	FString val;	//FString value representation
 	bool valid;		//value found
 	float fval;		//float value
-	try
-	{
+	try {
 		val = elem.Properties.at(dim.Id)[time];//.SummaryValue;
 		valid = true;
 	}
-	catch (std::out_of_range do_not_panic){//carry a towel
+	catch (std::out_of_range do_not_panic) {//carry a towel
 		valid = false; //element not found
 	}
-	if (!valid && !dim.ReplaceMissingValues)
-	{
+	if (!valid && !dim.ReplaceMissingValues) {
 #ifdef PresentationLayer_VERBOSE_MODE
 		DebugUtils::LogString(FString("PresentationLayer::TakeValue: didn't find a value for element ") + elem.Id);
 #endif
 		return false;
 	}
 
-	if (!valid)	//use default value
-	{
+	if (!valid)	{	//use default value
 		fval = c->CastFloat(dim.DefaultValue);
 		valid = true;
 #ifdef PresentationLayer_VERBOSE_MODE
 		DebugUtils::LogString(FString("PresentationLayer::TakeValue: recovered default value for element ") + elem.Id);
 #endif
 	}
-	else
-	{	//value successfully read
+	else {	//value successfully read
 		valid = c->Cast(val, fval);
 #ifdef PresentationLayer_VERBOSE_MODE
 		DebugUtils::LogString(FString("PresentationLayer::TakeValue: casted numeric value for element ") +
@@ -513,3 +473,80 @@ inline bool APresentationLayer::TakeValue(FSongDetails elem, DimensionDetails di
 	return valid;
 }
 
+
+//update single plottable dimensions
+void APresentationLayer::UpdateColorHue(const DimensionDetails dim, float CurrentTime, FString ElementID)
+{
+	bool valid;
+	float fval;
+
+	DimensionOnMap[PlottableDimension::Color_Hue].Caster = DataAgent->getCaster(dim);
+	DimensionOnMap[PlottableDimension::Color_Hue].Caster->SetTargetBounds(0.0f, 360.0f);
+	DimensionOnMap[PlottableDimension::Color_Hue].Caster->SetNormalizationType(ENormalize::Linear);
+
+	if (ElementID != "") {	//update only one element
+		SongDetails elem;
+		valid = DataAgent->getElementDetails(ElementID, elem);
+		valid = valid && TakeValue(elem, dim, DimensionOnMap[PlottableDimension::Color_Hue].Caster, fval, CurrentTime);
+		if (valid) {	
+			MapElementsManagerAgent->SetColorHue(ElementID, fval);
+		}
+#ifdef PresentationLayer_VERBOSE_MODE
+		else {
+			DebugUtils::LogString(FString("PresentationLayer::UpdateColorHue: failed update element ") + ElementID);
+		}
+#endif
+	}
+	else {					//update every element on map
+		const Utils::FHashMap<SongDetails> data = *DataAgent->GetElementMap();
+		for (auto elem : data) {
+			valid = TakeValue(elem.second, dim, DimensionOnMap[PlottableDimension::Color_Hue].Caster, fval, CurrentTime);
+			if (valid) {	//update the element using fval
+				MapElementsManagerAgent->SetColorHue(elem.first, fval);
+			}
+#ifdef PresentationLayer_VERBOSE_MODE
+			else {
+				DebugUtils::LogString(FString("PresentationLayer::UpdateColorHue: failed to load color Hue. Invalid value."));
+			}
+#endif
+		}
+	}
+}
+
+void APresentationLayer::UpdateColorSat(const DimensionDetails dim, float CurrentTime, FString ElementID)
+{
+	bool valid;
+	float fval;
+
+	DimensionOnMap[PlottableDimension::Color_Sat].Caster = DataAgent->getCaster(dim);
+	DimensionOnMap[PlottableDimension::Color_Sat].Caster->SetTargetBounds(SAT_LOWER_BOUND, 1.0f);
+	DimensionOnMap[PlottableDimension::Color_Sat].Caster->SetNormalizationType(ENormalize::Log);
+
+	if (ElementID != "") {	//update only one element
+		SongDetails elem;
+		valid = DataAgent->getElementDetails(ElementID, elem);
+		valid = valid && TakeValue(elem, dim, DimensionOnMap[PlottableDimension::Color_Sat].Caster, fval, CurrentTime);
+		if (valid) {
+			MapElementsManagerAgent->SetColorSat(ElementID, fval);
+		}
+#ifdef PresentationLayer_VERBOSE_MODE
+		else {
+			DebugUtils::LogString(FString("PresentationLayer::UpdateColorSat: failed update element ") + ElementID);
+		}
+#endif
+	}
+	else {					//update every element on map
+		const Utils::FHashMap<SongDetails> data = *DataAgent->GetElementMap();
+		for (auto elem : data) {
+			valid = TakeValue(elem.second, dim, DimensionOnMap[PlottableDimension::Color_Sat].Caster, fval, CurrentTime);
+			if (valid) {	//update the element using fval
+				MapElementsManagerAgent->SetColorSat(elem.first, fval);
+			}
+#ifdef PresentationLayer_VERBOSE_MODE
+			else {
+				DebugUtils::LogString(FString("PresentationLayer::UpdateColorSat: failed to load color Sat. Invalid value."));
+			}
+#endif
+		}
+	}
+}

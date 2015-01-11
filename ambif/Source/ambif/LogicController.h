@@ -64,6 +64,8 @@ private:
 	/** Contains IDs of Active Elements on the map (mouse click) */
 	TSet<FString> CurrentlyClickedElements;
 
+	FString LastClickedElementID;
+
 	//---------------MUSIC PLAYER FUNCTIONS---------------
 public:
 	UFUNCTION(BlueprintCallable, Category = "Music Player")
