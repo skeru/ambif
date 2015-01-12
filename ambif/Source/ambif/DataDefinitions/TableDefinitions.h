@@ -23,11 +23,11 @@ struct FSongProperty
 	 * segment time is expressed in seconds.
 	 * value is a FString representation of the value.
 	 */
-	TMap<float, FString> SegmentValues;
+	Utils::hashmap<float, FString> SegmentValues;
 
 	inline struct FSongProperty& operator<<(const TArray<FString> serialized_data)
 	{
-		SegmentValues = TMap<float, FString>();
+		SegmentValues = Utils::hashmap<float, FString>();
 		if (serialized_data.Num() > 0)
 		{
 			SummaryValue = serialized_data[0];
@@ -36,8 +36,7 @@ struct FSongProperty
 			for (int i = 0, offset = 1; i < SegmentCounter; i++)
 			{
 				float tmp;
-				if (Utils::FStrToF(serialized_data[offset + (2 * i)], tmp))
-				{
+				if (Utils::FStrToF(serialized_data[offset + (2 * i)], tmp)) {
 					SegmentValues[tmp] = serialized_data[offset + (2 * i) + 1];
 				}
 			}
@@ -53,12 +52,13 @@ struct FSongProperty
 	/** takes, if exists, the greater element less than time. */
 	inline FString operator[](float time)
 	{
-		if (SegmentValues.Num() > 0)
+		if (SegmentValues.size() > 0)
 		{
 			int a, b, middle, old_min;
 			TArray<float> keys;
 			a = 0;
-			b = SegmentValues.GetKeys(keys);
+			keys = Utils::GetIdList(SegmentValues);
+			b = keys.Num();
 			keys.Sort();
 			//binary search
 			old_min = -1;
@@ -113,11 +113,11 @@ struct FSongDetails //TODO promote to class & create interface via abstract clas
 	/** 'Array' of song available properties.
 	*
 	* Values can be accessed via operator[FString propertyID] */
-	Utils::FMap<FSongProperty> Properties;	//check out TMap
+	Utils::FMap<FSongProperty> Properties = Utils::FMap<FSongProperty>();	//check out TMap
 
 	inline struct FSongDetails& operator<<(const TArray<FString> serialized_data)
 	{
-		Properties = Utils::FMap<FSongProperty>();
+		//Properties = Utils::FMap<FSongProperty>();
 		//Properties = TArray<FSongProperty>();
 		if (serialized_data.Num() < 5)
 		{

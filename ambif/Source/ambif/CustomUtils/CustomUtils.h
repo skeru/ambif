@@ -97,6 +97,16 @@ namespace Utils
 		return id_list;
 	}
 
+	template<typename t1, typename t2> TArray<t1> GetIdList(Utils::hashmap<t1,t2> map)
+	{
+		TArray<t1> id_list = TArray<t1>();
+		for (auto elem : map)
+		{
+			id_list.Add(elem.first);
+		}
+		return id_list;
+	}
+
 	/** check if Container has a given key */
 	template<typename t> bool FHMContains(const FHashMap<t> Container, const FString key)
 	{

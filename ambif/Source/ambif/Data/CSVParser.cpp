@@ -7,12 +7,10 @@
 
 int CSVParser::ReadPropertyDataCSV(const char* FileName, Utils::FHashMap<SongDetails>& OutputMap, bool FirstRowDiscarded, char elem_delim, char row_delim)
 {
-	FSongProperty property;
 	int lineNumber = 0;
 	std::string line, linetoken;
 	std::ifstream ifile(FileName);
-	if (!ifile)
-	{//file can't be opened
+	if (!ifile) {	//file can't be opened
 		return -1;
 	}
 	/* before going on I want to point out one thing:
@@ -33,28 +31,26 @@ int CSVParser::ReadPropertyDataCSV(const char* FileName, Utils::FHashMap<SongDet
 		//DEBUG(line.c_str())
 #endif
 		std::istringstream str_parser;
-		bool found;
+		bool found = false;
 		str_parser.str(line);
 		TArray<FString> SeparatedLine = TArray<FString>();
 		FString ElementID;		//first column is Element ID.
-		FString DimensionID;	//second column is Dimension ID
+		FString DimensionID = "";	//second column is Dimension ID
 		std::getline(str_parser, linetoken, elem_delim);
 		ElementID = Utils::CustomUnquote(FString(linetoken.c_str()));
-		try{
+		try {
 			OutputMap.at(ElementID);
 			found = true;
 		}
-		catch (std::out_of_range e)
-		{
+		catch (std::out_of_range e) {
 			found = false;
 		}
-		if (found)		//if failed to load line, jump to next line
-		{
+		if (found) {	//if failed to load line, jump to next line
+			FSongProperty property;
 			std::getline(str_parser, linetoken, elem_delim);
 			DimensionID = Utils::CustomUnquote(FString(linetoken.c_str()));
 
-			while (std::getline(str_parser, linetoken, elem_delim))		//from third element to end of line
-			{
+			while (std::getline(str_parser, linetoken, elem_delim)) {	//from third element to end of line
 				SeparatedLine.Add(Utils::CustomUnquote(FString(linetoken.c_str())));	//append
 #ifdef DEBUG_CSV_CONTENT
 				UE_LOG(LogTemp, Log, TEXT("%s"), *Utils::CustomUnquote(FString(linetoken.c_str())));
@@ -62,7 +58,10 @@ int CSVParser::ReadPropertyDataCSV(const char* FileName, Utils::FHashMap<SongDet
 #endif
 			}
 			property << SeparatedLine;
-			OutputMap[ElementID].Properties[DimensionID] = property;
+			if (DimensionID.Len() > 0)
+			{
+				OutputMap[ElementID].Properties[DimensionID] = property;
+			}
 			lineNumber++;
 		}
 #ifdef DEBUG_CSV_CONTENT
