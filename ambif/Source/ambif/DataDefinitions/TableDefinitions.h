@@ -28,21 +28,18 @@ struct FSongProperty
 	inline struct FSongProperty& operator<<(const TArray<FString> serialized_data)
 	{
 		SegmentValues = Utils::hashmap<float, FString>();
-		if (serialized_data.Num() > 0)
-		{
+		if (serialized_data.Num() > 0) {
 			SummaryValue = serialized_data[0];
 			size_t SegmentCounter;
 			SegmentCounter = (serialized_data.Num() - 1) / 2;
-			for (int i = 0, offset = 1; i < SegmentCounter; i++)
-			{
+			for (int i = 0, offset = 1; i < SegmentCounter; i++) {
 				float tmp;
 				if (Utils::FStrToF(serialized_data[offset + (2 * i)], tmp)) {
 					SegmentValues[tmp] = serialized_data[offset + (2 * i) + 1];
 				}
 			}
 		}
-		else
-		{
+		else {
 			SummaryValue = FString("");
 			//			DebugUtils::LogString("Error loading value");
 		}
@@ -52,32 +49,27 @@ struct FSongProperty
 	/** takes, if exists, the greater element less than time. */
 	inline FString operator[](float time)
 	{
-		if (SegmentValues.size() > 0)
-		{
+		if (SegmentValues.size() > 0) {
 			int a, b, middle, old_min;
 			TArray<float> keys;
 			a = 0;
 			keys = Utils::GetIdList(SegmentValues);
-			b = keys.Num();
+			b = keys.Num() - 1;
 			keys.Sort();
 			//binary search
 			old_min = -1;
-			while (a <= b)
-			{
+			while (a <= b) {
 				middle = (a + b) / 2;
-				if (keys[middle] <= time)
-				{
+				if (keys[middle] <= time) {
 					a = middle + 1;
 					old_min = middle;
 				}
-				else
-				{
+				else {
 					b = middle - 1;
 				}
 			}
 
-			if (old_min != -1)
-			{
+			if (old_min != -1) {
 				return SegmentValues[keys[old_min]];
 			}
 		}

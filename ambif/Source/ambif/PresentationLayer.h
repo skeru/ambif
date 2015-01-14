@@ -116,7 +116,7 @@ private:
 	float MapBound_x, MapBound_y, MapBound_X, MapBound_Y;
 
 	/** Maps what Data Dimension is rendered as PlottalbeDimension */
-	Utils::hashmap<int, _DimensionOnMapInfo> DimensionOnMap;
+	Utils::hashmap<PlottableDimension::Type, _DimensionOnMapInfo> DimensionOnMap;
 
 	//-------------------------ELEMENTS BUFFERS-------------------------
 private:

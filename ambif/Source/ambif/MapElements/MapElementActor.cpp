@@ -12,8 +12,11 @@ AMapElementActor::AMapElementActor(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
 	ElementId = "";
+	RootScene = ObjectInitializer.CreateDefaultSubobject<USceneComponent>(this, "RootScene");
+	RootComponent = RootScene;
 	Mesh = ObjectInitializer.CreateAbstractDefaultSubobject<UStaticMeshComponent>(this, "ball mesh");
 	static ConstructorHelpers::FObjectFinder <UStaticMesh>StaticMesh(TEXT(_ElementAsset_Ball));
+	Mesh->AttachTo(RootComponent);
 	if (!StaticMesh.Object)
 	{
 		DebugUtils::LogString(FString("Element Ball Static Mesh not found"));
@@ -23,8 +26,6 @@ AMapElementActor::AMapElementActor(const FObjectInitializer& ObjectInitializer)
 		Mesh->SetStaticMesh(StaticMesh.Object);
 	}
 	Mesh->SetRelativeScale3D(FVector(25, 25, 25));
-	RootComponent = Mesh;
-
 	_material = UMaterialInstanceDynamic::Create(Mesh->GetMaterial(0), this);
 	_color = FLinearColor::Red;
 	_material->SetVectorParameterValue(FName(_ParamName_color), _color);
@@ -49,8 +50,11 @@ AMapElementActor::AMapElementActor(const FObjectInitializer& ObjectInitializer)
 //---------------------------- MOVE ----------------------------
 void AMapElementActor::MoveTo(float x, float y, float z)
 {
+	const FVector actual_pos = Mesh->RelativeLocation;
 	//no hit check, only translate root component
-	RootComponent->SetWorldLocation(FVector(x, y, z));
+	Mesh->MoveComponent(FVector(x, y, z) - actual_pos, FRotator(0, 0, 0), false);
+	//Mesh->RelativeLocation = FVector(x, y, z);
+	DebugUtils::LogString("MapElementActor::MoveTo: movement called. Moving " + ElementId + " to " + FString::SanitizeFloat(x) + " " + FString::SanitizeFloat(y) + " " + FString::SanitizeFloat(z));
 }
 
 //------------------- ELEMENT STATE ACCESSORS ------------------

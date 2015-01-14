@@ -87,7 +87,7 @@ TArray<TEnumAsByte<PlottableDimension::Type>> APresentationLayer::GetAvailablePl
 APresentationLayer::APresentationLayer(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
-	DimensionOnMap = Utils::hashmap<int, _DimensionOnMapInfo>();
+	DimensionOnMap = Utils::hashmap<PlottableDimension::Type, _DimensionOnMapInfo>();
 
 	//tick
 	//PrimaryActorTick.bCanEverTick = true;
@@ -319,13 +319,11 @@ void APresentationLayer::SetDimension(PlottableDimension::Type DimensionSpace, F
 {
 	DimensionDetails dd;
 	DimensionOnMap[DimensionSpace].Id = DimensionID;
-	if (DataAgent->getDimensionDetails(DimensionID, dd))
-	{
+	if (DataAgent->getDimensionDetails(DimensionID, dd)) {
 		DimensionOnMap[DimensionSpace].Caster = DataAgent->getCaster(dd);
 	}
 
-	if (Update)
-	{
+	if (Update) {
 		UpdateSingleMapDimension(DimensionSpace);
 	}
 }
@@ -336,11 +334,9 @@ void APresentationLayer::GlobalUpdateMap(float CurrentTime, FString ElementID)
 	UpdateMapXYZ(CurrentTime, ElementID);
 
 	//update other dimensions
-	for (auto d : DimensionOnMap)
-	{
-		if (d.first != PlottableDimension::X && d.first != PlottableDimension::Y && d.first != PlottableDimension::Z)
-		{
-			UpdateSingleMapDimension((PlottableDimension::Type) d.first, CurrentTime);
+	for (auto d : DimensionOnMap) {
+		if (d.first != PlottableDimension::X && d.first != PlottableDimension::Y && d.first != PlottableDimension::Z) {
+			UpdateSingleMapDimension((PlottableDimension::Type) d.first, CurrentTime, ElementID);
 		}
 	}
 }
@@ -350,7 +346,7 @@ void APresentationLayer::UpdateMapXYZ(float CurrentTime, FString ElementID)
 	DimensionDetails xd, yd, zd;
 	if (!DataAgent->getDimensionDetails(DimensionOnMap[PlottableDimension::X].Id, xd) || !DataAgent->getDimensionDetails(DimensionOnMap[PlottableDimension::Y].Id, yd) || !DataAgent->getDimensionDetails(DimensionOnMap[PlottableDimension::Z].Id, zd))
 	{
-		DEBUG("PresentationLayer::UpdateMapXYZ: Failed to load Dimension Details.");
+		DebugUtils::LogString("PresentationLayer::UpdateMapXYZ: Failed to load Dimension Details.");
 		return;
 	}
 
@@ -363,26 +359,46 @@ void APresentationLayer::UpdateMapXYZ(float CurrentTime, FString ElementID)
 	UpdateVolumeCasterBounds();
 
 	float x_elem_pos, y_elem_pos, z_elem_pos;
-	FString tmp;
-	Utils::FHashMap<SongDetails> map = *DataAgent->GetElementMap();
-	for (auto el : map)
-	{
-		//TODO perform existence and format check
-		bool conversion_ok;
-		conversion_ok = DimensionOnMap[PlottableDimension::X].Caster->Cast(el.second.Properties[xd.Id][CurrentTime], x_elem_pos);
-		conversion_ok = (conversion_ok) ? DimensionOnMap[PlottableDimension::Y].Caster->Cast(el.second.Properties[yd.Id][CurrentTime], y_elem_pos) : false;
-		conversion_ok = (conversion_ok) ? DimensionOnMap[PlottableDimension::Z].Caster->Cast(el.second.Properties[zd.Id][CurrentTime], z_elem_pos) : false;
-		if (conversion_ok)
-		{
-			MapElementsManagerAgent->MoveElementTo(el.first, x_elem_pos, y_elem_pos, z_elem_pos);
-		}
+	bool conversion_ok;
+
+	if (ElementID == "") {		//update every element
+		Utils::FHashMap<SongDetails> map = *DataAgent->GetElementMap();
+		for (auto el : map) {
+			//TODO perform existence and format check
+			conversion_ok = DimensionOnMap[PlottableDimension::X].Caster->Cast(el.second.Properties[xd.Id][CurrentTime], x_elem_pos);
+			conversion_ok = (conversion_ok) ? DimensionOnMap[PlottableDimension::Y].Caster->Cast(el.second.Properties[yd.Id][CurrentTime], y_elem_pos) : false;
+			conversion_ok = (conversion_ok) ? DimensionOnMap[PlottableDimension::Z].Caster->Cast(el.second.Properties[zd.Id][CurrentTime], z_elem_pos) : false;
+			if (conversion_ok) {
+				MapElementsManagerAgent->MoveElementTo(el.first, x_elem_pos, y_elem_pos, z_elem_pos);
+			}
 #ifdef PresentationLayer_VERBOSE_MODE
-		else
-		{
-			DebugUtils::LogString(FString("PresentationLayer: Failed to load details of element ") + el.first);
-		}
+			else {
+				DebugUtils::LogString(FString("PresentationLayer: Failed to load details of element ") + el.first);
+			}
 #endif
-	}
+		}	//end for each element of map
+	}		//end global update if
+
+	else {	//update only ElementID
+		FSongDetails elem;
+		conversion_ok = DataAgent->getElementDetails(ElementID, elem);
+		if (conversion_ok) {	//element found
+			conversion_ok = DimensionOnMap[PlottableDimension::X].Caster->Cast(elem.Properties[xd.Id][CurrentTime], x_elem_pos);
+			conversion_ok = (conversion_ok) ? DimensionOnMap[PlottableDimension::Y].Caster->Cast(elem.Properties[yd.Id][CurrentTime], y_elem_pos) : false;
+			conversion_ok = (conversion_ok) ? DimensionOnMap[PlottableDimension::Z].Caster->Cast(elem.Properties[zd.Id][CurrentTime], z_elem_pos) : false;
+			if (conversion_ok) {
+				MapElementsManagerAgent->MoveElementTo(ElementID, x_elem_pos, y_elem_pos, z_elem_pos);
+			}
+#ifdef PresentationLayer_VERBOSE_MODE
+			else {	//element values failed to load
+				DebugUtils::LogString(FString("PresentationLayer: Failed to load details of element ") + ElementID);
+			}
+		}
+		else {	//element not found
+			DebugUtils::LogString("PresentationLayer::UpdateMapXYZ: Failed to find element " + ElementID);
+#endif
+		}
+	}		//end update only ElementID else case
 }
 
 void APresentationLayer::UpdateSingleMapDimension(PlottableDimension::Type Dimension, float CurrentTime, FString ElementID)
@@ -400,13 +416,13 @@ void APresentationLayer::UpdateSingleMapDimension(PlottableDimension::Type Dimen
 	}
 	catch (std::out_of_range exception){ return; }//safety check
 
-	Utils::FHashMap<SongDetails> data = *DataAgent->GetElementMap();
+	//Utils::FHashMap<SongDetails> data = *DataAgent->GetElementMap();
 
 	switch (Dimension)
 	{
 	case PlottableDimension::X: case PlottableDimension::Y: case PlottableDimension::Z:
 		//refresh position
-		UpdateMapXYZ(CurrentTime);
+		UpdateMapXYZ(CurrentTime, ElementID);
 		break;
 	case PlottableDimension::Color_Hue:
 		UpdateColorHue(dim, CurrentTime, ElementID);

@@ -23,6 +23,7 @@ AMusicPlayerActor::AMusicPlayerActor(const FObjectInitializer& ObjectInitializer
 	loaded = false;
 	isPlaying = false;
 	isPaused = false;
+	playTime = 0.0f;
 
 	//tick
 	PrimaryActorTick.bCanEverTick = true;
@@ -67,15 +68,14 @@ void AMusicPlayerActor::Play()
 		return;
 	}
 
-	if (isPaused){
+	isPlaying = true;
+	if (isPaused) {
 		audioSource->Play();
 		isPaused = false;
 	}
-	else
-	{
+	else {
 		ac->Play();
 	}
-	isPlaying = true;
 }
 
 void AMusicPlayerActor::Pause()
@@ -83,11 +83,10 @@ void AMusicPlayerActor::Pause()
 	int status = findSource(sw);
 	//Debug("Surce location returned " + FString::FromInt(status));
 
-	if (audioSource)
-	{
+	if (audioSource) {
 		audioSource->Pause();
 		isPaused = true;
-		isPlaying = true;
+		isPlaying = false;
 	}
 }
 
@@ -174,7 +173,7 @@ int AMusicPlayerActor::findSource(USoundWave* sw)
 
 void AMusicPlayerActor::Tick(float DeltaTime)
 {
-	if (audioSource && audioSource->IsPlaying())
+	if (ac->IsPlaying() && isPlaying)
 	{
 		playTime += (double) DeltaTime;
 	}

@@ -238,6 +238,7 @@ void ALogicController::HandleElement()
 	{	//update only current playing element
 		const double currentTime = MusicPlayer->GetPlayTime();
 		PresentationLayer->GlobalUpdateMap(currentTime, LastClickedElementID);
+		//DebugUtils::LogString("HandleElement: " + LastClickedElementID);
 	}
 }
 

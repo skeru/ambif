@@ -48,10 +48,10 @@ private:
 	bool loaded;
 	
 	//* If true the song is playing
-	bool isPaused;
+	bool isPlaying;
 
 	//* If true the song was manually paused by the user
-	bool isPlaying;
+	bool isPaused;
 
 	//* Played seconds of the current song. Updated every tick.
 	double playTime;

@@ -24,6 +24,9 @@ public:
 	//------------------------ ELEMENT BODY ------------------------
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Element Look")
+	USceneComponent* RootScene;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Element Look")
 	UStaticMeshComponent* Mesh;
 
 	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = SkelMeshComponents)
