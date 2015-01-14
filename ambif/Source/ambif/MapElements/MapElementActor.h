@@ -48,6 +48,10 @@ protected:
 private:
 	FLinearColor _color;
 	FLinearColor _color_backup;
+	unsigned int _activeColorIndex;
+
+protected:
+	uint32 AvailableColorsNum;
 
 	//------------------------ AUXILIARITIES ------------------------
 private:
@@ -81,9 +85,28 @@ public:
 	/** set secondary color. Might not be visible. */
 	virtual void SetBgColor(FColor NewColor);
 	
+private:
+	UFUNCTION(BlueprintCallable, Category = "Element State")
+	/** Actually set color in material object */
+	virtual void _applyColor(FColor NewColor);
+
 	UFUNCTION(BlueprintCallable, Category = "Element State")
 	/** switch between main color and secondary color */
 	virtual void ToggleColor();
+
+public:
+	UFUNCTION(BlueprintCallable, Category = "Element State")
+	/** Number of different colors available for this object */
+	uint32 GetAvailableColorNum();
+
+	UFUNCTION(BlueprintCallable, Category = "Element State")
+	/** Apply a new color to the object 
+	 * 
+	 * @param ColorIndex should be a number between 0 and AvailableColorNum.
+	 *     - 0 use default (primary) color
+	 *     - 1 use background (secondary) color
+	 */
+	virtual void ApplyColor(uint32 ColorIndex);
 
 	//-------------------- EVENT REGISTRATION --------------------
 public:

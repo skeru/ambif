@@ -17,12 +17,10 @@ AMapElementActor::AMapElementActor(const FObjectInitializer& ObjectInitializer)
 	Mesh = ObjectInitializer.CreateAbstractDefaultSubobject<UStaticMeshComponent>(this, "ball mesh");
 	static ConstructorHelpers::FObjectFinder <UStaticMesh>StaticMesh(TEXT(_ElementAsset_Ball));
 	Mesh->AttachTo(RootComponent);
-	if (!StaticMesh.Object)
-	{
+	if (!StaticMesh.Object) {
 		DebugUtils::LogString(FString("Element Ball Static Mesh not found"));
 	}
-	else
-	{
+	else {
 		Mesh->SetStaticMesh(StaticMesh.Object);
 	}
 	Mesh->SetRelativeScale3D(FVector(25, 25, 25));
@@ -31,6 +29,8 @@ AMapElementActor::AMapElementActor(const FObjectInitializer& ObjectInitializer)
 	_material->SetVectorParameterValue(FName(_ParamName_color), _color);
 
 	_color_backup = FLinearColor::White;
+	_activeColorIndex = 0;
+	AvailableColorsNum = 2;
 
 	//Mesh->SetMaterial(0, Material.Object);
 	//static ConstructorHelpers::FObjectFinder <UMaterialInterface>BallMaterial(TEXT(_ElementAsset_BallMaterial));
@@ -53,7 +53,8 @@ void AMapElementActor::MoveTo(float x, float y, float z)
 	const FVector actual_pos = Mesh->RelativeLocation;
 	//no hit check, only translate root component
 	Mesh->MoveComponent(FVector(x, y, z) - actual_pos, FRotator(0, 0, 0), false);
-	//Mesh->RelativeLocation = FVector(x, y, z);
+	//this->SetActorLocation(FVector(x, y, z));
+	//RootComponent->MoveComponent(FVector(x, y, z) - actual_pos, FRotator(0, 0, 0), false);
 	DebugUtils::LogString("MapElementActor::MoveTo: movement called. Moving " + ElementId + " to " + FString::SanitizeFloat(x) + " " + FString::SanitizeFloat(y) + " " + FString::SanitizeFloat(z));
 }
 
@@ -71,11 +72,7 @@ FString AMapElementActor::GetElementID()
 void AMapElementActor::SetColor(FColor NewColor)
 {
 	_color = NewColor;
-	_material->SetVectorParameterValue(FName(_ParamName_color), NewColor);
-#ifdef MapElementActor_DEBUG_COLORS
-	DebugUtils::LogString(FString("Element::SetColor: R: ") + FString::SanitizeFloat(NewColor.R) + FString(" - G: ") + FString::SanitizeFloat(NewColor.G) + FString(" - B: ") + FString::SanitizeFloat(NewColor.B));
-#endif
-	Mesh->SetMaterial(0, _material);
+	_applyColor(NewColor);
 }
 
 FLinearColor AMapElementActor::GetColor()
@@ -98,13 +95,32 @@ void AMapElementActor::SetBgColor(FColor NewColor)
 	_color_backup = NewColor;
 }
 
+void AMapElementActor::_applyColor(FColor NewColor)
+{
+	_material->SetVectorParameterValue(FName(_ParamName_color), NewColor);
+#ifdef MapElementActor_DEBUG_COLORS
+	DebugUtils::LogString(FString("Element::SetColor: R: ") + FString::SanitizeFloat(NewColor.R) + FString(" - G: ") + FString::SanitizeFloat(NewColor.G) + FString(" - B: ") + FString::SanitizeFloat(NewColor.B));
+#endif
+	Mesh->SetMaterial(0, _material);
+}
+
 void AMapElementActor::ToggleColor()
 {
 	FLinearColor tmp = _color_backup;
 	_color_backup = _color;
-	SetColor(tmp);
+	_color = tmp;
+	_applyColor(tmp);
 }
 
+uint32 AMapElementActor::GetAvailableColorNum()
+{
+	return AvailableColorsNum;
+}
+
+void AMapElementActor::ApplyColor(uint32 ColorIndex)
+{
+	_applyColor((ColorIndex % AvailableColorsNum == 0) ? _color : _color_backup);
+}
 
 //------------------------ MOUSE INTERACTION ------------------------
 

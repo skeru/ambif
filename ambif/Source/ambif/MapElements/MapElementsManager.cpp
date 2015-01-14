@@ -127,13 +127,13 @@ void AMapElementsManager::MoveElementTo(FString ElementID, float x, float y, flo
 
 void AMapElementsManager::SelectElement(FString ElementID)
 {
-	ActorMap[ElementID]->ToggleColor();
+	ActorMap[ElementID]->ApplyColor(1);
 	//CurrentlySelectedElements.Add(ElementID);
 }
 
 void AMapElementsManager::DeselectElement(FString ElementID)
 {
-	ActorMap[ElementID]->ToggleColor();
+	ActorMap[ElementID]->ApplyColor(0);
 	/*
 	if (CurrentlySelectedElements.Contains(ElementID))
 	{
@@ -143,11 +143,10 @@ void AMapElementsManager::DeselectElement(FString ElementID)
 
 void AMapElementsManager::DeselectAllElements()
 {
-	/*
-	for (auto a : CurrentlySelectedElements)
+	for (auto a : ActorMap)
 	{
-	DeselectElement(a);
-	}*/
+		DeselectElement(a.first);
+	}
 }
 //------------------------SPAWNER STUFF-------------------------
 
@@ -190,14 +189,11 @@ void AMapElementsManager::Tick(float DeltaTime)
 void AMapElementsManager::OnMouseBeginHover(AActor* TouchedComponent)
 {
 	AMapElementActor* element = Cast<AMapElementActor>(TouchedComponent);
-	if (element)
-	{
-		if (ThisTickDeselectedElements.Contains(element->GetElementID()))
-		{
+	if (element) {
+		if (ThisTickDeselectedElements.Contains(element->GetElementID())) {
 			ThisTickDeselectedElements.Remove(element->GetElementID());
 		}
-		else if (!ThisTickSelectedElements.Contains(element->GetElementID()))
-		{
+		else if (!ThisTickSelectedElements.Contains(element->GetElementID())) {
 			ThisTickSelectedElements.Add(element->GetElementID());
 		}
 	}//null check end if
@@ -206,14 +202,11 @@ void AMapElementsManager::OnMouseBeginHover(AActor* TouchedComponent)
 void AMapElementsManager::OnMouseEndHover(AActor* TouchedComponent)
 {
 	AMapElementActor* element = Cast<AMapElementActor>(TouchedComponent);
-	if (element)
-	{
-		if (ThisTickSelectedElements.Contains(element->GetElementID()))
-		{
+	if (element) {
+		if (ThisTickSelectedElements.Contains(element->GetElementID())) {
 			ThisTickSelectedElements.Remove(element->GetElementID());
 		}
-		else
-		{
+		else {
 			ThisTickDeselectedElements.Add(element->GetElementID());
 		}
 	}//null check end if
