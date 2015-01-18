@@ -6,6 +6,7 @@
 #include "LogicController.h"
 
 //#define LogicController_VERBOSE_MODE
+#define LogicController_HIDE_ON_PLAY
 
 ALogicController::ALogicController(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -251,11 +252,13 @@ void ALogicController::HandleElement()
 		TArray<FString> tmp = TArray<FString>();
 		tmp.Add(LastClickedElementID);
 		PresentationLayer->GlobalUpdateMap(currentTime, LastClickedElementID);
-		PresentationLayer->HighlightElements(tmp);
 		//DebugUtils::LogString("HandleElement: " + LastClickedElementID);
+#ifdef LogicController_HIDE_ON_PLAY
+		PresentationLayer->HighlightElements(tmp);
 	}
 	else {
 		PresentationLayer->HighlightElements(TArray<FString>());
+#endif
 	}
 }
 
