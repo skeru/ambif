@@ -30,6 +30,8 @@ AMapElementsManager::AMapElementsManager(const FObjectInitializer& ObjectInitial
 	//PrimaryActorTick.bCanEverTick = true;	//nope!
 }
 
+//-------------------------ELEMENTS MANAGING-------------------------
+
 inline void AMapElementsManager::AddElement(FString ElementID, AMapElementActor* Element)
 {
 	ActorMap[ElementID] = Element;
@@ -62,6 +64,28 @@ void AMapElementsManager::SetVisibleToAll(bool bVisible)
 	for (auto iter : ActorMap)
 	{
 		iter.second->SetActorHiddenInGame(bVisible);
+	}
+}
+
+void AMapElementsManager::Highlight(TArray<FString> ElementsIDs)
+{
+	if (!ElementsIDs.Num()) {	//restore all to normal
+		for (auto a : ActorMap)
+			a.second->Ghost(false);
+		//DebugUtils::LogString("MapElementManager::Highlight: restore all to normal");
+	}
+	else {	//ghost to all but ElementIDs
+		for (auto a : ActorMap) {
+			//if found set ghost = false, if not found set ghost = true
+			/*if (ElementsIDs.Contains(a.first)) {
+				a.second->Ghost(false);
+				DebugUtils::LogString("MapElementManager::Highlight: highlight element " + a.first);
+			}
+			else {
+				a.second->Ghost();
+			}*/
+			a.second->Ghost(!ElementsIDs.Contains(a.first));
+		}
 	}
 }
 
@@ -123,22 +147,14 @@ void AMapElementsManager::MoveElementTo(FString ElementID, float x, float y, flo
 	//DebugUtils::LogString(FString("MapElementsManager::MoveElementTo: not implemented method called for element ") + ElementID);
 }
 
-//-------------------------ELEMENTS MANAGING-------------------------
-
 void AMapElementsManager::SelectElement(FString ElementID)
 {
 	ActorMap[ElementID]->ApplyColor(1);
-	//CurrentlySelectedElements.Add(ElementID);
 }
 
 void AMapElementsManager::DeselectElement(FString ElementID)
 {
 	ActorMap[ElementID]->ApplyColor(0);
-	/*
-	if (CurrentlySelectedElements.Contains(ElementID))
-	{
-	CurrentlySelectedElements.Remove(ElementID);
-	}*/
 }
 
 void AMapElementsManager::DeselectAllElements()
@@ -176,12 +192,6 @@ AMapElementActor* AMapElementsManager::Spawn(FString ElementID, float x, float y
 void AMapElementsManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	/* //element collection should be performed by the presentation layer
-	CollectTickSelectedElements();
-	CollectTickDeselectedElements();
-	CollectTickClickedElements();*/
-
-	//DebugUtils::LogString(FString("MapElementsManager::Tick: something")); //ok, it works
 }
 
 //--------------------------------MOUSE EVENTS--------------------------------

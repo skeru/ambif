@@ -51,6 +51,13 @@ public:
 	void SetVisibleToAll(bool bVisible);
 
 	UFUNCTION(BlueprintCallable, Category = "Element Managing")
+	/** Highlight a set of elements. 
+	 * 
+	 * @param ElementIDs Element IDs to enlight. With an empty array all elements will be set to normal.
+	 */
+	void Highlight(TArray<FString> ElementsIDs);
+
+	UFUNCTION(BlueprintCallable, Category = "Element Managing")
 	/** Set surface color of the specified element  */
 	void SetColor(FString ElementID, FColor NewColor);
 

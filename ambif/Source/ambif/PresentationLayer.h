@@ -229,6 +229,10 @@ public:
 	 */
 	void UpdateSingleMapDimension(PlottableDimension::Type Dimension, float CurrentTime = 0.0f, FString ElementID = "");
 
+	UFUNCTION(BlueprintCallable, Category = "Actions (Map)")
+	/** Highlight only a subset of shown elements */
+	void HighlightElements(TArray<FString> ElementIDs);
+
 	void ShowElements(TArray<FString> ElementIDs);
 
 	void ApplySelectionToElement(FString ElementID);

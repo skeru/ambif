@@ -176,7 +176,7 @@ private:
 	double DeltaTimeElementUpdate;
 
 	//*update element every ElmentUpdateGranularity seconds.
-	const double ElmentUpdateGranularity = 1.0f;
+	const double ElmentUpdateGranularity = 1.1f;
 
 	//--------------------PRIVATE STUFF--------------------
 private:

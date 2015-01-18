@@ -55,7 +55,7 @@ void AMapElementActor::MoveTo(float x, float y, float z)
 	Mesh->MoveComponent(FVector(x, y, z) - actual_pos, FRotator(0, 0, 0), false);
 	//this->SetActorLocation(FVector(x, y, z));
 	//RootComponent->MoveComponent(FVector(x, y, z) - actual_pos, FRotator(0, 0, 0), false);
-	DebugUtils::LogString("MapElementActor::MoveTo: movement called. Moving " + ElementId + " to " + FString::SanitizeFloat(x) + " " + FString::SanitizeFloat(y) + " " + FString::SanitizeFloat(z));
+	//DebugUtils::LogString("MapElementActor::MoveTo: movement called. Moving " + ElementId + " to " + FString::SanitizeFloat(x) + " " + FString::SanitizeFloat(y) + " " + FString::SanitizeFloat(z));
 }
 
 //------------------- ELEMENT STATE ACCESSORS ------------------
@@ -69,10 +69,15 @@ FString AMapElementActor::GetElementID()
 	return ElementId;
 }
 
-void AMapElementActor::SetColor(FColor NewColor)
+void AMapElementActor::Ghost(bool IsGhost)
 {
-	_color = NewColor;
-	_applyColor(NewColor);
+	//TODO implement transparency
+	/*
+	_color.A = (IsGhost) ? _color_alpha_ghost : _color_alpha_normal;
+	_color_backup.A = (IsGhost) ? _color_alpha_ghost : _color_alpha_normal;
+	ApplyColor(_activeColorIndex);
+	*/
+	Mesh->SetVisibility(!IsGhost);
 }
 
 FLinearColor AMapElementActor::GetColor()
@@ -88,6 +93,12 @@ FLinearColor AMapElementActor::GetColor()
 #undef _INTERNAL_READ_COLOR
 #endif
 	return _color;
+}
+
+void AMapElementActor::SetColor(FColor NewColor)
+{
+	_color = NewColor;
+	_applyColor(NewColor);
 }
 
 void AMapElementActor::SetBgColor(FColor NewColor)

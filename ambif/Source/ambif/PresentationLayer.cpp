@@ -318,10 +318,6 @@ void APresentationLayer::Initialize(FString ViewID)
 	UpdateSingleMapDimension(PlottableDimension::Color_Sat);
 
 	//GlobalUpdateMap();
-
-	//color testing
-	//HSVColor foo_color = HSVColor(FLinearColor::Blue);
-	//MapElementsManagerAgent->SetColor(FString("001"), foo_color.ToFLinearColor());
 }
 
 void APresentationLayer::SetDimension(PlottableDimension::Type DimensionSpace, FString DimensionID, bool Update)
@@ -442,6 +438,11 @@ void APresentationLayer::UpdateSingleMapDimension(PlottableDimension::Type Dimen
 	default:
 		break;
 	}
+}
+
+inline void APresentationLayer::HighlightElements(TArray<FString> ElementIDs)
+{
+	MapElementsManagerAgent->Highlight(ElementIDs);
 }
 
 inline void APresentationLayer::ShowElements(TArray<FString> ElementIDs)

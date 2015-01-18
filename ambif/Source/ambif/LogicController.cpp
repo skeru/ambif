@@ -246,11 +246,16 @@ void ALogicController::DetectClickedActors()
 
 void ALogicController::HandleElement()
 {
-	if (MusicPlayer && MusicPlayer->IsPlaying())
-	{	//update only current playing element
+	if (MusicPlayer && MusicPlayer->IsPlaying()) {	//update only current playing element
 		const double currentTime = MusicPlayer->GetPlayTime();
+		TArray<FString> tmp = TArray<FString>();
+		tmp.Add(LastClickedElementID);
 		PresentationLayer->GlobalUpdateMap(currentTime, LastClickedElementID);
+		PresentationLayer->HighlightElements(tmp);
 		//DebugUtils::LogString("HandleElement: " + LastClickedElementID);
+	}
+	else {
+		PresentationLayer->HighlightElements(TArray<FString>());
 	}
 }
 
