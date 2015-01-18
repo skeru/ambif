@@ -14,13 +14,12 @@ AambifGameMode::AambifGameMode(const FObjectInitializer& ObjectInitializer)
 		DefaultPawnClass = (UClass*)PlayerPawnBPClass.Object->GeneratedClass;
 	}
 
-	/* HUD DISABLED
-	static ConstructorHelpers::FObjectFinder<UBlueprint> TheHUDOb(TEXT("/Game/Blueprints/SimplePlayerHUD_BP"));
-	if (TheHUDOb.Object != NULL)
+	/* HUD used for tooltip messages */
+	static ConstructorHelpers::FObjectFinder<UBlueprint> Default_HUD_Obj(TEXT("Blueprint'/Game/HUD/InspectionHUD_BP.InspectionHUD_BP'"));
+	if (Default_HUD_Obj.Object != NULL)
 	{
-		HUDClass = (UClass*)TheHUDOb.Object->GeneratedClass;
+		HUDClass = (UClass*)Default_HUD_Obj.Object->GeneratedClass;
 	}
-	*/
 
 	PlayerControllerClass = AambifPlayerController::StaticClass();
 }

@@ -152,6 +152,7 @@ void ALogicController::SelectElement(FString ElementID)
 void ALogicController::DeselectElement(FString ElementID)
 {
 	PresentationLayer->RemoveSelectionFromElement(ElementID);
+
 }
 
 void ALogicController::UpdateDimensionsOnMap()
@@ -201,14 +202,25 @@ void ALogicController::DetectSelectedActors()
 		DebugUtils::LogString(FString("LogicController: Detected mouse out of ") + elem);
 #endif
 	
-	for (auto elem : detected_set)
-	{
+	for (auto elem : detected_set) {
 		SelectElement(elem);
 	}
-	for (auto elem : removed_set)
-	{
+	for (auto elem : removed_set) {
 		DeselectElement(elem);
 	}
+
+	//tooltip
+	FString toolTip = "";
+	FSongDetails d;
+	for (auto elem : CurrentlySelectedElements) {
+		if (DataAgent->getElementDetails(elem, d)) {	//should always be ok, but I'll check anyway
+			if (toolTip != "") {	//not first element - add nice element separator
+				toolTip += " | ";
+			}
+			toolTip += APresentationLayer::ElementToString(d);
+		}
+	}
+	ShowToolTip(toolTip);
 }
 
 void ALogicController::DetectClickedActors()
@@ -248,4 +260,11 @@ FString ALogicController::ReadMetadata(FString elementID)
 {
 	FSongDetails details;
 	return (DataAgent->getElementDetails(elementID, details)) ? details.Name + " - " + details.Artist : "no data retrieved";
+}
+
+void ALogicController::ShowToolTip(FString Message)
+{
+	if (!TooltipHUD)
+		return;
+	TooltipHUD->SetText(Message);
 }

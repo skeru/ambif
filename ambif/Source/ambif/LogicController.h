@@ -7,6 +7,7 @@
 #include "Data/DataManager.h"
 #include "PresentationLayer.h"
 #include "Widgets/WidgetManager_i.h"
+#include "HUD/InspectionHUD.h"
 #include "LogicController.generated.h"
 
 /**
@@ -38,19 +39,22 @@ public:
 	/** Data layer Manager */
 	ADataManager* DataAgent;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = TestingStuff)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SubManagers)
 	/** Presentation Layer */
 	APresentationLayer* PresentationLayer;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = TestingStuff)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SubManagers)
 	/** Map Elements Manager (notifications) */
 	AMapElementsManager* MapElementsAgent;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = TestingStuff)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Graphics)
 	/** Interface to update widget user interface */
 	AWidgetManager_i* WidgetManager;
 
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Graphics)
+	/** HUD used for tooltips */
+	AInspectionHUD* TooltipHUD;
+	
 	//-----------------------BUFFER------------------------
 private:
 	Utils::FHashMap<ViewDetails> ViewList_cache;
@@ -161,6 +165,7 @@ public:
 
 	//private tick stuff
 private:
+
 	void DetectSelectedActors();
 
 	void DetectClickedActors();
@@ -178,4 +183,5 @@ private:
 	/** Retrieve track artist and title given its id */
 	FString inline ReadMetadata(FString elementID);
 	
+	void ShowToolTip(FString Message);
 };

@@ -165,11 +165,11 @@ public:
 
 
 	//------------------------PLOTTABLE DIMENSION------------------------
-	UFUNCTION(BlueprintCallable, Category = "Enum Conversion")
+	UFUNCTION(BlueprintCallable, Category = "Conversions")
 	/** Provides conversion from PlottableDimension to FString using a unique human readable representation */
 	static FString ToString(PlottableDimension::Type var);
 
-	UFUNCTION(BlueprintCallable, Category = "Enum Conversion")
+	UFUNCTION(BlueprintCallable, Category = "Conversions")
 	/** Provides conversion from human readable FString to PlottableDimension.
 	 * 
 	 * @param var FString representation to convert
@@ -178,9 +178,13 @@ public:
 	 */
 	static bool ToPlottableDimension(FString var, TEnumAsByte<PlottableDimension::Type>& output);
 
-	UFUNCTION(BlueprintCallable, Category = "Enum Conversion")
+	UFUNCTION(BlueprintCallable, Category = "Conversions")
 	/** Provides a list of all enabled (and tested) plottable dimensions */
 	static TArray<TEnumAsByte<PlottableDimension::Type>> GetAvailablePlottableDimensions();
+
+	UFUNCTION(BlueprintCallable, Category = "Conversions")
+	/** Convert a FSongProperty element to its FString humar readable representation */
+	static FString ElementToString(FSongDetails element);
 
 	//---------------------------ACTIONS----------------------------
 

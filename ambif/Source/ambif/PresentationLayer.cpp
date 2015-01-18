@@ -207,6 +207,15 @@ void APresentationLayer::UpdateVolumeCasterBounds()
 #endif
 }
 
+FString APresentationLayer::ElementToString(FSongDetails element)
+{
+	FString s = "";
+	s += element.Name;
+	s += " - ";
+	s += element.Artist;
+	return s;
+}
+
 //------------------------ACTIONS-------------------------
 
 void APresentationLayer::Initialize(FString ViewID)

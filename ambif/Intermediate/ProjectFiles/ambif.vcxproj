@@ -79,6 +79,8 @@
 		<ClCompile Include="..\..\Source\ambif\DataDefinitions\MusicGenreAdapter.cpp" />
 		<ClInclude Include="..\..\Source\ambif\DataDefinitions\MusicGenreAdapter.h" />
 		<ClInclude Include="..\..\Source\ambif\DataDefinitions\TableDefinitions.h" />
+		<ClCompile Include="..\..\Source\ambif\HUD\InspectionHUD.cpp" />
+		<ClInclude Include="..\..\Source\ambif\HUD\InspectionHUD.h" />
 		<ClCompile Include="..\..\Source\ambif\HUD\SimplePlayerHUD.cpp" />
 		<ClInclude Include="..\..\Source\ambif\HUD\SimplePlayerHUD.h" />
 		<ClCompile Include="..\..\Source\ambif\MapElements\MapElementActor.cpp" />
