@@ -7,6 +7,7 @@
 //#define MapElementActor_DEBUG_COLORS
 //#define MapElemensActor_DEBUG_EVENTS
 //#define _INTERNAL_READ_COLOR
+#define MapElemensActor_GHOST_TRANSLUCENT
 
 AMapElementActor::AMapElementActor(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -72,12 +73,13 @@ FString AMapElementActor::GetElementID()
 void AMapElementActor::Ghost(bool IsGhost)
 {
 	//TODO implement transparency
-	/*
+#ifdef MapElemensActor_GHOST_TRANSLUCENT
 	_color.A = (IsGhost) ? _color_alpha_ghost : _color_alpha_normal;
 	_color_backup.A = (IsGhost) ? _color_alpha_ghost : _color_alpha_normal;
 	ApplyColor(_activeColorIndex);
-	*/
+#else
 	Mesh->SetVisibility(!IsGhost);
+#endif
 }
 
 FLinearColor AMapElementActor::GetColor()
