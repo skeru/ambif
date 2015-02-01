@@ -163,8 +163,26 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Map Settings")
 	void SetSpawnTargetBounds(float MinX, float MaxX, float MinY, float MaxY);
 
+private:
+	FVector LandscapeBounds_orig, LandscapeBounds_ext;
+	inline void UpdateLandscapeBounds();
+	inline void UpdateCasterX();
+	inline void UpdateCasterY();
+	inline void UpdateCasterZ();
+
+	//------------------------------DEFAULT------------------------------
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "No dimension Position")
+	float DefaultX;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "No dimension Position")
+	float DefaultY;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "No dimension Position")
+	float DefaultZ;
 
 	//------------------------PLOTTABLE DIMENSION------------------------
+public:
 	UFUNCTION(BlueprintCallable, Category = "Conversions")
 	/** Provides conversion from PlottableDimension to FString using a unique human readable representation */
 	static FString ToString(PlottableDimension::Type var);

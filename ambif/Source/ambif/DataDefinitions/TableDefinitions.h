@@ -7,6 +7,7 @@
 
 //default dimension for no dimension to represent
 #define NO_DIMENSION FString("void")
+#define NO_DIMENSION_DESCR FString("Do not use this dimension")
 
 USTRUCT(Blueprintable)
 struct FSongProperty
@@ -78,7 +79,7 @@ struct FSongProperty
 };
 
 USTRUCT(Blueprintable)
-struct FSongDetails //TODO promote to class & create interface via abstract class
+struct FSongDetails
 {
 	GENERATED_USTRUCT_BODY()
 
@@ -162,7 +163,7 @@ struct FSongDetails //TODO promote to class & create interface via abstract clas
 };
 
 USTRUCT(Blueprintable)
-struct FDimensionDetails //TODO promote to class & create interface via abstract class
+struct FDimensionDetails
 {
 	GENERATED_USTRUCT_BODY()
 
@@ -227,7 +228,7 @@ struct FDimensionDetails //TODO promote to class & create interface via abstract
 };
 
 USTRUCT(Blueprintable)
-struct FViewDetails //TODO promote to class & create interface via abstract class
+struct FViewDetails 
 {
 	GENERATED_USTRUCT_BODY()
 

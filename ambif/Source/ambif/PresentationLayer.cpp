@@ -96,6 +96,15 @@ APresentationLayer::APresentationLayer(const FObjectInitializer& ObjectInitializ
 	CurrentlySelectedElements = TSet<FString>();
 	CurrentlyClickedElements = TSet<FString>();
 
+	//no dimension position
+
+	DefaultX = 150.0f;
+	DefaultY = 150.0f;
+	DefaultZ = 150.0f;
+	
+	LandscapeBounds_orig = FVector::ZeroVector;
+	LandscapeBounds_ext = FVector::ZeroVector;
+
 	//spawner stuff
 
 	MapBound_x = MapBound_y = 0.0f;
@@ -136,20 +145,13 @@ void APresentationLayer::UpdateVolumeCasterBounds()
 		MaxZ = tmp;
 	}
 
+	UpdateLandscapeBounds();
+
 	if (Landscape)
 	{
-		FVector orig, ext;
-		Landscape->GetActorBounds(true, orig, ext);
-
-		MapBound_x = orig.X - ((ext.X * MapUsage) / 2);
-		MapBound_y = orig.Y - ((ext.Y * MapUsage) / 2);
-		MapBound_X = orig.X + ((ext.X * MapUsage) / 2);
-		MapBound_Y = orig.Y + ((ext.Y * MapUsage) / 2);
-
-		if (UsedVolume)	//can't really tell if it's working or not
-		{
-			UsedVolume->SetActorLocation(FVector(orig.X, orig.Y, (MaxZ + MinZ) / 2.0f));
-			UsedVolume->SetActorRelativeScale3D(FVector(ext.X, ext.Y, (MaxZ - MinZ)));
+		if (UsedVolume)	{ //can't really tell if it's working or not
+			UsedVolume->SetActorLocation(FVector(LandscapeBounds_orig.X, LandscapeBounds_orig.Y, (MaxZ + MinZ) / 2.0f));
+			UsedVolume->SetActorRelativeScale3D(FVector(LandscapeBounds_ext.X, LandscapeBounds_ext.Y, (MaxZ - MinZ)));
 		}
 		FVector wall_orig, wall_size;
 		if (TopBlocker)	//it works. updated at first spawn. need to update also other walls
@@ -191,12 +193,10 @@ void APresentationLayer::UpdateVolumeCasterBounds()
 		MapBound_Y = 1.0f;
 	}
 
-	DimensionOnMap[PlottableDimension::X].Caster->SetTargetBounds(MapBound_x, MapBound_X);
-	DimensionOnMap[PlottableDimension::Y].Caster->SetTargetBounds(MapBound_y, MapBound_Y);
-	DimensionOnMap[PlottableDimension::Z].Caster->SetTargetBounds(MinZ, MaxZ);
-	DimensionOnMap[PlottableDimension::X].Caster->SetNormalizationType(ENormalize::Linear);
-	DimensionOnMap[PlottableDimension::Y].Caster->SetNormalizationType(ENormalize::Linear);
-	DimensionOnMap[PlottableDimension::Z].Caster->SetNormalizationType(ENormalize::Linear);
+	UpdateCasterX();
+	UpdateCasterY();
+	UpdateCasterZ();
+
 #ifdef PresentationLayer_VERBOSE_MODE
 	DebugUtils::LogString(FString("PresentationLayer:: UpdateVolumeCasterBounds target x: ") +
 		FString::SanitizeFloat(MapBound_x) + " - " +
@@ -214,6 +214,35 @@ FString APresentationLayer::ElementToString(FSongDetails element)
 	s += " - ";
 	s += element.Artist;
 	return s;
+}
+
+void APresentationLayer::UpdateLandscapeBounds()
+{
+	if (Landscape && LandscapeBounds_ext == FVector::ZeroVector) {
+		Landscape->GetActorBounds(true, LandscapeBounds_orig, LandscapeBounds_ext);
+		MapBound_x = LandscapeBounds_orig.X - ((LandscapeBounds_ext.X * MapUsage) / 2);
+		MapBound_y = LandscapeBounds_orig.Y - ((LandscapeBounds_ext.Y * MapUsage) / 2);
+		MapBound_X = LandscapeBounds_orig.X + ((LandscapeBounds_ext.X * MapUsage) / 2);
+		MapBound_Y = LandscapeBounds_orig.Y + ((LandscapeBounds_ext.Y * MapUsage) / 2);
+	}
+}
+
+void APresentationLayer::UpdateCasterX()
+{
+	DimensionOnMap[PlottableDimension::X].Caster->SetTargetBounds(MapBound_x, MapBound_X);
+	DimensionOnMap[PlottableDimension::X].Caster->SetNormalizationType(ENormalize::Linear);
+}
+
+void APresentationLayer::UpdateCasterY()
+{
+	DimensionOnMap[PlottableDimension::Y].Caster->SetTargetBounds(MapBound_y, MapBound_Y);
+	DimensionOnMap[PlottableDimension::Y].Caster->SetNormalizationType(ENormalize::Linear);
+}
+
+void APresentationLayer::UpdateCasterZ()
+{
+	DimensionOnMap[PlottableDimension::Z].Caster->SetTargetBounds(MinZ, MaxZ);
+	DimensionOnMap[PlottableDimension::Z].Caster->SetNormalizationType(ENormalize::Linear);
 }
 
 //------------------------ACTIONS-------------------------
@@ -369,10 +398,28 @@ void APresentationLayer::UpdateMapXYZ(float CurrentTime, FString ElementID)
 	if (ElementID == "") {		//update every element
 		Utils::FHashMap<SongDetails> map = *DataAgent->GetElementMap();
 		for (auto el : map) {
-			//TODO perform existence and format check
-			conversion_ok = DimensionOnMap[PlottableDimension::X].Caster->Cast(el.second.Properties[xd.Id][CurrentTime], x_elem_pos);
-			conversion_ok = (conversion_ok) ? DimensionOnMap[PlottableDimension::Y].Caster->Cast(el.second.Properties[yd.Id][CurrentTime], y_elem_pos) : false;
-			conversion_ok = (conversion_ok) ? DimensionOnMap[PlottableDimension::Z].Caster->Cast(el.second.Properties[zd.Id][CurrentTime], z_elem_pos) : false;
+			if (DimensionOnMap[PlottableDimension::X].Id == NO_DIMENSION) {
+				x_elem_pos = DefaultX;
+				conversion_ok = true;
+			} else {
+				UpdateCasterX();
+				conversion_ok = DimensionOnMap[PlottableDimension::X].Caster->Cast(el.second.Properties[xd.Id][CurrentTime], x_elem_pos);
+			}
+
+			if (DimensionOnMap[PlottableDimension::Y].Id == NO_DIMENSION) {
+				y_elem_pos = DefaultY;
+			} else {
+				UpdateCasterY();
+				conversion_ok = (conversion_ok) ? DimensionOnMap[PlottableDimension::Y].Caster->Cast(el.second.Properties[yd.Id][CurrentTime], y_elem_pos) : false;
+			}
+
+			if (DimensionOnMap[PlottableDimension::Z].Id == NO_DIMENSION) {
+				z_elem_pos = DefaultZ;
+			} else {
+				UpdateCasterZ();
+				conversion_ok = (conversion_ok) ? DimensionOnMap[PlottableDimension::Z].Caster->Cast(el.second.Properties[zd.Id][CurrentTime], z_elem_pos) : false;
+			}
+
 			if (conversion_ok) {
 				MapElementsManagerAgent->MoveElementTo(el.first, x_elem_pos, y_elem_pos, z_elem_pos);
 			}
@@ -388,9 +435,31 @@ void APresentationLayer::UpdateMapXYZ(float CurrentTime, FString ElementID)
 		FSongDetails elem;
 		conversion_ok = DataAgent->getElementDetails(ElementID, elem);
 		if (conversion_ok) {	//element found
-			conversion_ok = DimensionOnMap[PlottableDimension::X].Caster->Cast(elem.Properties[xd.Id][CurrentTime], x_elem_pos);
-			conversion_ok = (conversion_ok) ? DimensionOnMap[PlottableDimension::Y].Caster->Cast(elem.Properties[yd.Id][CurrentTime], y_elem_pos) : false;
-			conversion_ok = (conversion_ok) ? DimensionOnMap[PlottableDimension::Z].Caster->Cast(elem.Properties[zd.Id][CurrentTime], z_elem_pos) : false;
+			if (DimensionOnMap[PlottableDimension::X].Id == NO_DIMENSION) {
+				x_elem_pos = DefaultX;
+				conversion_ok = true;
+			}
+			else {
+				UpdateCasterX();
+				conversion_ok = DimensionOnMap[PlottableDimension::X].Caster->Cast(elem.Properties[xd.Id][CurrentTime], x_elem_pos);
+			}
+
+			if (DimensionOnMap[PlottableDimension::Y].Id == NO_DIMENSION) {
+				y_elem_pos = DefaultY;
+			}
+			else {
+				UpdateCasterY();
+				conversion_ok = (conversion_ok) ? DimensionOnMap[PlottableDimension::Y].Caster->Cast(elem.Properties[yd.Id][CurrentTime], y_elem_pos) : false;
+			}
+
+			if (DimensionOnMap[PlottableDimension::Z].Id == NO_DIMENSION) {
+				z_elem_pos = DefaultZ;
+			}
+			else {
+				UpdateCasterZ();
+				conversion_ok = (conversion_ok) ? DimensionOnMap[PlottableDimension::Z].Caster->Cast(elem.Properties[zd.Id][CurrentTime], z_elem_pos) : false;
+			}
+			
 			if (conversion_ok) {
 				MapElementsManagerAgent->MoveElementTo(ElementID, x_elem_pos, y_elem_pos, z_elem_pos);
 			}
