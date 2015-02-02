@@ -294,3 +294,5 @@ struct FViewDetails
 typedef struct FSongDetails SongDetails;
 typedef struct FDimensionDetails DimensionDetails;
 typedef struct FViewDetails ViewDetails;
+
+static const DimensionDetails NoDimension = {NO_DIMENSION, NO_DIMENSION, NO_DIMENSION_DESCR, 0.0f, 1.0f, "Numbers", false, 0.0f};

@@ -1,7 +1,6 @@
 // Stefano Cherubin stefano1.cherubin@mail.polimi.it - except where otherwise stated
 
 #include "ambif.h"
-#include "stdexcept"
 #include "CustomUtils/DebugUtils.h"
 #include "DataManager.h"
 
@@ -10,7 +9,6 @@
 #define DimensionFileName "D:/_ambif_files_/DimensionList.csv"
 #define ViewFileName "D:/_ambif_files_/ViewList.csv"
 #define PropertiesFileName "D:/_ambif_files_/_properties.csv"
-//#define PropertiesFileName "D:/_ambif_files_/Properties.csv"
 
 //#define DATA_MANAGER_VERBOSE
 
@@ -21,6 +19,12 @@ ADataManager::ADataManager(const FObjectInitializer& ObjectInitializer)
 	DimensionMap = Utils::FHashMap<DimensionDetails>();
 	ViewMap = Utils::FHashMap<ViewDetails>();
 	CasterSet = Utils::FHashMap<Caster*>();
+}
+
+ADataManager::~ADataManager(){
+	for (auto c : CasterSet) {
+		delete(c.second);
+	}
 }
 
 void ADataManager::LoadOldWayCSVData()
@@ -43,15 +47,13 @@ void ADataManager::LoadOldWayCSVData()
 
 void ADataManager::LogData()
 {
-	for (auto v : ViewMap)
-	{
+	for (auto v : ViewMap) {
 		DebugUtils::LogString(FString("------------------------------------"));
 		DebugUtils::LogString(FString("View ID ") + v.first + FString(" :"));
 		DebugUtils::LogString(v.second.XDimension + FString(" - ") + v.second.YDimension + FString(" - ") + v.second.ZDimension + FString(" - ") + v.second.HueDimension + FString(" - ") + v.second.SatDimension);
 	}
 
-	for (auto d : DimensionMap)
-	{
+	for (auto d : DimensionMap) {
 		DebugUtils::LogString(FString("------------------------------------"));
 		DebugUtils::LogString(FString("Dimension ID ") + d.first + FString(":"));
 		DebugUtils::LogString(FString("Dimension Full Name: ") + d.second.FullName);
@@ -59,25 +61,20 @@ void ADataManager::LogData()
 		DebugUtils::LogString(FString("Dimension Range ") + FString::SanitizeFloat(d.second.LowerBound) + FString(" - ") + FString::SanitizeFloat(d.second.UpperBound));
 		FString tmp;
 		tmp = d.second.OrderAs + FString(" - ");
-		if (d.second.ReplaceMissingValues)
-		{
+		if (d.second.ReplaceMissingValues) {
 			tmp = tmp + FString("Replace Missing Values: YES - default value: ") + FString::SanitizeFloat(d.second.DefaultValue);
-		}
-		else
-		{
+		} else {
 			tmp = tmp + FString("Replace Missing Values: NO");
 		}
 		DebugUtils::LogString(tmp);
 	}
 
-	for (auto s : SongMap)
-	{
+	for (auto s : SongMap) {
 		DebugUtils::LogString(FString("------------------------------------"));
 		DebugUtils::LogString(FString("Element ID: ") + s.first + FString(":"));
 		DebugUtils::LogString(FString("Element Name: ") + s.second.Name);
 		DebugUtils::LogString(FString("Element file path: ") + s.second.Path);
-		for (auto p : s.second.Properties)
-		{
+		for (auto p : s.second.Properties) {
 			DebugUtils::LogString(FString("Property ") + p.first + FString(" of value ") + p.second.SummaryValue);
 		}
 	}
@@ -102,12 +99,9 @@ TArray<FString> ADataManager::GetDimensionIdList()
 inline Caster* ADataManager::getCaster(const DimensionDetails& Dimension)
 {
 	Caster* ret;
-	try
-	{
+	if (Utils::FHMContains(CasterSet,Dimension.Id)) {
 		ret = CasterSet.at(Dimension.Id);
-	}
-	catch (const std::out_of_range do_not_worry)
-	{
+	} else {
 		ret = new Caster(ENormalize::Linear);
 		ret->SetInputBounds(Dimension.LowerBound, Dimension.UpperBound);
 		//TODO set input format
@@ -121,43 +115,49 @@ inline Caster* ADataManager::getCaster(const DimensionDetails& Dimension)
 
 inline bool ADataManager::getDimensionDetails(FString DimensionID, DimensionDetails& output)
 {
-	try
-	{
+	if (Utils::FHMContains(DimensionMap, DimensionID)) {
 		output = DimensionMap.at(DimensionID);
 		return true;
-	}
-	catch (const std::out_of_range do_not_care)
-	{
+	} else {
+		if (DimensionID == NO_DIMENSION) {
+			output = NoDimension;
+			return true;
+		}
 		output.Id = DimensionID;
-		DEBUG("Failed to load Dimension Details. ID not found " + DimensionID);
+#ifdef DATA_MANAGER_VERBOSE
+		//DEBUG("Failed to load Dimension Details. ID not found " + DimensionID);
+		DebugUtils::LogString("DataManager: Failed to load Dimension Details. ID not found " + DimensionID);
+#endif
 		return false;
 	}
 }
 
 inline bool ADataManager::getViewDetails(FString ViewID, ViewDetails& output)
 {
-	try
+	if (Utils::FHMContains(ViewMap,ViewID))
 	{
 		output = ViewMap.at(ViewID);
 		return true;
-	}
-	catch (const std::out_of_range do_not_care)
-	{
-		DEBUG("Failed to load View Details. ID not found " + ViewID);
+	} else {
+#ifdef DATA_MANAGER_VERBOSE
+		//DEBUG("Failed to load View Details. ID not found " + ViewID);
+		DebugUtils::LogString("DataManager: Failed to load View Details. ID not found " + ViewID);
+#endif
 		return false;
 	}
 }
 
 inline bool ADataManager::getElementDetails(FString ElementID, SongDetails& output)
 {
-	try
+	if (Utils::FHMContains(SongMap,ElementID))
 	{
 		output = SongMap.at(ElementID);
 		return true;
-	}
-	catch (const std::out_of_range do_not_care)
-	{
-		DEBUG("Failed to load Element Details. ID not found " + ElementID);
+	} else {
+#ifdef DATA_MANAGER_VERBOSE
+		//DEBUG("Failed to load Element Details. ID not found " + ElementID);
+		DebugUtils::LogString("DataManager: Failed to load Element Details. ID not found " + ElementID);
+#endif
 		return false;
 	}
 }

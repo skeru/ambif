@@ -19,6 +19,7 @@ class AMBIF_API ADataManager : public AActor
 public:
 	//constructor
 	ADataManager(const FObjectInitializer& ObjectInitializer);
+	~ADataManager();
 
 	//---------------------DATA STRUCTURES---------------------
 protected:
@@ -48,19 +49,19 @@ public:
 public:
 	inline Caster* getCaster(const DimensionDetails& DimendionId);
 
-	/** Extract structur from id.
+	/** Extract structure from id.
 	 *
 	 * Returns true if success, false if failed.
 	 */
 	inline bool getDimensionDetails(FString DimensionID, DimensionDetails& output);
 
-	/** Extract structur from id.
+	/** Extract structure from id.
 	 *
 	 * Returns true if success, false if failed.
 	 */
 	inline bool getViewDetails(FString ViewID, ViewDetails& output);
 
-	/** Extract structur from id.
+	/** Extract structure from id.
 	 *
 	 * Returns true if success, false if failed.
 	 */

@@ -51,10 +51,12 @@ AMapElementActor::AMapElementActor(const FObjectInitializer& ObjectInitializer)
 //---------------------------- MOVE ----------------------------
 void AMapElementActor::MoveTo(float x, float y, float z)
 {
-	const FVector actual_pos = Mesh->RelativeLocation;
+	//const FVector actual_pos = Mesh->RelativeLocation;
+	//const FVector actual_pos = RootComponent->RelativeLocation;
 	//no hit check, only translate root component
-	Mesh->MoveComponent(FVector(x, y, z) - actual_pos, FRotator(0, 0, 0), false);
-	//this->SetActorLocation(FVector(x, y, z));
+	//RootComponent->MoveComponent(FVector(x, y, z) - actual_pos, FRotator(0, 0, 0), false);
+	//Mesh->MoveComponent(FVector(x, y, z) - actual_pos, FRotator(0, 0, 0), false);
+	this->SetActorLocation(FVector(x, y, z));
 	//RootComponent->MoveComponent(FVector(x, y, z) - actual_pos, FRotator(0, 0, 0), false);
 	//DebugUtils::LogString("MapElementActor::MoveTo: movement called. Moving " + ElementId + " to " + FString::SanitizeFloat(x) + " " + FString::SanitizeFloat(y) + " " + FString::SanitizeFloat(z));
 }

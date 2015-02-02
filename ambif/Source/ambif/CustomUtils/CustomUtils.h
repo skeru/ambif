@@ -108,7 +108,13 @@ namespace Utils
 	}
 
 	/** check if Container has a given key */
-	template<typename t> bool FHMContains(const FHashMap<t> Container, const FString key)
+	template<typename t> bool FHMContains(const FHashMap<t>& Container, const FString key)
+	{
+		return Container.find(key) != Container.end();
+	}
+
+	/** check if Container has a given key */
+	template<typename t1, typename t2> bool HMContains(const hashmap<t1, t2>& Container, const t1 key)
 	{
 		return Container.find(key) != Container.end();
 	}

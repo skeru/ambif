@@ -169,17 +169,30 @@ private:
 	inline void UpdateCasterX();
 	inline void UpdateCasterY();
 	inline void UpdateCasterZ();
+	inline void UpdateCasterColorHue();
+	inline void UpdateCasterColorSat();
 
-	//------------------------------DEFAULT------------------------------
+	//-----------------------NO DIMENSION POSITION-----------------------
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "No dimension Position")
-	float DefaultX;
+	/** This value is used when no dimension is set to PlottableDimension::X */
+	float NoDimensionX;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "No dimension Position")
-	float DefaultY;
+	/** This value is used when no dimension is set to PlottableDimension::Y */
+	float NoDimensionY;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "No dimension Position")
-	float DefaultZ;
+	/** This value is used when no dimension is set to PlottableDimension::Z */
+	float NoDimensionZ;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "No dimension Position")
+	/** This value is used when no dimension is set to PlottableDimension::ColorHue */
+	float NoDimensionColorHue;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "No dimension Position")
+	/** This value is used when no dimension is set to PlottableDimension::ColorHue */
+	float NoDimensionColorSat;
 
 	//------------------------PLOTTABLE DIMENSION------------------------
 public:

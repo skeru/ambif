@@ -2,7 +2,6 @@
 
 #include "ambif.h"
 #include "CustomUtils/DebugUtils.h"
-#include "stdexcept"
 #include "PresentationLayer.h"
 
 #define SAT_LOWER_BOUND 0.5f
@@ -98,9 +97,11 @@ APresentationLayer::APresentationLayer(const FObjectInitializer& ObjectInitializ
 
 	//no dimension position
 
-	DefaultX = 150.0f;
-	DefaultY = 150.0f;
-	DefaultZ = 150.0f;
+	NoDimensionX = 150.0f;
+	NoDimensionY = 150.0f;
+	NoDimensionZ = 150.0f;
+	NoDimensionColorHue = 1.0f;
+	NoDimensionColorSat = 0.0f;
 	
 	LandscapeBounds_orig = FVector::ZeroVector;
 	LandscapeBounds_ext = FVector::ZeroVector;
@@ -181,7 +182,7 @@ void APresentationLayer::UpdateVolumeCasterBounds()
 #undef UPDATE_INVSIBILE_WALL
 
 #ifdef PresentationLayer_VERBOSE_MODE
-		DebugUtils::LogString(FString("Landscape goes from " + orig.ToString() + " and has extension " + ext.ToString()));
+		DebugUtils::LogString(FString("Landscape goes from " + LandscapeBounds_orig.ToString() + " and has extension " + LandscapeBounds_ext.ToString()));
 #endif
 	}
 	else
@@ -243,6 +244,18 @@ void APresentationLayer::UpdateCasterZ()
 {
 	DimensionOnMap[PlottableDimension::Z].Caster->SetTargetBounds(MinZ, MaxZ);
 	DimensionOnMap[PlottableDimension::Z].Caster->SetNormalizationType(ENormalize::Linear);
+}
+
+void APresentationLayer::UpdateCasterColorHue()
+{
+	DimensionOnMap[PlottableDimension::Color_Hue].Caster->SetTargetBounds(0.0f, 360.0f);
+	DimensionOnMap[PlottableDimension::Color_Hue].Caster->SetNormalizationType(ENormalize::Linear);
+}
+
+void APresentationLayer::UpdateCasterColorSat()
+{
+	DimensionOnMap[PlottableDimension::Color_Sat].Caster->SetTargetBounds(SAT_LOWER_BOUND, 1.0f);
+	DimensionOnMap[PlottableDimension::Color_Sat].Caster->SetNormalizationType(ENormalize::Log);
 }
 
 //------------------------ACTIONS-------------------------
@@ -378,7 +391,9 @@ void APresentationLayer::GlobalUpdateMap(float CurrentTime, FString ElementID)
 void APresentationLayer::UpdateMapXYZ(float CurrentTime, FString ElementID)
 {
 	DimensionDetails xd, yd, zd;
-	if (!DataAgent->getDimensionDetails(DimensionOnMap[PlottableDimension::X].Id, xd) || !DataAgent->getDimensionDetails(DimensionOnMap[PlottableDimension::Y].Id, yd) || !DataAgent->getDimensionDetails(DimensionOnMap[PlottableDimension::Z].Id, zd))
+	if (!DataAgent->getDimensionDetails(DimensionOnMap[PlottableDimension::X].Id, xd) 
+		|| !DataAgent->getDimensionDetails(DimensionOnMap[PlottableDimension::Y].Id, yd) 
+		|| !DataAgent->getDimensionDetails(DimensionOnMap[PlottableDimension::Z].Id, zd))
 	{
 		DebugUtils::LogString("PresentationLayer::UpdateMapXYZ: Failed to load Dimension Details.");
 		return;
@@ -399,7 +414,7 @@ void APresentationLayer::UpdateMapXYZ(float CurrentTime, FString ElementID)
 		Utils::FHashMap<SongDetails> map = *DataAgent->GetElementMap();
 		for (auto el : map) {
 			if (DimensionOnMap[PlottableDimension::X].Id == NO_DIMENSION) {
-				x_elem_pos = DefaultX;
+				x_elem_pos = NoDimensionX;
 				conversion_ok = true;
 			} else {
 				UpdateCasterX();
@@ -407,14 +422,15 @@ void APresentationLayer::UpdateMapXYZ(float CurrentTime, FString ElementID)
 			}
 
 			if (DimensionOnMap[PlottableDimension::Y].Id == NO_DIMENSION) {
-				y_elem_pos = DefaultY;
+				y_elem_pos = NoDimensionY;
 			} else {
 				UpdateCasterY();
 				conversion_ok = (conversion_ok) ? DimensionOnMap[PlottableDimension::Y].Caster->Cast(el.second.Properties[yd.Id][CurrentTime], y_elem_pos) : false;
 			}
 
 			if (DimensionOnMap[PlottableDimension::Z].Id == NO_DIMENSION) {
-				z_elem_pos = DefaultZ;
+				z_elem_pos = NoDimensionZ;
+				DebugUtils::LogString("PresentationLayer::UpdateMapXYZ:: used z default value.");
 			} else {
 				UpdateCasterZ();
 				conversion_ok = (conversion_ok) ? DimensionOnMap[PlottableDimension::Z].Caster->Cast(el.second.Properties[zd.Id][CurrentTime], z_elem_pos) : false;
@@ -436,7 +452,7 @@ void APresentationLayer::UpdateMapXYZ(float CurrentTime, FString ElementID)
 		conversion_ok = DataAgent->getElementDetails(ElementID, elem);
 		if (conversion_ok) {	//element found
 			if (DimensionOnMap[PlottableDimension::X].Id == NO_DIMENSION) {
-				x_elem_pos = DefaultX;
+				x_elem_pos = NoDimensionX;
 				conversion_ok = true;
 			}
 			else {
@@ -445,7 +461,7 @@ void APresentationLayer::UpdateMapXYZ(float CurrentTime, FString ElementID)
 			}
 
 			if (DimensionOnMap[PlottableDimension::Y].Id == NO_DIMENSION) {
-				y_elem_pos = DefaultY;
+				y_elem_pos = NoDimensionY;
 			}
 			else {
 				UpdateCasterY();
@@ -453,7 +469,8 @@ void APresentationLayer::UpdateMapXYZ(float CurrentTime, FString ElementID)
 			}
 
 			if (DimensionOnMap[PlottableDimension::Z].Id == NO_DIMENSION) {
-				z_elem_pos = DefaultZ;
+				z_elem_pos = NoDimensionZ;
+				DebugUtils::LogString("PresentationLayer::UpdateMapXYZ:: used z default value.");
 			}
 			else {
 				UpdateCasterZ();
@@ -480,15 +497,13 @@ void APresentationLayer::UpdateSingleMapDimension(PlottableDimension::Type Dimen
 	DimensionDetails dim;
 	FString dim_id;
 
-	try
-	{
+	if (Utils::HMContains(DimensionOnMap, Dimension)) {
 		dim_id = DimensionOnMap.at(Dimension).Id;
-		if (!DataAgent->getDimensionDetails(dim_id, dim))
-		{
+		if (!DataAgent->getDimensionDetails(dim_id, dim)) {
 			DebugUtils::LogString(FString("PresentationLayer:: Update Single Map Dimension:: Failed to load Dimension Details ") + dim_id);
 		}
 	}
-	catch (std::out_of_range exception){ return; }//safety check
+	else{ return; }//safety check
 
 	//Utils::FHashMap<SongDetails> data = *DataAgent->GetElementMap();
 
@@ -576,14 +591,19 @@ void APresentationLayer::UpdateColorHue(const DimensionDetails dim, float Curren
 	float fval;
 
 	DimensionOnMap[PlottableDimension::Color_Hue].Caster = DataAgent->getCaster(dim);
-	DimensionOnMap[PlottableDimension::Color_Hue].Caster->SetTargetBounds(0.0f, 360.0f);
-	DimensionOnMap[PlottableDimension::Color_Hue].Caster->SetNormalizationType(ENormalize::Linear);
+	UpdateCasterColorHue();
 
 	if (ElementID != "") {	//update only one element
 		SongDetails elem;
 		valid = DataAgent->getElementDetails(ElementID, elem);
-		valid = valid && TakeValue(elem, dim, DimensionOnMap[PlottableDimension::Color_Hue].Caster, fval, CurrentTime);
-		if (valid) {	
+		if (DimensionOnMap[PlottableDimension::Color_Hue].Id == NO_DIMENSION) {	//default value
+			fval = NoDimensionColorHue;
+		}
+		else {				//update from a database dimension
+			valid = valid && TakeValue(elem, dim, DimensionOnMap[PlottableDimension::Color_Hue].Caster, fval, CurrentTime);
+		}
+
+		if (valid) {
 			MapElementsManagerAgent->SetColorHue(ElementID, fval);
 		}
 #ifdef PresentationLayer_VERBOSE_MODE
@@ -594,18 +614,25 @@ void APresentationLayer::UpdateColorHue(const DimensionDetails dim, float Curren
 	}
 	else {					//update every element on map
 		const Utils::FHashMap<SongDetails> data = *DataAgent->GetElementMap();
-		for (auto elem : data) {
-			valid = TakeValue(elem.second, dim, DimensionOnMap[PlottableDimension::Color_Hue].Caster, fval, CurrentTime);
-			if (valid) {	//update the element using fval
+		if (DimensionOnMap[PlottableDimension::Color_Sat].Id == NO_DIMENSION) {	//default value
+			for (auto elem : data) {
+				fval = NoDimensionColorHue;
 				MapElementsManagerAgent->SetColorHue(elem.first, fval);
 			}
+		} else {				//update from a database dimension
+			for (auto elem : data) {
+				valid = TakeValue(elem.second, dim, DimensionOnMap[PlottableDimension::Color_Hue].Caster, fval, CurrentTime);
+				if (valid) {	//update the element using fval
+					MapElementsManagerAgent->SetColorHue(elem.first, fval);
+				}
 #ifdef PresentationLayer_VERBOSE_MODE
-			else {
-				DebugUtils::LogString(FString("PresentationLayer::UpdateColorHue: failed to load color Hue. Invalid value."));
-			}
+				else {
+					DebugUtils::LogString(FString("PresentationLayer::UpdateColorHue: failed to load color Hue. Invalid value."));
+				}
 #endif
-		}
-	}
+			}	//end for each element
+		}		//end update from db dimension
+	}			//end update every element
 }
 
 void APresentationLayer::UpdateColorSat(const DimensionDetails dim, float CurrentTime, FString ElementID)
@@ -614,13 +641,17 @@ void APresentationLayer::UpdateColorSat(const DimensionDetails dim, float Curren
 	float fval;
 
 	DimensionOnMap[PlottableDimension::Color_Sat].Caster = DataAgent->getCaster(dim);
-	DimensionOnMap[PlottableDimension::Color_Sat].Caster->SetTargetBounds(SAT_LOWER_BOUND, 1.0f);
-	DimensionOnMap[PlottableDimension::Color_Sat].Caster->SetNormalizationType(ENormalize::Log);
+	UpdateCasterColorSat();
 
-	if (ElementID != "") {	//update only one element
+	if (ElementID != "") {		//update only one element
 		SongDetails elem;
 		valid = DataAgent->getElementDetails(ElementID, elem);
-		valid = valid && TakeValue(elem, dim, DimensionOnMap[PlottableDimension::Color_Sat].Caster, fval, CurrentTime);
+		if (DimensionOnMap[PlottableDimension::Color_Sat].Id == NO_DIMENSION) { //default value
+			fval = NoDimensionColorSat;
+		} else {				//update from a database dimension
+			valid = valid && TakeValue(elem, dim, DimensionOnMap[PlottableDimension::Color_Sat].Caster, fval, CurrentTime);
+		}
+
 		if (valid) {
 			MapElementsManagerAgent->SetColorSat(ElementID, fval);
 		}
@@ -630,18 +661,25 @@ void APresentationLayer::UpdateColorSat(const DimensionDetails dim, float Curren
 		}
 #endif
 	}
-	else {					//update every element on map
+	else {						//update every element on map
 		const Utils::FHashMap<SongDetails> data = *DataAgent->GetElementMap();
-		for (auto elem : data) {
-			valid = TakeValue(elem.second, dim, DimensionOnMap[PlottableDimension::Color_Sat].Caster, fval, CurrentTime);
-			if (valid) {	//update the element using fval
+		if (DimensionOnMap[PlottableDimension::Color_Sat].Id == NO_DIMENSION) { //default value
+			for (auto elem : data) {
+				fval = NoDimensionColorSat;
 				MapElementsManagerAgent->SetColorSat(elem.first, fval);
 			}
+		} else {				//update from a database dimension
+			for (auto elem : data) {
+				valid = TakeValue(elem.second, dim, DimensionOnMap[PlottableDimension::Color_Sat].Caster, fval, CurrentTime);
+				if (valid) {	//update the element using fval
+					MapElementsManagerAgent->SetColorSat(elem.first, fval);
+				}
 #ifdef PresentationLayer_VERBOSE_MODE
-			else {
-				DebugUtils::LogString(FString("PresentationLayer::UpdateColorSat: failed to load color Sat. Invalid value."));
-			}
+				else {
+					DebugUtils::LogString(FString("PresentationLayer::UpdateColorSat: failed to load color Sat. Invalid value."));
+				}
 #endif
-		}
-	}
+			}	//end for each element
+		}		//end update from db dimension
+	}			//end update every element
 }

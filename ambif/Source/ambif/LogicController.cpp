@@ -113,16 +113,22 @@ void ALogicController::RefreshViewList()
 
 TArray<FString> ALogicController::GetDimensionList()
 {
-	return DataAgent->GetDimensionIdList();
+	TArray<FString> tmp = DataAgent->GetDimensionIdList();
+	tmp.Add(NO_DIMENSION);
+	return tmp;
 }
 
 FString ALogicController::GetDimensionDescription(FString DimensionId)
 {
 	DimensionDetails tmp;
-	if (DataAgent->getDimensionDetails(DimensionId, tmp))
-	{
+	if (DataAgent->getDimensionDetails(DimensionId, tmp)) {
 		return tmp.Description;
 	}
+	
+	if (DimensionId == NO_DIMENSION) {
+		return NO_DIMENSION_DESCR;
+	}
+
 	return FString(NO_DIMENSION_FOUND);
 }
 
