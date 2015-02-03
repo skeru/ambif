@@ -100,8 +100,8 @@ APresentationLayer::APresentationLayer(const FObjectInitializer& ObjectInitializ
 	NoDimensionX = 150.0f;
 	NoDimensionY = 150.0f;
 	NoDimensionZ = 150.0f;
-	NoDimensionColorHue = 1.0f;
-	NoDimensionColorSat = 0.0f;
+	NoDimensionColorHue = 0.0f;
+	NoDimensionColorSat = 1.0f;
 	
 	LandscapeBounds_orig = FVector::ZeroVector;
 	LandscapeBounds_ext = FVector::ZeroVector;
@@ -383,7 +383,7 @@ void APresentationLayer::GlobalUpdateMap(float CurrentTime, FString ElementID)
 	//update other dimensions
 	for (auto d : DimensionOnMap) {
 		if (d.first != PlottableDimension::X && d.first != PlottableDimension::Y && d.first != PlottableDimension::Z) {
-			UpdateSingleMapDimension((PlottableDimension::Type) d.first, CurrentTime, ElementID);
+			UpdateSingleMapDimension(d.first, CurrentTime, ElementID);
 		}
 	}
 }
@@ -430,7 +430,6 @@ void APresentationLayer::UpdateMapXYZ(float CurrentTime, FString ElementID)
 
 			if (DimensionOnMap[PlottableDimension::Z].Id == NO_DIMENSION) {
 				z_elem_pos = NoDimensionZ;
-				DebugUtils::LogString("PresentationLayer::UpdateMapXYZ:: used z default value.");
 			} else {
 				UpdateCasterZ();
 				conversion_ok = (conversion_ok) ? DimensionOnMap[PlottableDimension::Z].Caster->Cast(el.second.Properties[zd.Id][CurrentTime], z_elem_pos) : false;
@@ -470,7 +469,6 @@ void APresentationLayer::UpdateMapXYZ(float CurrentTime, FString ElementID)
 
 			if (DimensionOnMap[PlottableDimension::Z].Id == NO_DIMENSION) {
 				z_elem_pos = NoDimensionZ;
-				DebugUtils::LogString("PresentationLayer::UpdateMapXYZ:: used z default value.");
 			}
 			else {
 				UpdateCasterZ();
@@ -503,9 +501,10 @@ void APresentationLayer::UpdateSingleMapDimension(PlottableDimension::Type Dimen
 			DebugUtils::LogString(FString("PresentationLayer:: Update Single Map Dimension:: Failed to load Dimension Details ") + dim_id);
 		}
 	}
-	else{ return; }//safety check
-
-	//Utils::FHashMap<SongDetails> data = *DataAgent->GetElementMap();
+	else{ //safety check
+		DebugUtils::LogString("PresentationLayer::UpdateSingleMapDimension: Tried to update unknown PlottableDimension.");
+		return; 
+	}
 
 	switch (Dimension)
 	{
@@ -614,7 +613,7 @@ void APresentationLayer::UpdateColorHue(const DimensionDetails dim, float Curren
 	}
 	else {					//update every element on map
 		const Utils::FHashMap<SongDetails> data = *DataAgent->GetElementMap();
-		if (DimensionOnMap[PlottableDimension::Color_Sat].Id == NO_DIMENSION) {	//default value
+		if (DimensionOnMap[PlottableDimension::Color_Hue].Id == NO_DIMENSION) {	//default value
 			for (auto elem : data) {
 				fval = NoDimensionColorHue;
 				MapElementsManagerAgent->SetColorHue(elem.first, fval);

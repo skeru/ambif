@@ -177,7 +177,7 @@ void HSVColor::RGB_to_HSV(float R, float G, float B, float&H, float&S, float&V)
 	Delta = Cmax - Cmin;
 
 	V = Cmax;
-	S = (Delta != 0.0f) ? Delta / Cmax : Delta;
+	S = (Cmax != 0.0f) ? Delta / Cmax : Cmax;
 
 	if (Delta == 0.0f)
 	{	//avoid divide by zero
@@ -187,15 +187,15 @@ void HSVColor::RGB_to_HSV(float R, float G, float B, float&H, float&S, float&V)
 	{	//using hue formula
 		if (Cmax == _r)
 		{
-			H = 60.0f * FMath::Fmod((_g - _b) / Delta, 6.0f);
+			H = 60.0f * FMath::Fmod(FMath::Abs(_g - _b) / Delta, 6.0f);
 		}
 		else if (Cmax == _g)
 		{
-			H = 60.0f * (((_b - _r) / Delta) + 2.0f);
+			H = 60.0f * ((FMath::Abs(_b - _r) / Delta) + 2.0f);
 		}
 		else	//Cmax == _b
 		{
-			H = 60.0f * (((_r - _g) / Delta) + 4.0f);
+			H = 60.0f * ((FMath::Abs(_r - _g) / Delta) + 4.0f);
 		}
 	}	//end 0 delta special case
 }
