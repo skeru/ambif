@@ -41,7 +41,7 @@ ABrowserCharacter::ABrowserCharacter(const FObjectInitializer& ObjectInitializer
 	
 	//do not consider collisions with world
 	CameraBoom->bDoCollisionTest = false;
-	CameraBoom->SetWorldRotation(FRotator(angle, 180, 0));
+	CameraBoom->SetWorldRotation(FRotator(angle, 0, 0));
 	
 	// The camera follows at this distance behind the character
 	CameraBoom->TargetArmLength = cameraZoom_current; 
@@ -75,10 +75,11 @@ void ABrowserCharacter::SetupPlayerInputComponent(class UInputComponent* InputCo
 //------------------------------ CAMERA ZOOM ------------------------------
 void ABrowserCharacter::ResetCamera()
 {
+	SetActorRotation(FRotator::ZeroRotator);
 	cameraZoom_current = CAMERA_ARM_LENGTH;
 	const float angle = CAMERA_ANGLE(cameraZoom_current);
 	CameraBoom->TargetArmLength = cameraZoom_current;
-	CameraBoom->SetWorldRotation(FRotator(angle, 180, 0));
+	CameraBoom->SetWorldRotation(FRotator(angle, 0, 0));
 	Manager->ForceUpdateZoomWidget(CAMERA_ZOOM_PERCENT(cameraZoom_current));
 #ifdef ENABLE_CAMERA_DEBUG_MESSAGES
 	DEBUG("Camera values reset.")
