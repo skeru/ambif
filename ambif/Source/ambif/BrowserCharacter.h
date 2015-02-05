@@ -57,6 +57,10 @@ public:
 	float SpeedLookUp;
 
 	//-------------------------CAMERA ZOOM-------------------------
+private:
+	UPROPERTY(EditAnywhere, Category = Camera)
+	/** Quadratically increase view angle when getting closer. */
+	bool bUseParabolicZoom;
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Camera Management")
@@ -75,20 +79,67 @@ public:
 	/** Camera zoom set to value.
 	 * Zoom 0 means close to object.
 	 *
-	 * Does not update Widget Zoom */
+	 * Does not update Widget Zoom 
+	 * (could cause loop due to circular reference)
+	 * (I know it's shitty by design but quickly just works) */
 	void CameraZoomTo(float ZoomPercent);
+
+	UFUNCTION(BlueprintCallable, Category = "Camera Management")
+	/** Activate / Deactivate parabolic zoom. 
+	 *
+	 * Parabolic zoom quadratically increase view angle when getting closer. */
+	void SetParabolicZoomEnable(bool Enable);
+
+	UFUNCTION(BlueprintCallable, Category = "Camera Management")
+	/** Returns true if and only if parabolic zoom is in use. */
+	bool IsParabolicZoomEnable();
 
 private:
 	float cameraZoom_current;
 
-	//------------------------- AXES CONTROL -------------------------
+	//-------------------PARABOLIC CAMERA ZOOM--------------------
+private:
+	UFUNCTION(BlueprintCallable, Category = "Parabolic Camera Management")
+	/** Parabolic camera zoom step in */
+	void ParabolicCameraZoomIn();
 
+	UFUNCTION(BlueprintCallable, Category = "Parabolic Camera Management")
+	/** Parabolic camera zoom step out */
+	void ParabolicCameraZoomOut();
+
+	UFUNCTION(BlueprintCallable, Category = "Parabolic Camera Management")
+	/** Parabolic camera zoom set to value.
+	 * Zoom 0 means close to object.
+	 *
+	 * Does not update Widget Zoom */
+	void ParabolicCameraZoomTo(float ZoomPercent);
+
+	//---------------------LINEAR CAMERA ZOOM----------------------
+private:
+	UFUNCTION(BlueprintCallable, Category = "Linear Camera Management")
+	/** Linear camera zoom step in */
+	void LinearCameraZoomIn();
+
+	UFUNCTION(BlueprintCallable, Category = "Linear Camera Management")
+	/** Linear camera zoom step out */
+	void LinearCameraZoomOut();
+
+	UFUNCTION(BlueprintCallable, Category = "Linear Camera Management")
+	/** Linear camera zoom set to value.
+	 * Zoom 0 means close to object.
+	 *
+	 * Does not update Widget Zoom */
+	void LinearCameraZoomTo(float ZoomPercent);
+
+
+	//------------------------- AXES CONTROL -------------------------
+private:
 	void Turn(float Val);
 
 	void LookUp(float Val);
 
 	//-------------------------CHARACTER MOVEMEMENT-------------------------
-
+private:
 	void MoveForward(float Val);
 
 	void MoveRight(float Val);

@@ -38,6 +38,7 @@ ABrowserCharacter::ABrowserCharacter(const FObjectInitializer& ObjectInitializer
 	
 	// Camera arm rotation, based on its length 
 	float angle = CAMERA_ANGLE(cameraZoom_current);
+	bUseParabolicZoom = true;
 	
 	//do not consider collisions with world
 	CameraBoom->bDoCollisionTest = false;
@@ -73,6 +74,7 @@ void ABrowserCharacter::SetupPlayerInputComponent(class UInputComponent* InputCo
 }
 
 //------------------------------ CAMERA ZOOM ------------------------------
+
 void ABrowserCharacter::ResetCamera()
 {
 	SetActorRotation(FRotator::ZeroRotator);
@@ -86,7 +88,34 @@ void ABrowserCharacter::ResetCamera()
 #endif
 }
 
-void ABrowserCharacter::CameraZoomIn(){
+void ABrowserCharacter::CameraZoomIn()
+{	
+	bUseParabolicZoom ? ParabolicCameraZoomIn() : LinearCameraZoomIn();
+}
+
+void ABrowserCharacter::CameraZoomOut()
+{
+	bUseParabolicZoom ? ParabolicCameraZoomOut() : LinearCameraZoomOut();
+}
+
+void ABrowserCharacter::CameraZoomTo(float ZoomPercent)
+{
+	bUseParabolicZoom ? ParabolicCameraZoomTo(ZoomPercent) : LinearCameraZoomTo(ZoomPercent);
+}
+
+void ABrowserCharacter::SetParabolicZoomEnable(bool Enable)
+{
+	bUseParabolicZoom = Enable;
+}
+
+bool ABrowserCharacter::IsParabolicZoomEnable()
+{
+	return bUseParabolicZoom;
+}
+
+//--------------------------- PARABOLIC CAMERA ZOOM ---------------------------
+
+void ABrowserCharacter::ParabolicCameraZoomIn(){
 	const float angle = (CAMERA_ANGLE(cameraZoom_current));
 	cameraZoom_current = FMath::Clamp(cameraZoom_current - CAMERA_ZOOM_STEP, CAMERA_ZOOM_MIN, CAMERA_ZOOM_MAX);
 	CameraBoom->TargetArmLength = cameraZoom_current;
@@ -101,7 +130,7 @@ void ABrowserCharacter::CameraZoomIn(){
 #endif
 }
 
-void ABrowserCharacter::CameraZoomOut(){
+void ABrowserCharacter::ParabolicCameraZoomOut(){
 	const float angle = (CAMERA_ANGLE(cameraZoom_current));
 	cameraZoom_current = FMath::Clamp(cameraZoom_current + CAMERA_ZOOM_STEP, CAMERA_ZOOM_MIN, CAMERA_ZOOM_MAX);
 	CameraBoom->TargetArmLength = cameraZoom_current;
@@ -117,19 +146,45 @@ void ABrowserCharacter::CameraZoomOut(){
 #endif
 }
 
-void ABrowserCharacter::CameraZoomTo(float ZoomPercent)
+void ABrowserCharacter::ParabolicCameraZoomTo(float ZoomPercent)
 {
 	const float angle = (CAMERA_ANGLE(cameraZoom_current));
 	cameraZoom_current = (CAMERA_ZOOM_VALUE(FMath::Clamp(ZoomPercent, 0.0f, 1.0f)));
 	const float delta_angle = (CAMERA_ANGLE(cameraZoom_current)) - angle;
 	CameraBoom->TargetArmLength = cameraZoom_current;
-
 	//const FRotator Rotation = Controller->GetControlRotation();
 	//CameraBoom->SetWorldRotation(FRotator(Rotation.Pitch - delta_angle, Rotation.Yaw, Rotation.Roll));
 	CameraBoom->AddRelativeRotation(FRotator(delta_angle, 0.0f, 0.0f));
 #ifdef ENABLE_CAMERA_DEBUG_MESSAGES
 	DEBUG("angle should be " + FString::SanitizeFloat(angle));
 #endif
+}
+
+
+//----------------------------- LINEAR CAMERA ZOOM -----------------------------
+
+void ABrowserCharacter::LinearCameraZoomIn()
+{
+	cameraZoom_current = FMath::Clamp(cameraZoom_current - CAMERA_ZOOM_STEP, CAMERA_ZOOM_MIN, CAMERA_ZOOM_MAX);
+	CameraBoom->TargetArmLength = cameraZoom_current;
+#ifndef SKIP_ZOOM_WIDGET
+	Manager->ForceUpdateZoomWidget(CAMERA_ZOOM_PERCENT(cameraZoom_current));
+#endif
+}
+
+void ABrowserCharacter::LinearCameraZoomOut()
+{
+	cameraZoom_current = FMath::Clamp(cameraZoom_current + CAMERA_ZOOM_STEP, CAMERA_ZOOM_MIN, CAMERA_ZOOM_MAX);
+	CameraBoom->TargetArmLength = cameraZoom_current;
+#ifndef SKIP_ZOOM_WIDGET
+	Manager->ForceUpdateZoomWidget(CAMERA_ZOOM_PERCENT(cameraZoom_current));
+#endif
+}
+
+void ABrowserCharacter::LinearCameraZoomTo(float ZoomPercent)
+{
+	cameraZoom_current = (CAMERA_ZOOM_VALUE(FMath::Clamp(ZoomPercent, 0.0f, 1.0f)));
+	CameraBoom->TargetArmLength = cameraZoom_current;
 }
 
 //------------------------- AXES CONTROL -------------------------
@@ -146,16 +201,14 @@ void ABrowserCharacter::LookUp(float Val)
 }
 
 //-------------------------CHARACTER MOVEMEMENT------------------------------
+
 void ABrowserCharacter::MoveForward(float Val)
 {
 	if ((Val != 0.f) && (Controller != NULL))
 	{
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotationMatrix R = FRotationMatrix(FRotator(0, Rotation.Yaw, 0));
-
 		const FVector WorldSpaceAccel = R.GetScaledAxis(EAxis::X);
-
-		// transform to world space and add it
 		AddMovementInput(WorldSpaceAccel, Val * SpeedX * (CHARACTER_MOVEMENT_SPEED(cameraZoom_current)));
 	}
 }
@@ -166,10 +219,7 @@ void ABrowserCharacter::MoveRight(float Val)
 	{
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotationMatrix R = FRotationMatrix(FRotator(0, Rotation.Yaw, 0));
-
 		const FVector WorldSpaceAccel = R.GetScaledAxis(EAxis::Y);
-
-		// transform to world space and add it
 		AddMovementInput(WorldSpaceAccel, Val * SpeedY * (CHARACTER_MOVEMENT_SPEED(cameraZoom_current)));
 	}
 }
@@ -181,31 +231,25 @@ void ABrowserCharacter::MoveUp(float Val)
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotationMatrix R = FRotationMatrix(FRotator(Rotation.Pitch, 0, Rotation.Roll));
 		const FVector WorldSpaceAccel = R.GetScaledAxis(EAxis::Z);
-
-		//const FVector WorldSpaceAccel = FVector(0.0f, 0.0f, 1.0f);
-
-		// transform to world space and add it
 		AddMovementInput(WorldSpaceAccel, Val * SpeedZ * (CHARACTER_MOVEMENT_SPEED(cameraZoom_current)));
 	}
 }
 
 //------------------------- OVERLAP EVENTS ------------------------------
+
 void ABrowserCharacter::OnBeginOverlap(AActor* Other)
 {
-	//overlap begin
 	/* Cast<> description: 
 	 * [efficiency preset] it's the equivalent of C++ line
 	 * AMapElementActor* element = dynamic_cast<AMapElementActor*>(Other);
 	 * but magically works without turning on RTTI compiler settings.
 	 * Pay attention to pointers. */
 	AMapElementActor* element = Cast<AMapElementActor>(Other);
-	if (element == NULL) // element is not a MapElementActor
-	{
+
+	if (element == NULL) {	// element is not a MapElementActor
 		return;
 	}
-
-	if (Manager)
-	{
+	if (Manager) {
 		Manager->SelectElement(element->GetElementID());
 	}
 
@@ -216,18 +260,16 @@ void ABrowserCharacter::OnBeginOverlap(AActor* Other)
 
 void ABrowserCharacter::OnEndOverlap(AActor* Other)
 {
-	//overlap end
 	/* equivalent of C++ line
-	* AMapElementActor* element = dynamic_cast<AMapElementActor*>(Other);
-	* but works without turning on RTTI compiler settings.
-	* Pay attention to pointers. */
+	 * AMapElementActor* element = dynamic_cast<AMapElementActor*>(Other);
+	 * but works without turning on RTTI compiler settings.
+	 * Pay attention to pointers. */
 	AMapElementActor* element = Cast<AMapElementActor>(Other);
-	if (element == NULL) // element is not a MapElementActor
-	{
+
+	if (element == NULL) {	// element is not a MapElementActor
 		return;
 	}
-	if (Manager)
-	{
+	if (Manager) {
 		Manager->DeselectElement(element->GetElementID());
 	}
 
