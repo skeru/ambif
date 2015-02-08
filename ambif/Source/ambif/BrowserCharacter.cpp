@@ -39,6 +39,7 @@ ABrowserCharacter::ABrowserCharacter(const FObjectInitializer& ObjectInitializer
 	// Camera arm rotation, based on its length 
 	float angle = CAMERA_ANGLE(cameraZoom_current);
 	bUseParabolicZoom = true;
+	bEnable3D = true;
 	
 	//do not consider collisions with world
 	CameraBoom->bDoCollisionTest = false;
@@ -79,9 +80,14 @@ void ABrowserCharacter::ResetCamera()
 {
 	SetActorRotation(FRotator::ZeroRotator);
 	cameraZoom_current = CAMERA_ARM_LENGTH;
-	const float angle = CAMERA_ANGLE(cameraZoom_current);
 	CameraBoom->TargetArmLength = cameraZoom_current;
-	CameraBoom->SetWorldRotation(FRotator(angle, 0, 0));
+	if (bEnable3D) {
+		const float angle = CAMERA_ANGLE(cameraZoom_current);
+		CameraBoom->SetWorldRotation(FRotator(angle, 0, 0));
+	}
+	else {
+		CameraBoom->SetWorldRotation(FRotator(-90.0f, 0.0f, 0.0f));
+	}
 	Manager->ForceUpdateZoomWidget(CAMERA_ZOOM_PERCENT(cameraZoom_current));
 #ifdef ENABLE_CAMERA_DEBUG_MESSAGES
 	DEBUG("Camera values reset.")
@@ -187,6 +193,22 @@ void ABrowserCharacter::LinearCameraZoomTo(float ZoomPercent)
 	CameraBoom->TargetArmLength = cameraZoom_current;
 }
 
+//------------------------- 2D 3D SWITCH -------------------------
+
+bool ABrowserCharacter::Is3DEnabled()
+{
+	return bEnable3D;
+}
+
+void ABrowserCharacter::Set3DEnabled(bool Enabled)
+{
+	bEnable3D = Enabled;
+	if (!Enabled) {
+		SetParabolicZoomEnable(false);
+	}
+	ResetCamera();
+}
+
 //------------------------- AXES CONTROL -------------------------
 
 void ABrowserCharacter::Turn(float Val)
@@ -197,14 +219,16 @@ void ABrowserCharacter::Turn(float Val)
 
 void ABrowserCharacter::LookUp(float Val)
 {
-	CameraBoom->AddRelativeRotation(FRotator(-Val * SpeedLookUp, 0.0f, 0.0f));
+	if (bEnable3D) {
+		CameraBoom->AddRelativeRotation(FRotator(-Val * SpeedLookUp, 0.0f, 0.0f));
+	}
 }
 
 //-------------------------CHARACTER MOVEMEMENT------------------------------
 
 void ABrowserCharacter::MoveForward(float Val)
 {
-	if ((Val != 0.f) && (Controller != NULL))
+	if ((Val != 0.0f) && (Controller != NULL))
 	{
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotationMatrix R = FRotationMatrix(FRotator(0, Rotation.Yaw, 0));
@@ -215,7 +239,7 @@ void ABrowserCharacter::MoveForward(float Val)
 
 void ABrowserCharacter::MoveRight(float Val)
 {
-	if ((Val != 0.f) && (Controller != NULL))
+	if ((Val != 0.0f) && (Controller != NULL))
 	{
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotationMatrix R = FRotationMatrix(FRotator(0, Rotation.Yaw, 0));
@@ -226,7 +250,7 @@ void ABrowserCharacter::MoveRight(float Val)
 
 void ABrowserCharacter::MoveUp(float Val)
 {
-	if ((Val != 0.f) && (Controller != NULL))
+	if ((Val != 0.0f) && (Controller != NULL) && bEnable3D)
 	{
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotationMatrix R = FRotationMatrix(FRotator(Rotation.Pitch, 0, Rotation.Roll));

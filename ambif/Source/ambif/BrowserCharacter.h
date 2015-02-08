@@ -5,6 +5,7 @@
 #include "GameFramework/Character.h"
 #include "MapElements/MapElementActor.h"
 #include "LogicController.h"
+#include "BrowserController_i.h"
 #include "BrowserCharacter.generated.h"
 
 /** Character used to focus elements.
@@ -12,7 +13,7 @@
  * Also contains camera controls.
  */
 UCLASS()
-class AMBIF_API ABrowserCharacter : public ACharacter
+class AMBIF_API ABrowserCharacter : public ACharacter, public IBrowserController_i
 {
 	GENERATED_BODY()
 public:
@@ -65,15 +66,15 @@ private:
 public:
 	UFUNCTION(BlueprintCallable, Category = "Camera Management")
 	/** Reset Camera to default values */
-	void ResetCamera();
+	virtual void ResetCamera();
 
 	UFUNCTION(BlueprintCallable, Category = "Camera Management")
 	/** Camera zoom step in */
-	void CameraZoomIn();
+	virtual void CameraZoomIn();
 
 	UFUNCTION(BlueprintCallable, Category = "Camera Management")
 	/** Camera zoom step out */
-	void CameraZoomOut();
+	virtual void CameraZoomOut();
 
 	UFUNCTION(BlueprintCallable, Category = "Camera Management")
 	/** Camera zoom set to value.
@@ -82,17 +83,17 @@ public:
 	 * Does not update Widget Zoom 
 	 * (could cause loop due to circular reference)
 	 * (I know it's shitty by design but quickly just works) */
-	void CameraZoomTo(float ZoomPercent);
+	virtual void CameraZoomTo(float ZoomPercent);
 
 	UFUNCTION(BlueprintCallable, Category = "Camera Management")
 	/** Activate / Deactivate parabolic zoom. 
 	 *
 	 * Parabolic zoom quadratically increase view angle when getting closer. */
-	void SetParabolicZoomEnable(bool Enable);
+	virtual void SetParabolicZoomEnable(bool Enable);
 
 	UFUNCTION(BlueprintCallable, Category = "Camera Management")
 	/** Returns true if and only if parabolic zoom is in use. */
-	bool IsParabolicZoomEnable();
+	virtual bool IsParabolicZoomEnable();
 
 private:
 	float cameraZoom_current;
@@ -131,6 +132,18 @@ private:
 	 * Does not update Widget Zoom */
 	void LinearCameraZoomTo(float ZoomPercent);
 
+	//------------------------- 2D 3D SWITCH -------------------------
+private:
+	bool bEnable3D;
+
+public:
+	UFUNCTION(BlueprintCallable, Category = "3D settings")
+	/** Returns true if and only if 3D navigation mode is enabled. */
+	virtual bool Is3DEnabled() override;
+
+	UFUNCTION(BlueprintCallable, Category = "3D settings")
+	/** Enable / Disable 3D navigation mode. */
+	virtual void Set3DEnabled(bool Enabled) override;
 
 	//------------------------- AXES CONTROL -------------------------
 private:
@@ -138,7 +151,7 @@ private:
 
 	void LookUp(float Val);
 
-	//-------------------------CHARACTER MOVEMEMENT-------------------------
+	//----------------------CHARACTER MOVEMEMENT----------------------
 private:
 	void MoveForward(float Val);
 

@@ -124,6 +124,8 @@ APresentationLayer::APresentationLayer(const FObjectInitializer& ObjectInitializ
 
 	DefaultSpawnHeigth = 150.0f;
 
+	bEnable3D = true;
+
 	// update should be called via blueprint to have referenecs properly set
 	//UpdateVolumeCasterBounds();
 }
@@ -360,6 +362,15 @@ void APresentationLayer::Initialize(FString ViewID)
 	UpdateSingleMapDimension(PlottableDimension::Color_Sat);
 
 	//GlobalUpdateMap();
+}
+
+void APresentationLayer::SetEnable3D(bool Enable3D)
+{
+	if (!Enable3D) {
+		DimensionOnMap[PlottableDimension::Z].Id = NO_DIMENSION;
+		UpdateMapXYZ();
+	}
+	bEnable3D = Enable3D;
 }
 
 void APresentationLayer::SetDimension(PlottableDimension::Type DimensionSpace, FString DimensionID, bool Update)

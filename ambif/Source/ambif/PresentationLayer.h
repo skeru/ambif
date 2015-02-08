@@ -173,6 +173,11 @@ private:
 	inline void UpdateCasterColorSat();
 
 	//-----------------------NO DIMENSION POSITION-----------------------
+private:
+	UPROPERTY(VisibleAnywhere, Category = "Map Settings")
+	/** Is currentyle enabled 3D mode */
+	bool bEnable3D;
+
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "No dimension Position")
 	/** This value is used when no dimension is set to PlottableDimension::X */
@@ -223,6 +228,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Actions (Map)")
 	/** Loads data and plot specified View */
 	void Initialize(FString ViewID);
+
+	UFUNCTION(BlueprintCallable, Category = "Actions (Map)")
+	/** TODO document */
+	void SetEnable3D(bool Enable3D);
 
 	UFUNCTION(BlueprintCallable, Category = "Actions (Map)")
 	/** Add / Overwrite a dimension on the map.

@@ -1,196 +1,204 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<ItemGroup>
-		<None Include="..\..\ambif.uproject" />
-		<Filter Include="Source">
-			<UniqueIdentifier>{81C983C9-C693-4989-B6D2-362FA5112BFB}</UniqueIdentifier>
-		</Filter>
-		<None Include="..\..\Source\ambif.Target.cs">
-			<Filter>Source</Filter>
-		</None >
-		<None Include="..\..\Source\ambifEditor.Target.cs">
-			<Filter>Source</Filter>
-		</None >
-		<Filter Include="Config">
-			<UniqueIdentifier>{8CDE8E53-463B-4EC9-BFE8-05CBC1E30617}</UniqueIdentifier>
-		</Filter>
-		<None Include="..\..\Config\DefaultEditor.ini">
-			<Filter>Config</Filter>
-		</None >
-		<None Include="..\..\Config\DefaultEngine.ini">
-			<Filter>Config</Filter>
-		</None >
-		<None Include="..\..\Config\DefaultGame.ini">
-			<Filter>Config</Filter>
-		</None >
-		<None Include="..\..\Config\DefaultInput.ini">
-			<Filter>Config</Filter>
-		</None >
-		<Filter Include="Source\ambif">
-			<UniqueIdentifier>{50B77BE3-0B3F-4F6B-88DC-D036A2FAF21C}</UniqueIdentifier>
-		</Filter>
-		<None Include="..\..\Source\ambif\ambif.Build.cs">
-			<Filter>Source\ambif</Filter>
-		</None >
-		<ClCompile Include="..\..\Source\ambif\ambif.cpp">
-			<Filter>Source\ambif</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\ambif\ambif.h">
-			<Filter>Source\ambif</Filter>
-		</ClInclude >
-		<ClCompile Include="..\..\Source\ambif\ambifGameMode.cpp">
-			<Filter>Source\ambif</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\ambif\ambifGameMode.h">
-			<Filter>Source\ambif</Filter>
-		</ClInclude >
-		<ClCompile Include="..\..\Source\ambif\ambifPlayerController.cpp">
-			<Filter>Source\ambif</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\ambif\ambifPlayerController.h">
-			<Filter>Source\ambif</Filter>
-		</ClInclude >
-		<ClCompile Include="..\..\Source\ambif\BrowserCharacter.cpp">
-			<Filter>Source\ambif</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\ambif\BrowserCharacter.h">
-			<Filter>Source\ambif</Filter>
-		</ClInclude >
-		<ClCompile Include="..\..\Source\ambif\LogicController.cpp">
-			<Filter>Source\ambif</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\ambif\LogicController.h">
-			<Filter>Source\ambif</Filter>
-		</ClInclude >
-		<ClCompile Include="..\..\Source\ambif\PresentationLayer.cpp">
-			<Filter>Source\ambif</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\ambif\PresentationLayer.h">
-			<Filter>Source\ambif</Filter>
-		</ClInclude >
-		<Filter Include="Source\ambif\CustomUtils">
-			<UniqueIdentifier>{F39E327E-9C3E-42E6-A4A9-C6DC3C24ECD0}</UniqueIdentifier>
-		</Filter>
-		<ClInclude Include="..\..\Source\ambif\CustomUtils\CameraMacros.h">
-			<Filter>Source\ambif\CustomUtils</Filter>
-		</ClInclude >
-		<ClInclude Include="..\..\Source\ambif\CustomUtils\CustomUtils.h">
-			<Filter>Source\ambif\CustomUtils</Filter>
-		</ClInclude >
-		<ClInclude Include="..\..\Source\ambif\CustomUtils\DebugUtils.h">
-			<Filter>Source\ambif\CustomUtils</Filter>
-		</ClInclude >
-		<ClCompile Include="..\..\Source\ambif\CustomUtils\HSVColor.cpp">
-			<Filter>Source\ambif\CustomUtils</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\ambif\CustomUtils\HSVColor.h">
-			<Filter>Source\ambif\CustomUtils</Filter>
-		</ClInclude >
-		<Filter Include="Source\ambif\Data">
-			<UniqueIdentifier>{3056A97B-70B8-4C6B-A512-D157D0B15E83}</UniqueIdentifier>
-		</Filter>
-		<ClCompile Include="..\..\Source\ambif\Data\Caster.cpp">
-			<Filter>Source\ambif\Data</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\ambif\Data\Caster.h">
-			<Filter>Source\ambif\Data</Filter>
-		</ClInclude >
-		<ClCompile Include="..\..\Source\ambif\Data\CSVParser.cpp">
-			<Filter>Source\ambif\Data</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\ambif\Data\CSVParser.h">
-			<Filter>Source\ambif\Data</Filter>
-		</ClInclude >
-		<ClCompile Include="..\..\Source\ambif\Data\DataManager.cpp">
-			<Filter>Source\ambif\Data</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\ambif\Data\DataManager.h">
-			<Filter>Source\ambif\Data</Filter>
-		</ClInclude >
-		<Filter Include="Source\ambif\DataDefinitions">
-			<UniqueIdentifier>{F22D3452-0084-4455-9B12-9D67584A2C11}</UniqueIdentifier>
-		</Filter>
-		<ClInclude Include="..\..\Source\ambif\DataDefinitions\Genre.h">
-			<Filter>Source\ambif\DataDefinitions</Filter>
-		</ClInclude >
-		<ClCompile Include="..\..\Source\ambif\DataDefinitions\MusicGenreAdapter.cpp">
-			<Filter>Source\ambif\DataDefinitions</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\ambif\DataDefinitions\MusicGenreAdapter.h">
-			<Filter>Source\ambif\DataDefinitions</Filter>
-		</ClInclude >
-		<ClInclude Include="..\..\Source\ambif\DataDefinitions\TableDefinitions.h">
-			<Filter>Source\ambif\DataDefinitions</Filter>
-		</ClInclude >
-		<Filter Include="Source\ambif\HUD">
-			<UniqueIdentifier>{CE6D85D1-1D6B-4965-B333-CEDA5B976274}</UniqueIdentifier>
-		</Filter>
-		<ClCompile Include="..\..\Source\ambif\HUD\InspectionHUD.cpp">
-			<Filter>Source\ambif\HUD</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\ambif\HUD\InspectionHUD.h">
-			<Filter>Source\ambif\HUD</Filter>
-		</ClInclude >
-		<ClCompile Include="..\..\Source\ambif\HUD\SimplePlayerHUD.cpp">
-			<Filter>Source\ambif\HUD</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\ambif\HUD\SimplePlayerHUD.h">
-			<Filter>Source\ambif\HUD</Filter>
-		</ClInclude >
-		<Filter Include="Source\ambif\MapElements">
-			<UniqueIdentifier>{8DE4DDF2-A8CF-4893-82E5-2B68344FA952}</UniqueIdentifier>
-		</Filter>
-		<ClCompile Include="..\..\Source\ambif\MapElements\MapElementActor.cpp">
-			<Filter>Source\ambif\MapElements</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\ambif\MapElements\MapElementActor.h">
-			<Filter>Source\ambif\MapElements</Filter>
-		</ClInclude >
-		<ClInclude Include="..\..\Source\ambif\MapElements\MapElementActorListener.h">
-			<Filter>Source\ambif\MapElements</Filter>
-		</ClInclude >
-		<ClCompile Include="..\..\Source\ambif\MapElements\MapElementsManager.cpp">
-			<Filter>Source\ambif\MapElements</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\ambif\MapElements\MapElementsManager.h">
-			<Filter>Source\ambif\MapElements</Filter>
-		</ClInclude >
-		<Filter Include="Source\ambif\Music">
-			<UniqueIdentifier>{C3DC4AC7-EC52-466E-BDAE-8ED1B14BF396}</UniqueIdentifier>
-		</Filter>
-		<ClCompile Include="..\..\Source\ambif\Music\MusicPlayerActor.cpp">
-			<Filter>Source\ambif\Music</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\ambif\Music\MusicPlayerActor.h">
-			<Filter>Source\ambif\Music</Filter>
-		</ClInclude >
-		<Filter Include="Source\ambif\Resources">
-			<UniqueIdentifier>{A05CA8F0-566B-4828-B4D3-B305C666142F}</UniqueIdentifier>
-		</Filter>
-		<Filter Include="Source\ambif\Resources\Windows">
-			<UniqueIdentifier>{7254666E-779E-4252-A2EF-84DE798B126A}</UniqueIdentifier>
-		</Filter>
-		<None Include="..\..\Source\ambif\Resources\Windows\ambif.ico">
-			<Filter>Source\ambif\Resources\Windows</Filter>
-		</None >
-		<ResourceCompile Include="..\..\Source\ambif\Resources\Windows\ambif.rc">
-			<Filter>Source\ambif\Resources\Windows</Filter>
-		</ResourceCompile >
-		<Filter Include="Source\ambif\Widgets">
-			<UniqueIdentifier>{44B19968-1740-4B7B-88D1-916FAF32ECD5}</UniqueIdentifier>
-		</Filter>
-		<ClCompile Include="..\..\Source\ambif\Widgets\WidgetManager_active_i.cpp">
-			<Filter>Source\ambif\Widgets</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\ambif\Widgets\WidgetManager_active_i.h">
-			<Filter>Source\ambif\Widgets</Filter>
-		</ClInclude >
-		<ClCompile Include="..\..\Source\ambif\Widgets\WidgetManager_i.cpp">
-			<Filter>Source\ambif\Widgets</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\ambif\Widgets\WidgetManager_i.h">
-			<Filter>Source\ambif\Widgets</Filter>
-		</ClInclude >
-	</ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\ambif.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{A8250D6A-046A-41CD-BB63-9421C2D01C76}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\ambif.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\ambifEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <Filter Include="Config">
+      <UniqueIdentifier>{A88AD27F-A203-47F5-83E1-E7E4F4C2D5FF}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultInput.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Source\ambif">
+      <UniqueIdentifier>{35FE92D4-15DD-421E-A1B0-E2D0508C08CB}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\ambif\ambif.Build.cs">
+      <Filter>Source\ambif</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\ambif\ambif.cpp">
+      <Filter>Source\ambif</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ambif\ambif.h">
+      <Filter>Source\ambif</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\ambif\ambifGameMode.cpp">
+      <Filter>Source\ambif</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ambif\ambifGameMode.h">
+      <Filter>Source\ambif</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\ambif\ambifPlayerController.cpp">
+      <Filter>Source\ambif</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ambif\ambifPlayerController.h">
+      <Filter>Source\ambif</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\ambif\BrowserCharacter.cpp">
+      <Filter>Source\ambif</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ambif\BrowserCharacter.h">
+      <Filter>Source\ambif</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ambif\BrowserController_i.h">
+      <Filter>Source\ambif</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\ambif\LogicController.cpp">
+      <Filter>Source\ambif</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ambif\LogicController.h">
+      <Filter>Source\ambif</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\ambif\NavigationSystemProxy.cpp">
+      <Filter>Source\ambif</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ambif\NavigationSystemProxy.h">
+      <Filter>Source\ambif</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\ambif\PresentationLayer.cpp">
+      <Filter>Source\ambif</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ambif\PresentationLayer.h">
+      <Filter>Source\ambif</Filter>
+    </ClInclude>
+    <Filter Include="Source\ambif\CustomUtils">
+      <UniqueIdentifier>{C58A7C6E-F6D4-4C08-9753-60B7F888EF24}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\ambif\CustomUtils\CameraMacros.h">
+      <Filter>Source\ambif\CustomUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ambif\CustomUtils\CustomUtils.h">
+      <Filter>Source\ambif\CustomUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ambif\CustomUtils\DebugUtils.h">
+      <Filter>Source\ambif\CustomUtils</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\ambif\CustomUtils\HSVColor.cpp">
+      <Filter>Source\ambif\CustomUtils</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ambif\CustomUtils\HSVColor.h">
+      <Filter>Source\ambif\CustomUtils</Filter>
+    </ClInclude>
+    <Filter Include="Source\ambif\Data">
+      <UniqueIdentifier>{1DFF76D8-67C2-43C3-A6E5-FB5712A03BE0}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\ambif\Data\Caster.cpp">
+      <Filter>Source\ambif\Data</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ambif\Data\Caster.h">
+      <Filter>Source\ambif\Data</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\ambif\Data\CSVParser.cpp">
+      <Filter>Source\ambif\Data</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ambif\Data\CSVParser.h">
+      <Filter>Source\ambif\Data</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\ambif\Data\DataManager.cpp">
+      <Filter>Source\ambif\Data</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ambif\Data\DataManager.h">
+      <Filter>Source\ambif\Data</Filter>
+    </ClInclude>
+    <Filter Include="Source\ambif\DataDefinitions">
+      <UniqueIdentifier>{E0B94AFB-006D-4ECA-B3B5-D981123FB8C8}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\ambif\DataDefinitions\Genre.h">
+      <Filter>Source\ambif\DataDefinitions</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\ambif\DataDefinitions\MusicGenreAdapter.cpp">
+      <Filter>Source\ambif\DataDefinitions</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ambif\DataDefinitions\MusicGenreAdapter.h">
+      <Filter>Source\ambif\DataDefinitions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ambif\DataDefinitions\TableDefinitions.h">
+      <Filter>Source\ambif\DataDefinitions</Filter>
+    </ClInclude>
+    <Filter Include="Source\ambif\HUD">
+      <UniqueIdentifier>{3489EBA0-6C04-4766-9B85-2D8B45839E94}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\ambif\HUD\InspectionHUD.cpp">
+      <Filter>Source\ambif\HUD</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ambif\HUD\InspectionHUD.h">
+      <Filter>Source\ambif\HUD</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\ambif\HUD\SimplePlayerHUD.cpp">
+      <Filter>Source\ambif\HUD</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ambif\HUD\SimplePlayerHUD.h">
+      <Filter>Source\ambif\HUD</Filter>
+    </ClInclude>
+    <Filter Include="Source\ambif\MapElements">
+      <UniqueIdentifier>{AB3BE7DB-B70C-4A11-A681-1578E05E9224}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\ambif\MapElements\MapElementActor.cpp">
+      <Filter>Source\ambif\MapElements</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ambif\MapElements\MapElementActor.h">
+      <Filter>Source\ambif\MapElements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ambif\MapElements\MapElementActorListener.h">
+      <Filter>Source\ambif\MapElements</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\ambif\MapElements\MapElementsManager.cpp">
+      <Filter>Source\ambif\MapElements</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ambif\MapElements\MapElementsManager.h">
+      <Filter>Source\ambif\MapElements</Filter>
+    </ClInclude>
+    <Filter Include="Source\ambif\Music">
+      <UniqueIdentifier>{6BA64C61-5390-48FA-A2C0-010BE3B5EFD3}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\ambif\Music\MusicPlayerActor.cpp">
+      <Filter>Source\ambif\Music</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ambif\Music\MusicPlayerActor.h">
+      <Filter>Source\ambif\Music</Filter>
+    </ClInclude>
+    <Filter Include="Source\ambif\Resources">
+      <UniqueIdentifier>{D0AB72C2-866C-4719-8A3D-4774FE3FCB85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\ambif\Resources\Windows">
+      <UniqueIdentifier>{F76F4767-A3C3-4025-A708-DE9923548AFD}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\ambif\Resources\Windows\ambif.ico">
+      <Filter>Source\ambif\Resources\Windows</Filter>
+    </None>
+    <ResourceCompile Include="..\..\Source\ambif\Resources\Windows\ambif.rc">
+      <Filter>Source\ambif\Resources\Windows</Filter>
+    </ResourceCompile>
+    <Filter Include="Source\ambif\Widgets">
+      <UniqueIdentifier>{7BE58D83-D06E-457D-B877-952BBE471AA5}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\ambif\Widgets\WidgetManager_active_i.cpp">
+      <Filter>Source\ambif\Widgets</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ambif\Widgets\WidgetManager_active_i.h">
+      <Filter>Source\ambif\Widgets</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\ambif\Widgets\WidgetManager_i.cpp">
+      <Filter>Source\ambif\Widgets</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ambif\Widgets\WidgetManager_i.h">
+      <Filter>Source\ambif\Widgets</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>

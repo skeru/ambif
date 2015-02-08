@@ -148,6 +148,12 @@ void ALogicController::SetDimension(PlottableDimension::Type DimensionSpace, FSt
 	PresentationLayer->SetDimension(DimensionSpace, DimensionID, UpdateNow);
 }
 
+void ALogicController::SetEnable3DMode(bool Enable)
+{
+	PresentationLayer->SetEnable3D(Enable);
+	WidgetManager->ForceUpdateParabolicLinear();
+}
+
 //-------------------MAP ACTIONS--------------------
 
 void ALogicController::SelectElement(FString ElementID)

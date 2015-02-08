@@ -125,6 +125,10 @@ public:
 	void SetDimension(PlottableDimension::Type DimensionSpace, FString DimensionID, bool UpdateNow = true);//testing
 
 	UFUNCTION(BlueprintCallable, Category = "Data functions")
+	/** ...TODO documentation */
+	void SetEnable3DMode(bool Enable);
+
+	UFUNCTION(BlueprintCallable, Category = "Data functions")
 	/** Triggers a global map elements update.
 	 * 
 	 * @see PresentationLayer::GlobalUpdateMap() */
