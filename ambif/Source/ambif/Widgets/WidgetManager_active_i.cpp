@@ -139,3 +139,8 @@ void AWidgetManager_active_i::UpdateWidgets()
 {
 	LogicController->UpdateWidgetInterface();
 }
+
+void AWidgetManager_active_i::SetEnable3DMode(bool Enable3D)
+{
+	LogicController->SetEnable3DMode(Enable3D);
+}

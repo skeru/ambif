@@ -17,4 +17,5 @@ void AWidgetManager_i::ApplyView(FViewDetails view)
 	SetSelectedDimension(PlottableDimension::Z, view.ZDimension);
 	SetSelectedDimension(PlottableDimension::Color_Hue, view.HueDimension);
 	SetSelectedDimension(PlottableDimension::Color_Sat, view.SatDimension);
+
 }
