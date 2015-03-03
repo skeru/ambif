@@ -201,3 +201,6 @@ ambif/Saved/*
 !ambif/Saved/Config*
 ambif/Saved/AutoScreenshot.png
 *.csv
+
+#transition files
+ambif 4.7/*
