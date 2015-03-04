@@ -24,7 +24,7 @@ AMapElementActor::AMapElementActor(const FObjectInitializer& ObjectInitializer)
 	else {
 		Mesh->SetStaticMesh(StaticMesh.Object);
 	}
-	Mesh->SetRelativeScale3D(FVector(25, 25, 25));
+	Mesh->SetRelativeScale3D(FVector(_scale_normal, _scale_normal, _scale_normal));
 	_material = UMaterialInstanceDynamic::Create(Mesh->GetMaterial(0), this);
 	_color = FLinearColor::Red;
 	_material->SetVectorParameterValue(FName(_ParamName_color), _color);
@@ -74,11 +74,21 @@ FString AMapElementActor::GetElementID()
 
 void AMapElementActor::Ghost(bool IsGhost)
 {
-	//TODO implement transparency
+	//transparency
 #ifdef MapElemensActor_GHOST_TRANSLUCENT
-	_color.A = (IsGhost) ? _color_alpha_ghost : _color_alpha_normal;
-	_color_backup.A = (IsGhost) ? _color_alpha_ghost : _color_alpha_normal;
+	float s;
+	if (IsGhost) {
+		_color.A = _color_alpha_ghost;
+		_color_backup.A = _color_alpha_ghost;
+		s = _scale_ghost;
+	}
+	else {
+		_color.A = _color_alpha_normal;
+		_color_backup.A = _color_alpha_normal;
+		s = _scale_normal;
+	}
 	ApplyColor(_activeColorIndex);
+	Mesh->SetRelativeScale3D(FVector(s, s, s));
 #else
 	Mesh->SetVisibility(!IsGhost);
 #endif

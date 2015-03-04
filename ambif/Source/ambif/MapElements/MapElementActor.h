@@ -50,7 +50,9 @@ private:
 	FLinearColor _color_backup;
 	uint32 _activeColorIndex;
 	const float _color_alpha_normal = 1.0;
-	const float _color_alpha_ghost = 0.35;
+	const float _color_alpha_ghost = 0.25;
+	const float _scale_normal = 25.0;
+	const float _scale_ghost = 10.0;
 
 protected:
 	uint32 AvailableColorsNum;
@@ -76,12 +78,15 @@ public:
 	FString GetElementID();
 
 	UFUNCTION(BlueprintCallable, Category = "Element State")
-	/** read element current color */
-	virtual FLinearColor GetColor();
-
-	UFUNCTION(BlueprintCallable, Category = "Element State")
 	/** Make this element a ghost (hide / reduce alpha channel) */
 	virtual void Ghost(bool IsGhost = true);
+
+	//---colors---
+
+
+	UFUNCTION(BlueprintCallable, Category = "Element State")
+	/** read element current color */
+	virtual FLinearColor GetColor();
 
 	UFUNCTION(BlueprintCallable, Category = "Element State")
 	/** Force a new element color */
