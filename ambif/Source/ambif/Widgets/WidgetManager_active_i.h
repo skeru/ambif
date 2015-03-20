@@ -19,7 +19,7 @@ class AMBIF_API AWidgetManager_active_i : public AActor
 	GENERATED_BODY()
 public:
 	//constructor
-	AWidgetManager_active_i(const FObjectInitializer& ObjectInitializer);
+	AWidgetManager_active_i();
 
 	//-------------------------LOGIC CONTROLLER-------------------------
 public:

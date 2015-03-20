@@ -4,9 +4,7 @@
 #include "WidgetManager_i.h"
 
 
-AWidgetManager_i::AWidgetManager_i(const FObjectInitializer& ObjectInitializer)
-	: Super(ObjectInitializer)
-{
+AWidgetManager_i::AWidgetManager_i() {
 
 }
 

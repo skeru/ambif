@@ -6,7 +6,8 @@
 
 #define HUD_BGTEXTURE_MANDATORY
 
-AInspectionHUD::AInspectionHUD(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
+AInspectionHUD::AInspectionHUD(const FObjectInitializer &ObjectInitializer) 
+	:Super(ObjectInitializer) 
 {
 	DefaultFontScale = 0.05f;
 	ToolTipPadding = FVector2D(10.0, 10.0);

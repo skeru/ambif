@@ -19,7 +19,7 @@ class AMBIF_API AMapElementsManager : public AActor, public MapElementActorListe
 	GENERATED_BODY()
 public:
 	//constructor
-	AMapElementsManager(const FObjectInitializer& ObjectInitializer);
+	AMapElementsManager();
 
 public:
 	//------------------------ACTIONS ON ELEMENTS------------------------

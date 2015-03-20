@@ -5,9 +5,7 @@
 #include "NavigationSystemProxy.h"
 
 
-ANavigationSystemProxy::ANavigationSystemProxy(const FObjectInitializer& ObjectInitializer) 
-	: Super(ObjectInitializer)
-{
+ANavigationSystemProxy::ANavigationSystemProxy() {
 	Manager = nullptr;
 }
 

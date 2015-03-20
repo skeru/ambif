@@ -18,7 +18,7 @@ class AMBIF_API ABrowserCharacter : public ACharacter, public IBrowserController
 	GENERATED_BODY()
 public:
 	//constructor
-	ABrowserCharacter(const FObjectInitializer& ObjectInitializer);
+	ABrowserCharacter();
 
 	//-------------------------ACTOR REFERENCES-------------------------
 public:

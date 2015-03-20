@@ -15,9 +15,10 @@
 // comment/uncomment this define to update or not zoom widget 
 //#define SKIP_ZOOM_WIDGET
 
-ABrowserCharacter::ABrowserCharacter(const FObjectInitializer& ObjectInitializer) 
-	: Super(ObjectInitializer)
-{
+//constructor for the implemented interface. Needed in 4.7 to keep UHT quiet
+UBrowserController_i::UBrowserController_i(const FObjectInitializer & ObjectInitializer) : Super(ObjectInitializer) {};
+
+ABrowserCharacter::ABrowserCharacter() {
 	GetCapsuleComponent()->SetEnableGravity(false);
 	GetCapsuleComponent()->SetCapsuleSize(150.0f, 0.0f);
 
@@ -33,7 +34,7 @@ ABrowserCharacter::ABrowserCharacter(const FObjectInitializer& ObjectInitializer
 	SpeedLookUp = 1.0f;
 
 	// Create a camera boom (pulls in towards the player if there is a collision)	
-	CameraBoom = ObjectInitializer.CreateDefaultSubobject<USpringArmComponent>(this, TEXT("CameraBoom"));
+	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(FName("CameraBoom"));
 	CameraBoom->AttachTo(RootComponent);
 	cameraZoom_current = CAMERA_ARM_LENGTH;
 	
@@ -50,7 +51,7 @@ ABrowserCharacter::ABrowserCharacter(const FObjectInitializer& ObjectInitializer
 	CameraBoom->TargetArmLength = cameraZoom_current; 
 
 	// Create a follow camera
-	FollowCamera = ObjectInitializer.CreateDefaultSubobject<UCameraComponent>(this, TEXT("FollowCamera"));
+	FollowCamera = CreateDefaultSubobject<UCameraComponent>(FName("FollowCamera"));
 	
 	// Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->AttachTo(CameraBoom, USpringArmComponent::SocketName); 

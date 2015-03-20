@@ -9,13 +9,11 @@
 //#define _INTERNAL_READ_COLOR
 #define MapElemensActor_GHOST_TRANSLUCENT
 
-AMapElementActor::AMapElementActor(const FObjectInitializer& ObjectInitializer)
-	: Super(ObjectInitializer)
-{
+AMapElementActor::AMapElementActor() {
 	ElementId = "";
-	RootScene = ObjectInitializer.CreateDefaultSubobject<USceneComponent>(this, "RootScene");
+	RootScene = CreateDefaultSubobject<USceneComponent>(FName("RootScene"));
 	RootComponent = RootScene;
-	Mesh = ObjectInitializer.CreateAbstractDefaultSubobject<UStaticMeshComponent>(this, "ball mesh");
+	Mesh = CreateAbstractDefaultSubobject<UStaticMeshComponent>(FName("ball mesh"));
 	static ConstructorHelpers::FObjectFinder <UStaticMesh>StaticMesh(TEXT(_ElementAsset_Ball));
 	Mesh->AttachTo(RootComponent);
 	if (!StaticMesh.Object) {

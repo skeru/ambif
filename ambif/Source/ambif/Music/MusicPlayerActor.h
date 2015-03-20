@@ -22,7 +22,7 @@ class AMBIF_API AMusicPlayerActor : public AActor
 	GENERATED_BODY()
 public:
 	//constructor
-	AMusicPlayerActor(const FObjectInitializer& ObjectInitializer);
+	AMusicPlayerActor();
 
 private:
 	//* Audio file name (OggVorbis) with path

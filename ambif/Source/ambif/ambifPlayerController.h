@@ -14,6 +14,6 @@ class AMBIF_API AambifPlayerController : public APlayerController
 	GENERATED_BODY()
 
 public:
-	AambifPlayerController(const FObjectInitializer& ObjectInitializer);
+	AambifPlayerController(const FObjectInitializer & ObjectInitializer);
 	
 };

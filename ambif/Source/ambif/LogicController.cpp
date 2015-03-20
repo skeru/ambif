@@ -9,9 +9,7 @@
 //#define LogicController_VERBOSE_MODE_LOGALL
 #define LogicController_HIDE_ON_PLAY
 
-ALogicController::ALogicController(const FObjectInitializer& ObjectInitializer)
-	: Super(ObjectInitializer)
-{
+ALogicController::ALogicController() {
 	ViewList_cache = Utils::FHashMap<ViewDetails>();
 
 	//tick

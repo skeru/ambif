@@ -27,7 +27,7 @@ class AMBIF_API ALogicController : public AActor
 	GENERATED_BODY()
 public:
 	//constructor
-	ALogicController(const FObjectInitializer& ObjectInitializer);
+	ALogicController();
 
 	//-------------------ACTOR REFERENCES-------------------
 public:

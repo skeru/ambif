@@ -45,7 +45,7 @@ class AMBIF_API APresentationLayer : public AActor
 	GENERATED_BODY()
 public:
 	//constructor
-	APresentationLayer(const FObjectInitializer& ObjectInitializer);
+	APresentationLayer();
 
 public:
 	//-----------------OTHER ACTOR REFERENCES-----------------

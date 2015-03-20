@@ -7,7 +7,8 @@
 UINTERFACE()
 class UBrowserController_i : public UInterface
 {
-	GENERATED_BODY()
+	//GENERATED_BODY()
+	GENERATED_UINTERFACE_BODY()
 };
 
 class IBrowserController_i 
@@ -51,3 +52,7 @@ public:
 	/** Enable / Disable 3D navigation mode. */
 	virtual void Set3DEnabled(bool Enabled) {};
 };
+
+//copy this line in every class that implements this interface
+//just because otherwise interfaces in 4.7 make UHT crash badly
+//UBrowserController_i::UBrowserController_i(const FObjectInitializer & ObjectInitializer) : Super(ObjectInitializer) {};

@@ -5,8 +5,8 @@
 #include "ambifGameMode.h"
 
 
-AambifGameMode::AambifGameMode(const FObjectInitializer& ObjectInitializer)
-	: Super(ObjectInitializer)
+AambifGameMode::AambifGameMode(const FObjectInitializer & ObjectInitializer) 
+	:Super(ObjectInitializer)
 {
 	static ConstructorHelpers::FObjectFinder<UBlueprint> PlayerPawnBPClass(TEXT("/Game/Blueprints/BrowserCharacter_BP"));
 	if (PlayerPawnBPClass.Object != NULL)

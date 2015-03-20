@@ -14,7 +14,7 @@ class AMBIF_API ANavigationSystemProxy : public AActor
 {
 	GENERATED_BODY()
 
-	ANavigationSystemProxy(const FObjectInitializer& ObjectInitializer);
+	ANavigationSystemProxy();
 
 private:
 	IBrowserController_i* Manager;

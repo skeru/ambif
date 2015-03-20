@@ -6,13 +6,11 @@
 
 //#define MUSIC_PLAYER_ACTOR_VERBOSE
 
-AMusicPlayerActor::AMusicPlayerActor(const FObjectInitializer& ObjectInitializer)
-	: Super(ObjectInitializer)
-{
+AMusicPlayerActor::AMusicPlayerActor() {
 	FileName = "My Song.ogg";
 
-	sw = (USoundWave*)StaticConstructObject(USoundWave::StaticClass(), this, TEXT("MyTestSoundWave"));
-	ac = ObjectInitializer.CreateDefaultSubobject<UAudioComponent>(this, TEXT("audio_component"));
+	sw = (USoundWave*)StaticConstructObject(USoundWave::StaticClass(), this, FName("MyTestSoundWave"));
+	ac = CreateDefaultSubobject<UAudioComponent>(FName("audio_component"));
 	device = GEngine ? GEngine->GetAudioDevice() : NULL; //gently ask for the audio device
 
 	sw->SoundGroup = ESoundGroup::SOUNDGROUP_Music;

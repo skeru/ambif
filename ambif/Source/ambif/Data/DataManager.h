@@ -18,7 +18,7 @@ class AMBIF_API ADataManager : public AActor
 	GENERATED_BODY()
 public:
 	//constructor
-	ADataManager(const FObjectInitializer& ObjectInitializer);
+	ADataManager();
 	~ADataManager();
 
 	//---------------------DATA STRUCTURES---------------------

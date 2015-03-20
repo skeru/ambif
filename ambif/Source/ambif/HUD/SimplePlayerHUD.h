@@ -73,7 +73,7 @@ class AMBIF_API ASimplePlayerHUD : public AHUD
 	GENERATED_BODY()
 public:
 	//constructor
-	ASimplePlayerHUD(const FObjectInitializer& ObjectInitializer);
+	ASimplePlayerHUD(const FObjectInitializer & ObjectInitializer);
 
 	//---------internal components reference-------------
 public:

@@ -12,9 +12,7 @@
 
 //#define DATA_MANAGER_VERBOSE
 
-ADataManager::ADataManager(const FObjectInitializer& ObjectInitializer)
-	: Super(ObjectInitializer)
-{
+ADataManager::ADataManager() {
 	SongMap = Utils::FHashMap<SongDetails>();
 	DimensionMap = Utils::FHashMap<DimensionDetails>();
 	ViewMap = Utils::FHashMap<ViewDetails>();

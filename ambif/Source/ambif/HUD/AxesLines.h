@@ -14,7 +14,7 @@ class AMBIF_API AAxesLines : public AActor
 	GENERATED_BODY()
 	
 public:	
-	AAxesLines(const FObjectInitializer& ObjectInitializer);
+	AAxesLines();
 	
 	UFUNCTION(BlueprintCallable, Category = "Style")
 	void SetLenght(float lenght);

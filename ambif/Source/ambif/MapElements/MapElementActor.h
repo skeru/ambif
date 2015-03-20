@@ -19,7 +19,7 @@ class AMBIF_API AMapElementActor : public AActor
 	GENERATED_BODY()
 public:
 	//constructor
-	AMapElementActor(const FObjectInitializer& ObjectInitializer);
+	AMapElementActor();
 	
 	//------------------------ ELEMENT BODY ------------------------
 protected:

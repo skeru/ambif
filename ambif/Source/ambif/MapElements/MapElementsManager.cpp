@@ -8,9 +8,7 @@
 //#define BIND_HSVCOLOR_VALUE_TO_SATURATION
 //#define MapElementsManager_VERBOSE_MODE
 
-AMapElementsManager::AMapElementsManager(const FObjectInitializer& ObjectInitializer) 
-	: Super(ObjectInitializer)
-{
+AMapElementsManager::AMapElementsManager() {
 	ActorMap = Utils::FHashMap<AMapElementActor*>();
 
 	ThisTickSelectedElements = TSet<FString>();

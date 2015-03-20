@@ -3,8 +3,7 @@
 #include "ambif.h"
 #include "AxesLines.h"
 
-AAxesLines::AAxesLines(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
-{
+AAxesLines::AAxesLines() {
 	origin = FVector::ZeroVector;
 	SetLenght(500.0f);
 	t = 50.0f;

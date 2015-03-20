@@ -5,8 +5,7 @@
 #include "WidgetManager_active_i.h"
 
 
-AWidgetManager_active_i::AWidgetManager_active_i(const FObjectInitializer& ObjectInitializer)
-	: Super(ObjectInitializer)
+AWidgetManager_active_i::AWidgetManager_active_i()
 {
 	dim_descr_buffer = Utils::FHashMap<int>();
 	dim_id_descr_map = Utils::FHashMap<FString>();

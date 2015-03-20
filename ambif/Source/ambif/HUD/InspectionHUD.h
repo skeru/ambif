@@ -14,7 +14,7 @@ class AMBIF_API AInspectionHUD : public AHUD
 	GENERATED_BODY()
 
 public:
-	AInspectionHUD(const FObjectInitializer& ObjectInitializer);
+	AInspectionHUD(const FObjectInitializer & ObjectInitializer);
 	//------------------------------CONST DEF------------------------------
 public:
 	/** Beackground Color */

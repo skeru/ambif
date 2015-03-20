@@ -83,9 +83,7 @@ TArray<TEnumAsByte<PlottableDimension::Type>> APresentationLayer::GetAvailablePl
 }
 
 //------------------------PRESENTATION LAYER-----------------------------
-APresentationLayer::APresentationLayer(const FObjectInitializer& ObjectInitializer)
-	: Super(ObjectInitializer)
-{
+APresentationLayer::APresentationLayer() {
 	DimensionOnMap = Utils::hashmap<PlottableDimension::Type, _DimensionOnMapInfo>();
 
 	//tick

@@ -15,6 +15,6 @@ class AMBIF_API AambifGameMode : public AGameMode
 
 public:
 	//constructor
-	AambifGameMode(const FObjectInitializer& ObjectInitializer);
+	AambifGameMode(const FObjectInitializer & ObjectInitializer);
 	
 };

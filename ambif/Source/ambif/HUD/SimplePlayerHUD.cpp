@@ -69,8 +69,8 @@ t_item_location LayoutSimple::getLocation(int id){
 }
 //--end of layout stuff
 
-ASimplePlayerHUD::ASimplePlayerHUD(const FObjectInitializer& ObjectInitializer)
-	: Super(ObjectInitializer)
+ASimplePlayerHUD::ASimplePlayerHUD(const FObjectInitializer & ObjectInitializer) 
+	:Super(ObjectInitializer)
 {
 
 	buttonLayout = LayoutSimple();
