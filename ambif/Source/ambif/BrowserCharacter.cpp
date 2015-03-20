@@ -9,6 +9,7 @@
 #define CHARACTER_MOVEMENT_SPEED(cameraZoom_current) (CAMERA_ZOOM_PERCENT((cameraZoom_current))*CAMERA_ZOOM_PERCENT((cameraZoom_current)) + CHARACTER_MOVEMENT_SPEED_BASE)
 
 //#define ENABLE_CAMERA_DEBUG_MESSAGES
+//#define ENABLE_OVERLAP_SELECTION
 //#define ENABLE_OVERLAP_DEBUG_MESSAGES
 
 // comment/uncomment this define to update or not zoom widget 
@@ -263,6 +264,7 @@ void ABrowserCharacter::MoveUp(float Val)
 
 void ABrowserCharacter::OnBeginOverlap(AActor* Other)
 {
+#ifdef ENABLE_OVERLAP_SELECTION
 	/* Cast<> description: 
 	 * [efficiency preset] it's the equivalent of C++ line
 	 * AMapElementActor* element = dynamic_cast<AMapElementActor*>(Other);
@@ -276,6 +278,7 @@ void ABrowserCharacter::OnBeginOverlap(AActor* Other)
 	if (Manager) {
 		Manager->SelectElement(element->GetElementID());
 	}
+#endif
 
 #ifdef ENABLE_OVERLAP_DEBUG_MESSAGES
 	DEBUG("overlap begin")
@@ -284,6 +287,7 @@ void ABrowserCharacter::OnBeginOverlap(AActor* Other)
 
 void ABrowserCharacter::OnEndOverlap(AActor* Other)
 {
+#ifdef ENABLE_OVERLAP_SELECTION
 	/* equivalent of C++ line
 	 * AMapElementActor* element = dynamic_cast<AMapElementActor*>(Other);
 	 * but works without turning on RTTI compiler settings.
@@ -296,7 +300,7 @@ void ABrowserCharacter::OnEndOverlap(AActor* Other)
 	if (Manager) {
 		Manager->DeselectElement(element->GetElementID());
 	}
-
+#endif
 #ifdef ENABLE_OVERLAP_DEBUG_MESSAGES
 	DEBUG("overlap end")
 #endif
