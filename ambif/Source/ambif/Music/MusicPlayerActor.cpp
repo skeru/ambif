@@ -32,17 +32,17 @@ AMusicPlayerActor::AMusicPlayerActor(const FObjectInitializer& ObjectInitializer
 
 inline void AMusicPlayerActor::Load(FString NewFileName = "")
 {
-	if (NewFileName != "")
-	{
+	if (NewFileName != "") {
 		FileName = NewFileName;
 	}
-	Stop();
+	Stop();	//avoid any possible conflict on data
 	
 	rawFile.Empty();
-	
+	delete sw;
+	sw = (USoundWave*)StaticConstructObject(USoundWave::StaticClass(), this, TEXT("MusicPlayerActorSW"));
 	loaded = FFileHelper::LoadFileToArray(rawFile, FileName.GetCharArray().GetData());
 
-	if (loaded){
+	if (loaded) {		
 		FByteBulkData* bulkData = &sw->CompressedFormatData.GetFormat(TEXT("OGG"));
 		bulkData->Lock(LOCK_READ_WRITE);
 		FMemory::Memcpy(bulkData->Realloc(rawFile.Num()), rawFile.GetData(), rawFile.Num());
@@ -50,22 +50,24 @@ inline void AMusicPlayerActor::Load(FString NewFileName = "")
 		fillSoundWaveInfo(sw, &rawFile);
 		ac->SetSound(sw);
 #ifdef MUSIC_PLAYER_ACTOR_VERBOSE
-		DEBUG("loaded");
+		DebugUtils::LogString("MusicPlayerActor: song loaded");
 	}
-	else
-	{
-		DebugUtils::LogString("MusicPlayerActor: can't load song file.");
+	else {
+		DebugUtils::LogString("MusicPlayerActor: can't load song file " + FileName);
 #endif
 	}
 }
 
 void AMusicPlayerActor::Play()
 {
-	if (!loaded){
+	if (!loaded) {
 		Load();
 	}
-	if (!loaded){
+	if (!loaded) {
 		return;
+#ifdef MUSIC_PLAYER_ACTOR_VERBOSE
+		DebugUtils::LogString("MusicPlayerActor: can't load audio file " + FileName);
+#endif
 	}
 
 	isPlaying = true;
@@ -80,6 +82,9 @@ void AMusicPlayerActor::Play()
 
 void AMusicPlayerActor::Pause()
 {
+	//audioSource is the only way to pause
+	//audioSource is initialized the next tick 
+	//after play() is called.
 	int status = findSource(sw);
 	//Debug("Surce location returned " + FString::FromInt(status));
 
@@ -96,8 +101,7 @@ void AMusicPlayerActor::Stop()
 	isPaused = false;
 	isPlaying = false;
 	playTime = 0.0f;
-	if (audioSource)
-	{
+	if (audioSource) {
 		audioSource->Stop();
 	}
 }
@@ -128,9 +132,8 @@ int AMusicPlayerActor::fillSoundWaveInfo(USoundWave* sw, TArray<uint8>* rawFile)
 {
 	FSoundQualityInfo info;
 	FVorbisAudioInfo vorbis_obj = FVorbisAudioInfo();
-	if (!vorbis_obj.ReadCompressedInfo(rawFile->GetData(), rawFile->Num(), &info))
-	{
-		//Debug("Can't load header");
+	if (!vorbis_obj.ReadCompressedInfo(rawFile->GetData(), rawFile->Num(), &info)) {
+		DebugUtils::LogString("Can't load header");
 		return 1;
 	}
 	sw->NumChannels = info.NumChannels;
@@ -142,8 +145,7 @@ int AMusicPlayerActor::fillSoundWaveInfo(USoundWave* sw, TArray<uint8>* rawFile)
 
 int AMusicPlayerActor::findSource(USoundWave* sw)
 {
-	if (!device)
-	{
+	if (!device) {
 		activeSound = NULL;
 		audioSource = NULL;
 		return -1;
@@ -173,12 +175,11 @@ int AMusicPlayerActor::findSource(USoundWave* sw)
 
 void AMusicPlayerActor::Tick(float DeltaTime)
 {
-	if (ac->IsPlaying() && isPlaying)
-	{
+	if (ac->IsPlaying() && isPlaying) {
 		playTime += (double) DeltaTime;
 	}
-	else if (isPlaying && playTime > DeltaTime)
-	{	//song just ended (playTime > DeltaTime is needed to avoid first tick)
+	else if (isPlaying && playTime > DeltaTime) {	
+		//song just ended (playTime > DeltaTime is needed to avoid first tick)
 		Stop();
 #ifdef MUSIC_PLAYER_ACTOR_VERBOSE
 		DebugUtils::LogString("MusicPlayerActor: detected song end");

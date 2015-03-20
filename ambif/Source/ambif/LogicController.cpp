@@ -6,6 +6,7 @@
 #include "LogicController.h"
 
 //#define LogicController_VERBOSE_MODE
+//#define LogicController_VERBOSE_MODE_LOGALL
 #define LogicController_HIDE_ON_PLAY
 
 ALogicController::ALogicController(const FObjectInitializer& ObjectInitializer)
@@ -29,23 +30,20 @@ ALogicController::ALogicController(const FObjectInitializer& ObjectInitializer)
 void ALogicController::LoadElement(FString ElementID)
 {
 	SongDetails d;
-	if (MusicPlayer && DataAgent->getElementDetails(ElementID, d))
-	{
-		if (Utils::FileExists(d.Path))
-		{
+	if (MusicPlayer && DataAgent->getElementDetails(ElementID, d)) {
+		if (Utils::FileExists(d.Path)) {
 			MusicPlayer->Load(d.Path);
 			WidgetManager->UpdateMusicPlayerWidget(false, false); //load stops music
 
+			lastLoadedElement = ElementID;
 #ifdef LogicController_VERBOSE_MODE
 			DebugUtils::LogString("LogicController: Loaded song");
 		}
-		else
-		{
-			DebugUtils::LogString("LogicController: file not found fot element " + ElementID);
+		else {
+			DebugUtils::LogString("LogicController: file not found for element " + ElementID + " - path: " + d.Path);
 		}
 	}
-	else
-	{
+	else {
 		DebugUtils::LogString("LogicController: unable to load element to " + ElementID + " on music player.");
 	}
 #else
@@ -56,8 +54,10 @@ void ALogicController::LoadElement(FString ElementID)
 
 void ALogicController::MusicPlay()
 {
-	if (MusicPlayer)
-	{
+	if (LastClickedElementID != lastLoadedElement) {
+		LoadElement(LastClickedElementID);
+	}
+	if (MusicPlayer) {
 		MusicPlayer->Play();
 	}
 }
@@ -94,7 +94,7 @@ void ALogicController::ReadData()
 	{
 		//DataAgent->LoadCSVData();
 		DataAgent->LoadOldWayCSVData();
-#ifdef LogicController_VERBOSE_MODE
+#ifdef LogicController_VERBOSE_MODE_LOGALL
 		DataAgent->LogData();
 #endif
 	}
@@ -159,7 +159,6 @@ void ALogicController::SetEnable3DMode(bool Enable)
 void ALogicController::SelectElement(FString ElementID)
 {
 	PresentationLayer->ApplySelectionToElement(ElementID);
-
 }
 
 void ALogicController::DeselectElement(FString ElementID)

@@ -181,6 +181,7 @@ namespace Utils
 	inline static bool FileExists(FString FileName)
 	{
 		struct stat buffer;
-		return (stat((TCHAR_TO_UTF8(*FileName)), &buffer) == 0);
+		std::string s = TCHAR_TO_UTF8(*FileName);
+		return (stat(s.c_str(), &buffer) == 0);
 	}
 };

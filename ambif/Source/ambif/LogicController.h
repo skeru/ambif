@@ -88,6 +88,9 @@ public:
 	/** Stop song */
 	void MusicStop();
 
+private:
+	FString lastLoadedElement;
+
 	//------------------SPAWN FUNCTIONS------------------
 public:
 	UFUNCTION(BlueprintCallable, Category = "Spawner")
@@ -174,6 +177,7 @@ private:
 
 	void DetectClickedActors();
 
+	/** update elements every tick */
 	inline void HandleElement();
 
 	//*time from last element update

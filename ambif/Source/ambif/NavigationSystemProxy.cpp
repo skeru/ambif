@@ -14,7 +14,7 @@ ANavigationSystemProxy::ANavigationSystemProxy(const FObjectInitializer& ObjectI
 void ANavigationSystemProxy::SetManager(TScriptInterface<IBrowserController_i> NewManager)
 {
 	//Manager = InterfaceCast<IBrowserController_i>(NewManager);
-	Manager = InterfaceCast<IBrowserController_i>(NewManager.GetObjectRef());
+	Manager = Cast<IBrowserController_i>(NewManager.GetObjectRef());
 	if (!Manager) {
 		DebugUtils::LogString("NavigationSystemProxy::SetManager: given Manager does not implement required interface.");
 	}
