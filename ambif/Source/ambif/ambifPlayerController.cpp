@@ -10,6 +10,7 @@ AambifPlayerController::AambifPlayerController(const FObjectInitializer & Object
 	bEnableClickEvents = true;
 	bEnableTouchEvents = true;
 	bEnableMouseOverEvents = true;
+	bShowMouseCursor = true;
 }
 
 
