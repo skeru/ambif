@@ -50,8 +50,8 @@ private:
 	FLinearColor _color_backup;
 	uint32 _activeColorIndex;
 	const float _color_alpha_normal = 1.0;
-	const float _color_alpha_ghost = 0.25;
-	const float _scale_normal = 15.0;
+	const float _color_alpha_ghost = 0.2;
+	const float _scale_normal = 10.0;
 	const float _scale_ghost = 4.0;
 
 protected:
