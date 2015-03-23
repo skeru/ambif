@@ -289,6 +289,10 @@ struct FViewDetails
 		return *this;
 	}
 
+	inline bool operator== (const FViewDetails& other) const
+	{
+		return Id == other.Id;
+	};
 };
 
 typedef struct FSongDetails SongDetails;

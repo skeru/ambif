@@ -90,12 +90,13 @@ public:
 
 private:
 	FString lastLoadedElement;
+	FString lastLoadedView;
 
 	//------------------SPAWN FUNCTIONS------------------
 public:
 	UFUNCTION(BlueprintCallable, Category = "Spawner")
 	/** Spawn an element in a random position */
-	void Spawn();
+	void Spawn(FString ViewID = "Rnd");
 
 	//------------------DATA FUNCTIONS-------------------
 public:
@@ -153,8 +154,11 @@ public:
 	 *
 	 * Actually updates:
 	 *  - Dimension Selection Widget
+	 *
+	 * @param SynchronizeWithViewID Default empty. 
+	 *    Reset widgets to this ID details. Does not apply the view.
 	 */
-	void UpdateWidgetInterface();
+	void UpdateWidgetInterface(FString SynchronizeWithViewID = "");
 
 	/** Force zoom to NewZoomPercentage.
 	 * Updates widget slider and triggers a zoom update. 

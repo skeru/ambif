@@ -4,6 +4,7 @@
 #include "CustomUtils/DebugUtils.h"
 #include "WidgetManager_active_i.h"
 
+//#define Wid_Manager_active_VERBOSE
 
 AWidgetManager_active_i::AWidgetManager_active_i()
 {
@@ -121,17 +122,26 @@ FString AWidgetManager_active_i::GetOnScreenDimensionDescription(FString Dimensi
 		int counter = dim_descr_buffer[descr];
 		FString aux = FString(descr);
 		aux.AppendInt(counter);
+#ifdef Wid_Manager_active_VERBOSE
+		DebugUtils::LogString("WidManagerActive::Dimension Descr Getter Called. Dimension description: " + aux);
+#endif
 		return aux;
 	}
+#ifdef Wid_Manager_active_VERBOSE
+	DebugUtils::LogString("WidManagerActive::Dimension Descr Getter Called. standard description: " + descr);
+#endif
 	return descr;
 }
 
 //-------------------------OTHER THINGS-------------------------
 void AWidgetManager_active_i::TriggerSpawn()
 {
+	FString viewID = FString("Rnd");
 	LogicController->ReadData();
 	LogicController->RefreshViewList();
-	LogicController->Spawn();
+	LogicController->Spawn(viewID);
+	//UpdateWidgets();
+	LogicController->UpdateWidgetInterface(viewID);
 }
 
 void AWidgetManager_active_i::UpdateWidgets()

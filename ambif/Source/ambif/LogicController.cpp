@@ -78,10 +78,10 @@ void ALogicController::MusicStop()
 
 //------------------SPAWN FUNCTIONS------------------
 
-void ALogicController::Spawn()
+void ALogicController::Spawn(FString ViewID)
 {
-
-	PresentationLayer->Initialize(FString("Rnd"));//TODO change & use something parametrical
+	PresentationLayer->Initialize(ViewID);
+	lastLoadedView = ViewID;
 }
 
 //------------------DATA FUNCTIONS-------------------
@@ -171,9 +171,15 @@ void ALogicController::UpdateDimensionsOnMap()
 }
 //----------------------GUI-----------------------
 
-void ALogicController::UpdateWidgetInterface()
+void ALogicController::UpdateWidgetInterface(FString SynchronizeWithViewID)
 {
 	WidgetManager->UpdateDimensionWidegt();
+	if (SynchronizeWithViewID != "") {
+		ViewDetails d;
+		if (DataAgent->getViewDetails(SynchronizeWithViewID, d)) {
+			WidgetManager->EnqueueApplyView(d);
+		}
+	}
 }
 
 void ALogicController::ForceUpdateZoomWidget(float NewZoomPercentage)
