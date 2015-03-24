@@ -1,4 +1,4 @@
 ambif
 =====
 
-Academic Music Browsing Interactive Framework
+Advanced Music Browsing Interactive Framework
