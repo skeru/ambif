@@ -1,4 +1,8 @@
-// Stefano Cherubin stefano1.cherubin@mail.polimi.it - except where otherwise stated
+//* Copyright 2015 Stefano Cherubin
+//* stefano1{dot}cherubin{at}mail{dot}polimi{dot}it
+//* ISPG - Image and Sound Processing Group
+//* Politecnico di Milano
+
 //This code is based on the wiki tutorial found at the following link
 //https://wiki.unrealengine.com/HUD,_Canvas,_Code_Sample_of_800%2B_Lines,_Create_Buttons_%26_Draw_Materials
 //most of the code was adapted to my intent.
